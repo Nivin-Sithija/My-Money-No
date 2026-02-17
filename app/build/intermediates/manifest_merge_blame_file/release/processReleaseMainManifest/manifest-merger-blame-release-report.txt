@@ -32,53 +32,53 @@
 20-->[androidx.core:core:1.12.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/2254b219ee01acacfbc71a302374372d/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
 20-->[androidx.core:core:1.12.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/2254b219ee01acacfbc71a302374372d/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
 21    <application
-21-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:7:5-36:19
+21-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:7:5-36:19
 22        android:name="com.wiyadama.expensetracker.WiyadamaApplication"
-22-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:8:9-44
+22-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:8:9-44
 23        android:allowBackup="true"
-23-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:9:9-35
+23-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:9:9-35
 24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 24-->[androidx.core:core:1.12.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/2254b219ee01acacfbc71a302374372d/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
 25        android:extractNativeLibs="false"
 26        android:icon="@drawable/ic_launcher"
-26-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:10:9-45
+26-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:10:9-45
 27        android:label="@string/app_name"
-27-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:11:9-41
+27-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:11:9-41
 28        android:roundIcon="@drawable/ic_launcher_round"
-28-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:12:9-56
+28-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:12:9-56
 29        android:supportsRtl="true"
-29-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:13:9-35
+29-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:13:9-35
 30        android:theme="@style/Theme.WiyadamaExpenseTracker" >
-30-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:14:9-60
+30-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:14:9-60
 31        <activity
-31-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:15:9-24:20
+31-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:15:9-24:20
 32            android:name="com.wiyadama.expensetracker.MainActivity"
-32-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:16:13-41
+32-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:16:13-41
 33            android:exported="true"
-33-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:17:13-36
+33-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:17:13-36
 34            android:theme="@style/Theme.WiyadamaExpenseTracker"
-34-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:19:13-64
+34-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:19:13-64
 35            android:windowSoftInputMode="adjustResize" >
-35-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:18:13-55
+35-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:18:13-55
 36            <intent-filter>
-36-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:20:13-23:29
+36-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:20:13-23:29
 37                <action android:name="android.intent.action.MAIN" />
-37-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:21:17-69
-37-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:21:25-66
+37-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:21:17-69
+37-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:21:25-66
 38
 39                <category android:name="android.intent.category.LAUNCHER" />
-39-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:22:17-77
-39-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:22:27-74
+39-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:22:17-77
+39-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:22:27-74
 40            </intent-filter>
 41        </activity>
 42
 43        <provider
 44            android:name="androidx.startup.InitializationProvider"
-44-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:27:13-67
+44-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:27:13-67
 45            android:authorities="com.wiyadama.expensetracker.androidx-startup"
-45-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:28:13-68
+45-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:28:13-68
 46            android:exported="false" >
-46-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/AndroidManifest.xml:29:13-37
+46-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:29:13-37
 47            <meta-data
 47-->[androidx.emoji2:emoji2:1.3.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/780517c1ff86c7efa2dfc2a17118a913/transformed/jetified-emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
 48                android:name="androidx.emoji2.text.EmojiCompatInitializer"

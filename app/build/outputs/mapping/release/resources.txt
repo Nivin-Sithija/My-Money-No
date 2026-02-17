@@ -1,220 +1,220 @@
-Marking string:tab:2131558537 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:switch_role:2131558536 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking style:DialogWindowTheme:2131624097 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:compose_view_saveable_id_tag:2131230792 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:view_tree_on_back_pressed_dispatcher_owner:2131230902 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_unhandled_key_event_manager:2131230884 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:report_drawn:2131230843 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_unhandled_key_listeners:2131230885 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:alpha:2130903082 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:lStar:2130903204 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:androidx_compose_ui_view_composition_context:2131230781 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_popup_menu_item_layout:2131427347 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking dimen:abc_config_prefDialogWidth:2131099671 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_popup_menu_header_item_layout:2131427346 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_range_picker_scroll_to_previous_month:2131558492 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_range_picker_scroll_to_next_month:2131558491 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:pooling_container_listener_holder_tag:2131230839 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:autoCompleteTextViewStyle:2130903087 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:default_error_message:2131558446 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_0:2131230727 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_1:2131230728 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_2:2131230739 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_3:2131230750 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_4:2131230753 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_5:2131230754 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_6:2131230755 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_7:2131230756 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_8:2131230757 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_9:2131230758 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_10:2131230729 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_11:2131230730 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_12:2131230731 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_13:2131230732 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_14:2131230733 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_15:2131230734 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_16:2131230735 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_17:2131230736 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_18:2131230737 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_19:2131230738 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_20:2131230740 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_21:2131230741 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_22:2131230742 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_23:2131230743 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_24:2131230744 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_25:2131230745 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_26:2131230746 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_27:2131230747 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_28:2131230748 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_29:2131230749 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_30:2131230751 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_custom_action_31:2131230752 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:indeterminate:2131558458 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:off:2131558523 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:on:2131558525 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:selected:2131558533 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:not_selected:2131558521 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:template_percent:2131558538 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:in_progress:2131558457 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:wrapped_composition_tag:2131230908 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:actionModeStyle:2130903069 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:actionBarPopupTheme:2130903043 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_action_mode_close_item_material:2131427333 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_action_bar_title_item:2131427328 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:action_bar_title:2131230765 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:action_bar_subtitle:2131230764 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:actionBarStyle:2130903046 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:view_tree_view_model_store_owner:2131230904 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:view_tree_lifecycle_owner:2131230901 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_range_picker_start_headline:2131558493 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_range_picker_end_headline:2131558490 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_range_picker_day_in_range:2131558489 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_picker_today_description:2131558485 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:hide_in_inspector_tag:2131230811 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:inspection_slot_table_set:2131230819 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:view_tree_saved_state_registry_owner:2131230903 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:searchViewStyle:2130903268 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_search_view:2131427353 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:search_src_text:2131230858 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:search_edit_frame:2131230854 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:search_plate:2131230857 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:submit_area:2131230872 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:search_button:2131230852 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:search_go_btn:2131230855 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:search_close_btn:2131230853 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:search_voice_btn:2131230859 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:search_mag_icon:2131230856 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_searchview_description_search:2131558421 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_search_dropdown_item_icons_2line:2131427352 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking dimen:abc_search_view_preferred_height:2131099702 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking dimen:abc_search_view_preferred_width:2131099703 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:topPanel:2131230896 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:buttonPanel:2131230786 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:contentPanel:2131230795 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:customPanel:2131230797 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_accessibility_pane_title:2131230877 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_on_apply_window_listener:2131230878 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_window_insets_animation_callback:2131230886 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_action_menu_item_layout:2131427330 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_input_invalid_for_pattern:2131558466 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_input_invalid_year_range:2131558468 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_input_invalid_not_allowed:2131558467 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_range_input_invalid_range_input:2131558487 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:listMenuViewStyle:2130903215 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:dropDownListViewStyle:2130903165 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_prepend_shortcut_label:2131558417 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_menu_meta_shortcut_label:2131558413 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_menu_ctrl_shortcut_label:2131558409 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_menu_alt_shortcut_label:2131558408 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_menu_shift_shortcut_label:2131558414 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_menu_sym_shortcut_label:2131558416 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_menu_function_shortcut_label:2131558412 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_menu_space_shortcut_label:2131558415 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_menu_enter_shortcut_label:2131558411 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_menu_delete_shortcut_label:2131558410 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:title:2131230892 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:shortcut:2131230861 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:submenuarrow:2131230871 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:group_divider:2131230809 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:content:2131230794 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_list_menu_item_radio:2131427345 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_list_menu_item_checkbox:2131427342 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_list_menu_item_icon:2131427343 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:toolbarNavigationButtonStyle:2130903329 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking bool:workmanager_test_configuration:2130968581 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_cab_background_top_material:2131165200 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_cab_background_internal_bg:2131165199 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_cab_background_top_mtrl_alpha:2131165201 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ratingbar_material:2131165235 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking dimen:abc_star_big:2131099707 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ratingbar_indicator_material:2131165234 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking dimen:abc_star_medium:2131099708 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ratingbar_small_material:2131165236 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking dimen:abc_star_small:2131099709 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_vector_test:2131165262 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:colorControlNormal:2130903128 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:colorControlActivated:2130903126 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_switch_thumb_material:2131165249 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_seekbar_track_material:2131165244 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_list_divider_mtrl_alpha:2131165221 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_dialog_material_background:2131165203 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:consume_window_insets_tag:2131230793 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:textColorSearchUrl:2130903307 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:edit_query:2131230802 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:actionBarSize:2130903044 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:action_bar_activity_content:2131230760 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:action_bar_container:2131230761 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:action_bar:2131230759 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking layout:abc_cascading_menu_item_layout:2131427339 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:nestedScrollViewStyle:2130903235 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:default_popup_window_title:2131558447 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_dropdown_menu_expanded:2131558497 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_dropdown_menu_collapsed:2131558496 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_accessibility_actions:2131230874 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:accessibility_action_clickable_span:2131230726 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_accessibility_clickable_spans:2131230875 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:actionOverflowButtonStyle:2130903072 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:spacer:2131230865 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:androidx_startup:2131558429 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_dialog:2131558495 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking dimen:abc_cascading_menus_min_smallest_width:2131099670 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:split_action_bar:2131230867 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:action_context_bar:2131230767 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_textfield_default_mtrl_alpha:2131165258 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ab_share_pack_mtrl_alpha:2131165184 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_textfield_search_default_mtrl_alpha:2131165260 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_menu_hardkey_panel_mtrl_mult:2131165232 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_popup_background_mtrl_mult:2131165233 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_tab_indicator_material:2131165251 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_textfield_search_material:2131165261 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_btn_check_material_anim:2131165188 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_btn_radio_material_anim:2131165194 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_btn_check_material:2131165187 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_btn_radio_material:2131165193 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ic_commit_search_api_mtrl_alpha:2131165208 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_seekbar_tick_mark_material:2131165243 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ic_menu_share_mtrl_alpha:2131165215 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ic_menu_copy_mtrl_am_alpha:2131165210 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ic_menu_cut_mtrl_alpha:2131165211 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ic_menu_selectall_mtrl_alpha:2131165214 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_ic_menu_paste_mtrl_am_alpha:2131165213 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_textfield_activated_mtrl_alpha:2131165257 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_textfield_search_activated_mtrl_alpha:2131165259 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_text_cursor_material:2131165253 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_text_select_handle_left_mtrl:2131165254 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_text_select_handle_middle_mtrl:2131165255 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_text_select_handle_right_mtrl:2131165256 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:colorControlHighlight:2130903127 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:colorButtonNormal:2130903125 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_star_black_48dp:2131165247 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_star_half_black_48dp:2131165248 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_edit_text_material:2131165204 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking color:abc_tint_edittext:2131034133 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_switch_track_mtrl_alpha:2131165250 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking color:abc_tint_switch_track:2131034136 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:colorSwitchThumbNormal:2130903132 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_btn_default_mtrl_shape:2131165192 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_btn_borderless_material:2131165186 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_btn_colored_material:2131165191 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:colorAccent:2130903123 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_spinner_mtrl_am_alpha:2131165245 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_spinner_textfield_background_material:2131165246 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking color:abc_tint_default:2131034132 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking color:abc_tint_btn_checkable:2131034131 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking drawable:abc_seekbar_thumb_material:2131165242 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking color:abc_tint_seek_thumb:2131034134 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking color:abc_tint_spinner:2131034135 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_picker_switch_to_calendar_mode:2131558478 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:m3c_date_picker_switch_to_input_mode:2131558480 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_screen_reader_focusable:2131230881 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_accessibility_heading:2131230876 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:tag_state_description:2131230882 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:toolbarStyle:2130903330 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking string:abc_action_bar_up_description:2131558401 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking attr:actionOverflowMenuStyle:2130903073 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking id:is_pooling_container_tag:2131230820 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking dimen:abc_dropdownitem_icon_width:2131099689 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-Marking dimen:abc_dropdownitem_text_padding_left:2131099690 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_screen_reader_focusable:2131230881 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_accessibility_heading:2131230876 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_accessibility_pane_title:2131230877 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_state_description:2131230882 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_accessibility_actions:2131230874 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_range_picker_scroll_to_previous_month:2131558492 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_range_picker_scroll_to_next_month:2131558491 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_unhandled_key_event_manager:2131230884 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:view_tree_on_back_pressed_dispatcher_owner:2131230902 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:report_drawn:2131230843 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:androidx_compose_ui_view_composition_context:2131230781 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:wrapped_composition_tag:2131230908 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:default_popup_window_title:2131558447 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:compose_view_saveable_id_tag:2131230792 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_popup_menu_item_layout:2131427347 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking dimen:abc_config_prefDialogWidth:2131099671 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_popup_menu_header_item_layout:2131427346 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:autoCompleteTextViewStyle:2130903087 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_dropdown_menu_expanded:2131558497 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_dropdown_menu_collapsed:2131558496 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:view_tree_saved_state_registry_owner:2131230903 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:actionModeStyle:2130903069 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:actionBarPopupTheme:2130903043 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_action_mode_close_item_material:2131427333 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_action_bar_title_item:2131427328 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:action_bar_title:2131230765 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:action_bar_subtitle:2131230764 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:actionBarStyle:2130903046 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_input_invalid_for_pattern:2131558466 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_input_invalid_year_range:2131558468 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_input_invalid_not_allowed:2131558467 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_range_input_invalid_range_input:2131558487 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_range_picker_start_headline:2131558493 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_range_picker_end_headline:2131558490 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:view_tree_view_model_store_owner:2131230904 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:view_tree_lifecycle_owner:2131230901 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_unhandled_key_listeners:2131230885 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:searchViewStyle:2130903268 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_search_view:2131427353 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:search_src_text:2131230858 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:search_edit_frame:2131230854 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:search_plate:2131230857 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:submit_area:2131230872 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:search_button:2131230852 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:search_go_btn:2131230855 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:search_close_btn:2131230853 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:search_voice_btn:2131230859 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:search_mag_icon:2131230856 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_searchview_description_search:2131558421 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_search_dropdown_item_icons_2line:2131427352 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking dimen:abc_search_view_preferred_height:2131099702 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking dimen:abc_search_view_preferred_width:2131099703 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_on_apply_window_listener:2131230878 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_window_insets_animation_callback:2131230886 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:topPanel:2131230896 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:buttonPanel:2131230786 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:contentPanel:2131230795 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:customPanel:2131230797 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_action_menu_item_layout:2131427330 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:listMenuViewStyle:2130903215 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:dropDownListViewStyle:2130903165 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_prepend_shortcut_label:2131558417 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_menu_meta_shortcut_label:2131558413 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_menu_ctrl_shortcut_label:2131558409 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_menu_alt_shortcut_label:2131558408 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_menu_shift_shortcut_label:2131558414 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_menu_sym_shortcut_label:2131558416 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_menu_function_shortcut_label:2131558412 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_menu_space_shortcut_label:2131558415 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_menu_enter_shortcut_label:2131558411 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_menu_delete_shortcut_label:2131558410 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:title:2131230892 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:shortcut:2131230861 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:submenuarrow:2131230871 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:group_divider:2131230809 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:content:2131230794 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_list_menu_item_radio:2131427345 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_list_menu_item_checkbox:2131427342 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_list_menu_item_icon:2131427343 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:toolbarNavigationButtonStyle:2130903329 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:textColorSearchUrl:2130903307 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:edit_query:2131230802 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:androidx_startup:2131558429 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_cab_background_top_material:2131165200 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_cab_background_internal_bg:2131165199 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_cab_background_top_mtrl_alpha:2131165201 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ratingbar_material:2131165235 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking dimen:abc_star_big:2131099707 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ratingbar_indicator_material:2131165234 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking dimen:abc_star_medium:2131099708 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ratingbar_small_material:2131165236 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking dimen:abc_star_small:2131099709 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_vector_test:2131165262 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:colorControlNormal:2130903128 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:colorControlActivated:2130903126 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_switch_thumb_material:2131165249 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_seekbar_track_material:2131165244 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_list_divider_mtrl_alpha:2131165221 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_dialog_material_background:2131165203 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_picker_switch_to_calendar_mode:2131558478 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_picker_switch_to_input_mode:2131558480 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:pooling_container_listener_holder_tag:2131230839 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:hide_in_inspector_tag:2131230811 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:actionBarSize:2130903044 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:action_bar_activity_content:2131230760 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:action_bar_container:2131230761 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:action_bar:2131230759 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking layout:abc_cascading_menu_item_layout:2131427339 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:nestedScrollViewStyle:2130903235 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:consume_window_insets_tag:2131230793 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:actionOverflowButtonStyle:2130903072 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:default_error_message:2131558446 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:spacer:2131230865 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking style:DialogWindowTheme:2131624097 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking bool:workmanager_test_configuration:2130968581 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking dimen:abc_cascading_menus_min_smallest_width:2131099670 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:split_action_bar:2131230867 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:action_context_bar:2131230767 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_action_clickable_span:2131230726 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:tag_accessibility_clickable_spans:2131230875 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_textfield_default_mtrl_alpha:2131165258 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ab_share_pack_mtrl_alpha:2131165184 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_textfield_search_default_mtrl_alpha:2131165260 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_menu_hardkey_panel_mtrl_mult:2131165232 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_popup_background_mtrl_mult:2131165233 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_tab_indicator_material:2131165251 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_textfield_search_material:2131165261 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_btn_check_material_anim:2131165188 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_btn_radio_material_anim:2131165194 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_btn_check_material:2131165187 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_btn_radio_material:2131165193 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ic_commit_search_api_mtrl_alpha:2131165208 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_seekbar_tick_mark_material:2131165243 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ic_menu_share_mtrl_alpha:2131165215 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ic_menu_copy_mtrl_am_alpha:2131165210 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ic_menu_cut_mtrl_alpha:2131165211 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ic_menu_selectall_mtrl_alpha:2131165214 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_ic_menu_paste_mtrl_am_alpha:2131165213 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_textfield_activated_mtrl_alpha:2131165257 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_textfield_search_activated_mtrl_alpha:2131165259 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_text_cursor_material:2131165253 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_text_select_handle_left_mtrl:2131165254 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_text_select_handle_middle_mtrl:2131165255 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_text_select_handle_right_mtrl:2131165256 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:colorControlHighlight:2130903127 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:colorButtonNormal:2130903125 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_star_black_48dp:2131165247 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_star_half_black_48dp:2131165248 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_edit_text_material:2131165204 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking color:abc_tint_edittext:2131034133 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_switch_track_mtrl_alpha:2131165250 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking color:abc_tint_switch_track:2131034136 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:colorSwitchThumbNormal:2130903132 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_btn_default_mtrl_shape:2131165192 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_btn_borderless_material:2131165186 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_btn_colored_material:2131165191 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:colorAccent:2130903123 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_spinner_mtrl_am_alpha:2131165245 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_spinner_textfield_background_material:2131165246 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking color:abc_tint_default:2131034132 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking color:abc_tint_btn_checkable:2131034131 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking drawable:abc_seekbar_thumb_material:2131165242 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking color:abc_tint_seek_thumb:2131034134 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking color:abc_tint_spinner:2131034135 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_0:2131230727 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_1:2131230728 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_2:2131230739 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_3:2131230750 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_4:2131230753 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_5:2131230754 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_6:2131230755 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_7:2131230756 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_8:2131230757 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_9:2131230758 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_10:2131230729 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_11:2131230730 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_12:2131230731 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_13:2131230732 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_14:2131230733 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_15:2131230734 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_16:2131230735 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_17:2131230736 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_18:2131230737 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_19:2131230738 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_20:2131230740 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_21:2131230741 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_22:2131230742 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_23:2131230743 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_24:2131230744 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_25:2131230745 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_26:2131230746 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_27:2131230747 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_28:2131230748 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_29:2131230749 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_30:2131230751 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:accessibility_custom_action_31:2131230752 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:indeterminate:2131558458 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:off:2131558523 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:on:2131558525 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:selected:2131558533 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:not_selected:2131558521 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:template_percent:2131558538 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:in_progress:2131558457 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:alpha:2130903082 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:lStar:2130903204 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:toolbarStyle:2130903330 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:abc_action_bar_up_description:2131558401 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking attr:actionOverflowMenuStyle:2130903073 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:inspection_slot_table_set:2131230819 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking id:is_pooling_container_tag:2131230820 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_range_picker_day_in_range:2131558489 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_date_picker_today_description:2131558485 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:m3c_dialog:2131558495 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:tab:2131558537 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking string:switch_role:2131558536 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking dimen:abc_dropdownitem_icon_width:2131099689 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+Marking dimen:abc_dropdownitem_text_padding_left:2131099690 reachable: referenced from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 android.content.res.Resources#getIdentifier present: true
 Web content present: false
 Referenced Strings:
@@ -231,28 +231,27 @@ TAKEN
 android.speech.extra.RESULTS_PENDINGI...
 layoutDirection
 $this$item
-S2.v0
 Compose:abandons
 Filled.Add
-java.lang.CharSequence
 $
+java.lang.CharSequence
 STOP
 RESTRICT
 requires_device_idle
 requires_battery_not_low
 0
 textSelectionRange
-ACTION_PRESS_AND_HOLD
 size
-kotlinx.coroutines.DefaultExecutor
+ACTION_PRESS_AND_HOLD
 left
+kotlinx.coroutines.DefaultExecutor
 notnull
 Strategy.HighQuality
 removeItemAt
-WorkForegroundRunnable
 setNextSelectedPositionInt
-S_RESUMING_BY_RCV
+WorkForegroundRunnable
 role
+S_RESUMING_BY_RCV
 Selection
 emoji2.text.DefaultEmojiConfig
 H
@@ -269,27 +268,27 @@ a
 Center
 b
 address
-ACTION_CLEAR_ACCESSIBILITY_FOCUS
 c
-user_query
 SUCCESS
+user_query
+ACTION_CLEAR_ACCESSIBILITY_FOCUS
 Infinity
 Compose:unobserve
 f
 truncated
 kotlin.String
 RESUMING_BY_EB
-OnClick
 m
+OnClick
 Red
 r
-java.lang.Module
 SUSPEND
+java.lang.Module
 TypefaceCompatApi26Impl
 x
 appContext
-ProgressBarRangeInfo
 1.0.0
+ProgressBarRangeInfo
 Start
 merchantName
 isTagEnabled
@@ -300,8 +299,8 @@ Multiply
 ACTION_SCROLL_FORWARD
 bufferEndSegment
 Filled.ArrowBack
-list
 dagger.hilt.android.components.ViewCo...
+list
 Rgb
 indicatorRipple
 isSystem
@@ -323,11 +322,11 @@ backup_meta
 kotlinx.coroutines.main.delay
 _delayed
 navigationBars
-Shops
 jobscheduler
+Shops
 onDismiss
-kotlin.collections.List
 deqIdx
+kotlin.collections.List
 compose:lazylist:prefetch:measure
 ForceStopRunnable$Rcvr
 SearchView
@@ -336,12 +335,12 @@ ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE
 android.view.View$AttachInfo
 java.lang.Float
 Dispatchers.IO
-fixups
 InactivePendingWork
+fixups
 SharingStarted.Eagerly
 autoMigrationSpecs
-androidx.profileinstaller.action.SAVE...
 LookaheadLayingOut
+androidx.profileinstaller.action.SAVE...
 android.os.Build$VERSION
 executor
 primitiveSerializer
@@ -354,21 +353,21 @@ StateDescription
 Filled.TrendingUp
 toggleableState
 EmojiSupportMatch.Default
-TextSubstitution
 $this$Button
 byte
+TextSubstitution
 Square
 Modulate
 onBackInvoked
 Filled.Payment
 orders
 Transport
-doAfterTextChanged
 SystemJobScheduler
+doAfterTextChanged
 wasZoomOverridden
 long_value
-NothingSerialDescriptor
 onRestoreBackup
+NothingSerialDescriptor
 index_WorkSpec_schedule_requested_at
 foreignKeys
 ACTION_SCROLL_IN_DIRECTION
@@ -393,8 +392,8 @@ All
 New
 android.widget.CheckBox
 members
-android.view.accessibility.extra.DATA...
 setEpicenterBounds
+android.view.accessibility.extra.DATA...
 Plus
 yMMMd
 void
@@ -402,9 +401,9 @@ statusBarStyle
 _cur
 mStableInsets
 Filled.AccountCircle
-REAL
-StructuralEqualityPolicy
 chartValues
+StructuralEqualityPolicy
+REAL
 _id
 index_shops_name
 kotlin.Throwable
@@ -434,9 +433,9 @@ UNKNOWN
 initialExtras
 DstOut
 Entertainment
-accessibility
-ACTION_STOP_WORK
 Bradford
+ACTION_STOP_WORK
+accessibility
 Edit
 Filled.AccessTime
 STOP_AND_RESET_REPLAY_CACHE
@@ -459,15 +458,15 @@ SupportMenuInflater
 getHorizontallyScrolling
 CollectionInfo
 on_delete
-GetTextLayoutResult
 Rtl
+GetTextLayoutResult
 ToggleableState
 ordersMap.values
 WorkConstraintsTracker
 ComposeInternal
 builder
-currency
 liveRegion
+currency
 Filled.DirectionsCar
 DstIn
 setRemoveOnCancelPolicy
@@ -489,28 +488,28 @@ parameterProviderClassName
 source
 align
 SelectionStart
-Compose:Composer.dispose
 android.intent.action.BATTERY_CHANGED
+Compose:Composer.dispose
 Container
 Compose
 java.lang.Short
 Search
 positionSelector
 android.widget.Button
-Oklab
 _closeCause
+Oklab
 androidx.view.accessibility.Accessibi...
 Filled.Restore
 markState
 Eraser
 INTEGER
 search_suggest_query
-worker_class_name
 tableIds
+worker_class_name
 DIAGNOSTIC_PROFILE_IS_COMPRESSED
 HandlerCompat
-shops
 Enter
+shops
 INTERRUPTED_RCV
 font_variation_settings
 DpAnimation
@@ -521,21 +520,21 @@ Stylus
 SEALED
 android.text.DynamicLayout$ChangeWatcher
 CREATED
-NO_OWNER
 ContentOrRtl
+NO_OWNER
 fae0f81fe354b051ba6a3cca00463c38
 KEY_NOTIFICATION
 androidx.content.action.LOAD_EMOJI_FONT
 Password
 Fab
 EXTRA_SKIP_FILE_OPERATION
-captionBar
 Overview
+captionBar
 pair
 Paragraph
 KEY_BATTERY_NOT_LOW_PROXY_ENABLED
-Sentences
 short
+Sentences
 COMPLETING_RETRY
 Strategy.Unspecified
 Amber
@@ -557,25 +556,25 @@ PreEnter
 customActions
 closeHandler
 CustomActions
-onDelete
 Transactions
+onDelete
+index_WorkName_work_spec_id
 $callback
 BUFFERED
-index_WorkName_work_spec_id
 .apk
 CHANNEL_CLOSED
 SharingStarted.Lazily
 java.lang.Throwable
-/data/misc/profiles/cur/0/
 map.entries
+/data/misc/profiles/cur/0/
 CREATION_CALLBACK_KEY
 PrivateApi
 Outlined
 className
 migrationContainer
 kotlin.collections.ArrayList
-undefined
 unknown
+undefined
 android.widget.SeekBar
 QueryDispatcher
 INITIALIZED
@@ -587,21 +586,21 @@ WorkSpec
 LineHeightStyle.Alignment.Bottom
 ACTION_DRAG_START
 JsonArray
-SecureOff
 .immediate
+SecureOff
 char
 None
 JsonObject
-Bevel
 Grouped
+Bevel
 Filled.BarChart
-RESULT_INSTALL_SUCCESS
 Send
+RESULT_INSTALL_SUCCESS
 internalTransactionExecutor
 Input
 kotlinx.serialization.json.JsonLiteral
-CollectionItemInfo
 ConstraintTracker
+CollectionItemInfo
 BoundReached
 workerParameters
 KEY_COMPONENT_ACTIVITY_REGISTERED_KEYS
@@ -627,22 +626,22 @@ LocalFocusManager
 LineHeightStyle.Trim.None
 consumerIndex
 memberRepository
-findViewByAccessibilityIdTraversal
 index_categories_name
+findViewByAccessibilityIdTraversal
 gradientColors
 Lime
 _removedRef
 Idle
 HardLight
 kotlin.String.Companion
-process
 LocalDensity
+process
 ActiveParent
 ACTION_SHOW_TOOLTIP
 onCreateBackup
+zoom
 jClass
 Data
-zoom
 addFontFromAssetManager
 doBeforeTextChanged
 Date
@@ -676,8 +675,8 @@ ON_PAUSE
 KEY_STORAGE_NOT_LOW_PROXY_ENABLED
 groupAnchor
 TraceCompat
-Grocery
 context.noBackupFilesDir
+Grocery
 Recomposer:animation
 getEmojiConsistencySet
 Wrap
@@ -685,21 +684,21 @@ BLOCKED
 DROP_LATEST
 _exceptionsHolder
 ExitTransition.KeepUntilTransitionsFi...
-onBackInvokedDispatcher
 d49454ee2fe694e2faaad19a81c517f6
 $token
 dagger.hilt.android.internal.builders...
+onBackInvokedDispatcher
 composition
 $this$AnimatedVisibility
 Crossfade
 kotlin.Nothing
 ConstrntProxyUpdtRecvr
-RESULT_DESIRED_FORMAT_UNSUPPORTED
 Decal
+RESULT_DESIRED_FORMAT_UNSUPPORTED
 Blue
 tail
-0.00
 typeParams
+0.00
 currentView
 EnterTransition.None
 PERMIT
@@ -713,8 +712,8 @@ BanParcelableUsage
 RescheduleReceiver
 AwaitContinuation
 Compose:onForgotten
-Filled.Description
 free_form
+Filled.Description
 kotlin.Boolean
 RoomCursorUtil
 _queue
@@ -738,8 +737,8 @@ title
 WorkContinuationImpl
 kotlin.collections.Map
 RecordingIC
-columnNames
 ListPopupWindow
+columnNames
 ProfileInstaller
 java.lang.Boolean
 selector
@@ -771,8 +770,8 @@ EXTRA_WORK_SPEC_GENERATION
 Captured
 LocalFontFamilyResolver
 cookie
-primary.prof
 last_force_stop_ms
+primary.prof
 getLayoutAlignment
 dagger.hilt.android.internal.builders...
 getResId
@@ -780,8 +779,8 @@ status
 arch_disk_io_
 dateTime
 LocalClipboardManager
-ACTION_CLEAR_SELECTION
 TestTagsAsResourceId
+ACTION_CLEAR_SELECTION
 WorkTimer
 Right
 newShop
@@ -798,19 +797,19 @@ Filled.People
 outInsets
 extraStore
 CancellableContinuation
-Final
 map
+Final
 $this$OutlinedButton
-ACTION_PAGE_RIGHT
 max
+ACTION_PAGE_RIGHT
 KEY_NOTIFICATION_ID
 required_network_type
 menu
 uri
-focusManager
 Italic
-ACTION_HIDE_TOOLTIP
+focusManager
 viewParent
+ACTION_HIDE_TOOLTIP
 WrkMgrInitializer
 EmojiCompat.MetadataRepo.create
 columnName
@@ -822,8 +821,8 @@ Luminosity
 Filled.ExpandMore
 LineHeightStyle.Trim.FirstLineTop
 UnknownNullness
-ContinueTraversal
 mVisibleInsets
+ContinueTraversal
 onBackStarted
 selected
 TopLeft
@@ -859,8 +858,8 @@ $this$LazyVerticalGrid
 ResourceManagerInternal
 Trace
 ACTVAutoSizeHelper
-bytes
 collectionItemInfo
+bytes
 Completed
 callback
 UNINITIALIZED
@@ -870,8 +869,8 @@ android.graphics.FontFamily
 Vertical
 PUBLICATION
 navigationBarsIgnoringVisibility
-Dialog:
 History
+Dialog:
 constraints
 predicate
 observer
@@ -879,14 +878,14 @@ Unknown
 java.lang.Long
 TRACE_TAG_APP
 imeAnimationSource
-DAILY
 Categories
+DAILY
 _decision
 Butt
 input_method
 defaultCreationExtras
-Expand
 unique
+Expand
 setCurrentState
 Retry
 next_schedule_time_override
@@ -896,8 +895,8 @@ Filled.Category
 dagger.hilt.android.components.ViewWi...
 long
 min
-ACTION_PAGE_DOWN
 PreviewLogger
+ACTION_PAGE_DOWN
 kotlinx.coroutines.channels.defaultBu...
 classes_to_restore
 isTraversalGroup
@@ -908,12 +907,12 @@ WrkTimerRunnable
 kotlin.UInt
 p.second
 METERED
-yyyy
 WorkProgress
+yyyy
 Filled.CloudOff
 progress
-android.widget.EditText
 LocalFontLoader
+android.widget.EditText
 requiresMember
 NO_DECISION
 OnLongClick
@@ -922,13 +921,13 @@ PasteText
 DESC
 Full
 ACTION_CANCEL_WORK
-FontFamily.Default
 topAxis
+FontFamily.Default
 android.intent.action.BATTERY_OKAY
 Weekly
 androidx.profileinstaller.action.INST...
-ON_START
 nativeCanvas
+ON_START
 KEY_COMPONENT_ACTIVITY_LAUNCHED_KEYS
 reschedule_needed
 getAccessibilityViewId
@@ -949,14 +948,14 @@ android.intent.action.BATTERY_LOW
 index_transactions_shopId
 Compose:applyChanges
 keyDesc
-ColorBurn
 previousModelID
+ColorBurn
 androidx.work.util.id
 Empty
 Electricity
 onBackPressedCallback
-android.view.accessibility.extra.EXTR...
 setClipToScreenEnabled
+android.view.accessibility.extra.EXTR...
 SetProgress
 registry
 debug.layout
@@ -972,16 +971,16 @@ Filled.CreditCard
 LiveRegion
 state1
 getViewRootImpl
-superclass
 delimiter
+superclass
 NONE
 last_cancel_all_time_ms
 kotlinx.coroutines.semaphore.maxSpinC...
 ShutDown
 taskExecutor
 java.util.Set
-Suffix
 WorkProgressUpdater
+Suffix
 Switch
 Preference
 M/y
@@ -989,18 +988,18 @@ TopBar
 result_code
 7d73d21f1bd82c9e5268b6dcf9fde2cb
 DELETE_SKIP_FILE
-Heading
 verticalLabelPosition
+Heading
 Description
-androidx.compose.ui.semantics.id
 kotlin.collections.MutableMap
+androidx.compose.ui.semantics.id
 signature
 createFromFamiliesWithDefault
 Clip
 savedStateRegistry
 ConstraintTrkngWrkr
-chartEntryModel
 NO_THREAD_ELEMENTS
+chartEntryModel
 INTERRUPTED_SEND
 tracker
 Visible
@@ -1022,12 +1021,12 @@ ACTION_SET_TEXT
 java.lang.Comparable
 DstAtop
 UnfocusedEmpty
-Done
 BLOB
+Done
 minimum_retention_duration
 Characters
-float
 Cursor
+float
 reference
 java.lang.Enum
 $this$ExposedDropdownMenuBox
@@ -1040,8 +1039,8 @@ offset
 Strategy.Balanced
 androidx.work.workdb
 StopInput
-Softlight
 revision
+Softlight
 DATA
 androidx.core.view.inputmethod.Editor...
 Content
@@ -1052,8 +1051,8 @@ $this$ExposedDropdownMenu
 replacement
 Filled.Edit
 $onBackInvoked
-ime
 AndroidOwner:measureAndLayout
+ime
 Category
 android.text.EmojiConsistency
 configuration
@@ -1075,19 +1074,20 @@ TextMotion.Animated
 REUSABLE_CLAIMED
 0x%08x
 TestTag
-shopRepository
 resources
+shopRepository
 fontMetrics
-int
 command
+int
 layout_
 providers
 Delete
 exception
 suggest_intent_data
 IsTraversalGroup
-String
+AutoMirrored.Filled.ArrowBack
 CommandHandler
+String
 ExitTransition.None
 CROSSED
 $this$LazyColumn
@@ -1142,6 +1142,7 @@ addSuppressed
 ACTION_SET_PROGRESS
 RESULT_OK
 androidx.core.view.inputmethod.Editor...
+T2.w0
 inputMergerClassName
 delegateFactory
 index_
@@ -1163,10 +1164,10 @@ kotlinx.serialization.json.JsonNull
 android.graphics.drawable.VectorDrawable
 scope
 index_Dependency_work_spec_id
-next_job_scheduler_id
 oldValue
-ACTION_SCHEDULE_WORK
+next_job_scheduler_id
 Home
+ACTION_SCHEDULE_WORK
 ACTION_SCROLL_UP
 BITMAP_MASKABLE
 Down
@@ -1181,8 +1182,8 @@ Mouse
 Offset.Unspecified
 Measuring
 Previous
-ImeAction
 START
+ImeAction
 DirectExecutor
 Filled.Phone
 PageDown
@@ -1194,9 +1195,9 @@ PostExit
 ACTION_CONTEXT_CLICK
 dexopt/baseline.prof
 KEY_GENERATION
-kotlinx.coroutines.internal.StackTrac...
-Back
 property
+Back
+kotlinx.coroutines.internal.StackTrac...
 androidx.view.accessibility.Accessibi...
 createSegment
 workDatabase
@@ -1212,12 +1213,11 @@ FLOA
 RESULT_NOT_WRITABLE
 .dp
 dagger.hilt.android.internal.builders...
-Snackbar
 .xml
+Snackbar
 RESULT_INSTALL_SKIP_FILE_SUCCESS
 Strictness.Loose
 other
-V2.A
 CASCADE
 ProcessorForegroundLck
 URI
@@ -1227,19 +1227,17 @@ androidx$room$IMultiInstanceInvalidat...
 suggest_text_2
 LocalViewConfiguration
 autoScrollCondition
-V2.F
 androidx.view.accessibility.Accessibi...
 queryExecutor
-android.intent.action.ACTION_POWER_DI...
 Strategy.Simple
-kotlin.Long
+android.intent.action.ACTION_POWER_DI...
 .em
+kotlin.Long
 androidx.view.accessibility.Accessibi...
-Completing
 Style
+Completing
 networkCallback
 UPDATE
-V2.K
 ALIGN_LEFT
 Focused
 _resumed
@@ -1249,16 +1247,15 @@ Alarms
 Text
 Lab
 parentId
-future
 runningWorkers
+future
 anchor
 Xyz
 DESTROYED
 LK
-V2.v
 dagger.hilt.android.components.Fragme...
-kotlin.collections.Collection
 UTC
+kotlin.collections.Collection
 modifier
 paneTitle
 Filled.Restaurant
@@ -1270,27 +1267,25 @@ InputMerger
 Hyphens.Auto
 MM
 ACTION_START_FOREGROUND
-read
 systemGestures
+read
 MagnifierPositionInRoot
 clock
-backupMetaRepository
 LocalAutofillTree
+backupMetaRepository
 java.util.List
 lineCap
 chartStyle
-V2.q
 imeAnimationTarget
 kotlin.Int
-V2.j
 backups
 requiredNetworkType
 ctx.baseContext
 handleLifecycleEvent
 COMPLETING_ALREADY
 Indeterminate
-WMFgUpdater
 My
+WMFgUpdater
 workerClassName
 java.lang.Iterable
 WakeLocks
@@ -1305,8 +1300,8 @@ Keyboard
 next_schedule_time_override_generation
 P:
 Analytics
-paddingValues
 android.intent.action.DEVICE_STORAGE_LOW
+paddingValues
 lastUsedAt
 _disposer
 backoffPolicy
@@ -1319,14 +1314,14 @@ LineHeightStyle.Alignment.Proportional
 suggest_intent_extra_data
 sqLiteDatabase
 layoutResult
-AccessibilityNodeInfo.roleDescription
 NetworkMeteredCtrlr
+AccessibilityNodeInfo.roleDescription
 Filled.Close
-tableName
 suggest_flags
 currentFilters
-android.widget.HorizontalScrollView
+tableName
 receiveSegment
+android.widget.HorizontalScrollView
 emojiCompat
 DelayMetCommandHandler
 NO_CLOSE_CAUSE
@@ -1335,23 +1330,23 @@ androidx$room$IMultiInstanceInvalidat...
 KEY_NETWORK_STATE_PROXY_ENABLED
 kotlin.collections.LinkedHashMap
 Dependency
+verticalScrollAxisRange
 sortOrder
 dbObj
-verticalScrollAxisRange
 targetVector
-_COROUTINE.
 DROP_WORK_REQUEST
+_COROUTINE.
 EXPONENTIAL
 REMOVE_FROZEN
 _Impl
 Processor
 S:
 index_transactions_dateTime
-android.view.accessibility.extra.DATA...
-$this$buildSerialDescriptor
-kotlinx.coroutines.semaphore.segmentSize
-androidx.savedstate.Restarter
 Filled.Storefront
+kotlinx.coroutines.semaphore.segmentSize
+$this$buildSerialDescriptor
+android.view.accessibility.extra.DATA...
+androidx.savedstate.Restarter
 Repeated
 context.applicationContext
 DROP_SHADER_CACHE
@@ -1360,16 +1355,16 @@ waterfall
 disabled
 outBundle
 ACTION_SELECT
-timestamp
 LocalSavedStateRegistryOwner
+timestamp
 Rs
 touchPoint
 blockingTasksInBuffer
 dagger.hilt.android.internal.builders...
 9223372036854775807
 kotlin.Char
-ACTION_ARGUMENT_EXTEND_SELECTION_BOOLEAN
 triggerType
+ACTION_ARGUMENT_EXTEND_SELECTION_BOOLEAN
 Sp
 _decisionAndIndex
 SrcOver
@@ -1379,9 +1374,9 @@ java.util.ListIterator
 Label
 DefaultDispatcher
 android.view.accessibility.extra.EXTR...
-kotlin.Double
-Filled.Repeat
 GreedyScheduler
+Filled.Repeat
+kotlin.Double
 lifecycle
 view
 ViewCompat
@@ -1403,10 +1398,10 @@ NestedScrollView
 parameters
 getDescriptor
 shop
+string
 color
 bool
 distance
-string
 kotlin.coroutines.jvm.internal.BaseCo...
 android
 java.lang.module.ModuleDescriptor
@@ -1414,8 +1409,8 @@ sQLiteDatabase
 Justify
 SrcIn
 LineThrough
-androidx.view.accessibility.Accessibi...
 wiyadama_expense_tracker.db
+androidx.view.accessibility.Accessibi...
 Picker
 statement
 Shopping
@@ -1426,14 +1421,14 @@ Tiramisu
 SUSPEND_NO_WAITER
 Dispatchers.Main
 TraversalIndex
-TREAT_AS_VIEW_TREE_APPEARING
 collectionInfo
+TREAT_AS_VIEW_TREE_APPEARING
 workSpecId
 Cancelled
 callbackName
 createSchedulers
-.lck
 Filled.Delete
+.lck
 Filter
 $command
 KEY_START_ID
@@ -1449,23 +1444,23 @@ _isCompleted
 .sp
 WorkerFactory
 EmptyCoroutineContext
-ACTION_ARGUMENT_SELECTION_END_INT
 onEdit
+ACTION_ARGUMENT_SELECTION_END_INT
 connectivity
 generation
-item
 canvas
+item
 kotlinx.coroutines.scheduler.core.poo...
 kotlinx.coroutines.scheduler.max.pool...
 double
 INSTANCE
 Darken
-kotlin.Short
 phone
+kotlin.Short
 mRecreateDisplayList
 bounds
-Members
 ConstraintsCmdHandler
+Members
 DiagnosticsRcvr
 tappableElementIgnoringVisibility
 CHAR
@@ -1478,8 +1473,8 @@ mContentInsets
 resuming_sender
 categories
 MONOSPACE
-Filled.ChevronRight
 internalOpenHelper
+Filled.ChevronRight
 java.util.Map$Entry
 MMMM
 axisLabelTextAlignment
@@ -1492,16 +1487,16 @@ Clamp
 sendSegment
 StartInput
 _parentHandle
-indicator
 ForceStopRunnable
+indicator
 trackers
 kotlinx.coroutines.fast.service.loader
 ScrollToIndex
 requires_storage_not_low
-EmojiCompatInitializer
 completedExpandBuffersAndPauseFlag
-kotlin.Any
+EmojiCompatInitializer
 ACTION_DELAY_MET
+kotlin.Any
 KEY_COMPONENT_ACTIVITY_REGISTERED_RCS
 ThemeUtils
 elementDesc
@@ -1515,12 +1510,12 @@ _reusableCancellableContinuation
 android.view.View
 java.lang.Byte
 keyboardActions
-android.view.accessibility.action.ARG...
 onConfirmDelete
+android.view.accessibility.action.ARG...
 UnfocusedNotEmpty
 EEE
-kind
 updateEnabledCallbacks
+kind
 Filled.ReceiptLong
 FontFamily.SansSerif
 actionIcons
@@ -1530,8 +1525,8 @@ DropdownList
 android.intent.action.ACTION_POWER_CO...
 editableText
 effect
-kotlin.collections.Iterator
 CLOSED_EMPTY
+kotlin.collections.Iterator
 SecureOn
 res/
 job
@@ -1547,14 +1542,14 @@ Ltr
 Touch
 INT
 Filled.ExpandLess
-kotlin.Enum
 database
+kotlin.Enum
 backEvent
 Trailing
 Size.Unspecified
 compose:lazylist:prefetch:compose
-ACTION_PREVIOUS_HTML_ELEMENT
 getDeclaredField
+ACTION_PREVIOUS_HTML_ELEMENT
 CLOB
 suggest_text_2_url
 Ellipsis
@@ -1567,13 +1562,13 @@ mIsChildViewEnabled
 IsPopup
 getModule
 TEMPORARILY_UNMETERED
-android.widget.ProgressBar
 Filled.Schedule
+android.widget.ProgressBar
 TopMiddle
 canvasBounds
 bgGradientColors
-PerformImeAction
 androidx.lifecycle.LifecycleDispatche...
+PerformImeAction
 getSuppressed
 .DYNAMIC_RECEIVER_NOT_EXPORTED_PERMIS...
 memberId
@@ -1583,8 +1578,8 @@ kotlinx.serialization.json.JsonElement
 SHOULD_BUFFER
 LineHeightStyle.Alignment.Center
 traceCounter
-kotlinx.coroutines.scheduler.resoluti...
 kotlin.Unit
+kotlinx.coroutines.scheduler.resoluti...
 web_search
 SUCCEEDED
 kotlin.jvm.internal.StringCompanionOb...
@@ -1599,13 +1594,13 @@ PageLeft
 icon
 onAddMember
 Selected
-seq
 androidx.compose.text.SpanStyle
+seq
 %02x
 androidx.view.accessibility.Accessibi...
 ACTION_IME_ENTER
-Strictness.Strict
 kotlinx.serialization.json.JsonObject
+Strictness.Strict
 computeFitSystemWindows
 Dp.Unspecified
 android.os.action.CHARGING
@@ -1642,9 +1637,9 @@ frame
 ACTION_LONG_CLICK
 origin
 android.speech.extra.LANGUAGE
-timeout
-content
 Outside
+content
+timeout
 Number
 com.wiyadama.expensetracker.WiyadamaA...
 json
@@ -1656,8 +1651,8 @@ getDeclaredMethod
 RUN_AS_NON_EXPEDITED_WORK_REQUEST
 newArray
 PendingWork
-Middle
 workerCtl
+Middle
 BottomRight
 onBack
 referenceColumnNames
@@ -1685,29 +1680,29 @@ Exit
 scrollListener
 Filled.Warning
 it
-transactions
 params
+transactions
 UNDECIDED
 IndexForKey
 WiyadamaApplication
 columnsMap.values
 kotlin.jvm.internal.
 Cmyk
-charset
 Filled.Home
+charset
 Cancel
 extras
 Uri
-Url
 BatteryNotLowTracker
-suggest_intent_action
+Url
 delegate
+suggest_intent_action
 workManagerImpl.trackers
 SystemIdInfo
 bundle
 table
-kotlin.jvm.functions.Function
 change
+kotlin.jvm.functions.Function
 android.widget.ScrollView
 outBounds
 com.android.internal.view.menu.MenuBu...
@@ -1741,8 +1736,8 @@ p4
 p5
 keys
 KEY_WORKSPEC_GENERATION
-androidx.compose.ui.semantics.testTag
 addFontFromBuffer
+androidx.compose.ui.semantics.testTag
 ViewUtils
 sql
 head
@@ -1751,26 +1746,31 @@ kotlin.UShort
 android.intent.action.DEVICE_STORAGE_OK
 receivers
 ACTION_SCROLL_LEFT
+W2.q
 kotlin.Comparable
 groupSlotIndex
+W2.j
 baseKey
 android.app.ActivityThread
+W2.A
 COROUTINE_SUSPENDED
 android.widget.Spinner
+W2.K
 MenuItemImpl
 chartBounds
 kotlin.UByte
 _LifecycleAdapter
 LineHeightStyle.Alignment.Top
 pk
+W2.F
 EditableText
 suggest_icon_1
 suggest_icon_2
 paint
 createAsync
 .Companion
-iterator
 Daily
+iterator
 freeze
 java.util.Map
 /data/misc/profiles/cur/0
@@ -1783,11 +1783,12 @@ ACTION_NEXT_HTML_ELEMENT
 onShopClick
 insertReorderBarrier
 enqIdx
+W2.v
 invoker
 autoScaleUp
 startAxis
-ACTION_COLLAPSE
 $this$items
+ACTION_COLLAPSE
 node
 DiagnosticsWrkr
 $listenersList
@@ -1803,16 +1804,16 @@ SystemAlarmDispatcher
 LocalLifecycleOwner
 ASC
 $this$ChartBox
-current
 DELETE
+current
 EXTRA_IS_PERIODIC
 ACTION_SCROLL_TO_POSITION
 $this$$receiver
 key
 email
 animator_duration_scale
-kotlin.Enum.Companion
 RESOURCE
+kotlin.Enum.Companion
 profileinstaller_profileWrittenFor_la...
 prerequisiteId
 system_id
@@ -1824,8 +1825,8 @@ kotlin.Float
 store
 Filled.Backup
 buf
-android.speech.action.WEB_SEARCH
 BottomLeft
+android.speech.action.WEB_SEARCH
 Words
 to
 compressed
@@ -1842,8 +1843,8 @@ BROKEN
 Hyphens.Unspecified
 Dispatchers.Default
 kotlinx.coroutines.flow.defaultConcur...
-java.util.Collection
 query
+java.util.Collection
 CLOSE_HANDLER_CLOSED
 PreventUserInput
 index_categories_parentId_sortOrder
@@ -1858,8 +1859,8 @@ removeObserver
 destination
 ON_DESTROY
 Inside
-abortCreation
 Restore
+abortCreation
 ViewParentCompat
 LocalContext
 onMemberClick
@@ -1869,9 +1870,9 @@ KEY_BATTERY_CHARGING_PROXY_ENABLED
 EMPTY
 workerParams
 text/plain
+Schedulers
 Saturation
 TextLayout:initLayout
-Schedulers
 DropDownMenu
 filters
 MenuPopupWindow
@@ -1888,23 +1889,23 @@ Filled.CloudUpload
 triggerName
 run_attempt_count
 type
-Orange
 LocalView
+Orange
 statusBars
 JsonLiteral
 cont
 currentProcessName
 getTextDirectionHeuristic
+categoryRepository
 Finished
 IsShowingTextSubstitution
-categoryRepository
 ACTION_ARGUMENT_MOVEMENT_GRANULARITY_INT
 config_showMenuShortcutsWhenKeyboardP...
 CONSUMED
 refHolder
 3071c8717539de5d5353f4c8cd59a032
-ACTION_ARGUMENT_SELECTION_START_INT
 ShowKeyboard
+ACTION_ARGUMENT_SELECTION_START_INT
 android.support.text.emoji.emojiCompa...
 Shop
 intent_extra_data_key
@@ -1926,9 +1927,9 @@ dagger.hilt.android.components.Activi...
 next_alarm_manager_id
 suggest_intent_data_id
 MONTHLY
-android.view.accessibility.extra.DATA...
-initializer
 token
+initializer
+android.view.accessibility.extra.DATA...
 LocalTextToolbar
 dagger.hilt.android.internal.builders...
 elements
@@ -1950,13 +1951,13 @@ tag
 Member
 Inherit
 EmojiCompat.FontRequestEmojiCompatCon...
-PageUp
 SYNCHRONIZED
+PageUp
 backoff_policy
 Insights
 LocalHapticFeedback
-kotlin.jvm.internal.EnumCompanionObject
 TextMotion.Static
+kotlin.jvm.internal.EnumCompanionObject
 RESULT_UNSUPPORTED_ART_VERSION
 ACTION_COPY
 ACTION_FORCE_STOP_RESCHEDULE
@@ -1972,11 +1973,11 @@ send
 calling_package
 kotlin.collections.Map.Entry
 ScrollBy
-Screen
 StopWorkRunnable
+Screen
 scale
-CopyText
 sqLiteQuery
+CopyText
 mAccessibilityDelegate
 alarm
 kotlin.collections.Set

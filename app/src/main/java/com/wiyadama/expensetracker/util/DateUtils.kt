@@ -4,25 +4,25 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateUtils {
-    private val dateFormatter = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
-    private val timeFormatter = SimpleDateFormat("h:mm a", Locale.getDefault())
-    private val dateTimeFormatter = SimpleDateFormat("MMM d, yyyy h:mm a", Locale.getDefault())
-    private val dayFormatter = SimpleDateFormat("EEE", Locale.getDefault())
+    private fun getDataFormatter() = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
+    private fun getTimeFormatter() = SimpleDateFormat("h:mm a", Locale.getDefault())
+    private fun getDateTimeFormatter() = SimpleDateFormat("MMM d, yyyy h:mm a", Locale.getDefault())
+    private fun getDayFormatter() = SimpleDateFormat("EEE", Locale.getDefault())
 
     fun formatDate(timestamp: Long): String {
-        return dateFormatter.format(Date(timestamp))
+        return getDataFormatter().format(Date(timestamp))
     }
 
     fun formatTime(timestamp: Long): String {
-        return timeFormatter.format(Date(timestamp))
+        return getTimeFormatter().format(Date(timestamp))
     }
 
     fun formatDateTime(timestamp: Long): String {
-        return dateTimeFormatter.format(Date(timestamp))
+        return getDateTimeFormatter().format(Date(timestamp))
     }
 
     fun formatDay(timestamp: Long): String {
-        return dayFormatter.format(Date(timestamp))
+        return getDayFormatter().format(Date(timestamp))
     }
 
     fun getStartOfDay(timestamp: Long): Long {

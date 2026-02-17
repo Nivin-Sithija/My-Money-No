@@ -22,7 +22,7 @@ object CurrencyFormatter {
      */
     fun formatWithSymbol(cents: Int, symbol: String = "Rs"): String {
         val amount = cents / 100.0
-        return "$symbol ${String.format("%,.2f", amount)}"
+        return "$symbol ${String.format(Locale.US, "%,.2f", amount)}"
     }
 
     /**
@@ -47,6 +47,6 @@ object CurrencyFormatter {
      */
     fun formatForInput(cents: Int): String {
         val amount = cents / 100.0
-        return String.format("%.2f", amount)
+        return String.format(Locale.US, "%.2f", amount)
     }
 }

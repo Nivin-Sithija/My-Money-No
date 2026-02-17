@@ -1,4 +1,4 @@
-# The proguard configuration file for the following section is /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/aapt_proguard_file/release/processReleaseResources/aapt_rules.txt
+# The proguard configuration file for the following section is /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/aapt_proguard_file/release/processReleaseResources/aapt_rules.txt
 -keep class androidx.compose.ui.tooling.PreviewActivity { <init>(); }
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
 -keep class androidx.profileinstaller.ProfileInstallReceiver { <init>(); }
@@ -58,8 +58,8 @@
 -keep class androidx.core.widget.NestedScrollView { <init>(android.content.Context, android.util.AttributeSet); }
 
 
-# End of content from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/aapt_proguard_file/release/processReleaseResources/aapt_rules.txt
-# The proguard configuration file for the following section is /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-8.7.3
+# End of content from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/aapt_proguard_file/release/processReleaseResources/aapt_rules.txt
+# The proguard configuration file for the following section is /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-8.7.3
 # This is a configuration file for ProGuard.
 # http://proguard.sourceforge.net/index.html#manual/usage.html
 #
@@ -150,8 +150,8 @@
 # These classes are duplicated between android.jar and core-lambda-stubs.jar.
 -dontnote java.lang.invoke.**
 
-# End of content from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-8.7.3
-# The proguard configuration file for the following section is /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/proguard-rules.pro
+# End of content from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-8.7.3
+# The proguard configuration file for the following section is /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/proguard-rules.pro
 # Add project specific ProGuard rules here.
 -keep class com.wiyadama.expensetracker.data.entity.** { *; }
 -keep class * extends androidx.room.RoomDatabase
@@ -175,7 +175,7 @@
 -keep class javax.inject.** { *; }
 -keep class * extends dagger.hilt.android.internal.managers.ViewComponentManager$FragmentContextWrapper { *; }
 
-# End of content from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/proguard-rules.pro
+# End of content from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/proguard-rules.pro
 # The proguard configuration file for the following section is /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/632a309ac9026ba635aa25a1f384ab45/transformed/jetified-hilt-work-1.1.0/proguard.txt
 # Keep class names of Hilt injected Workers since their name are used as a multibinding map key.
 -keepnames @androidx.hilt.work.HiltWorker class * extends androidx.work.ListenableWorker

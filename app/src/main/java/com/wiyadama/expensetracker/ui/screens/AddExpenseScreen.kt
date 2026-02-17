@@ -53,7 +53,7 @@ fun AddExpenseScreen(
     var selectedMember by remember { mutableStateOf(members.find { it.id == editingTransaction?.memberId }) }
     var selectedShop by remember { mutableStateOf(shops.find { it.id == editingTransaction?.shopId }) }
     var description by remember { mutableStateOf(editingTransaction?.notes ?: "") }
-    var selectedDate by remember { mutableStateOf(editingTransaction?.dateTime ?: System.currentTimeMillis()) }
+    var selectedDate by remember { mutableLongStateOf(editingTransaction?.dateTime ?: System.currentTimeMillis()) }
     
     // Dialog states
     var showMemberDialog by remember { mutableStateOf(false) }

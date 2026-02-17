@@ -10,7 +10,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 @HiltViewModel
+@OptIn(ExperimentalCoroutinesApi::class)
 class CategoryDetailViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val categoryRepository: CategoryRepository

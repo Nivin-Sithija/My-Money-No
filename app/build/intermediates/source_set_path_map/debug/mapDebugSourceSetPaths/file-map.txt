@@ -64,9 +64,9 @@ com.wiyadama.expensetracker.app-jetified-ui-geometry-release-62 /Users/sithijase
 com.wiyadama.expensetracker.app-jetified-room-ktx-2.6.1-63 /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/f76d13b2a12c4a4a225a6bf97bc9bad7/transformed/jetified-room-ktx-2.6.1/res
 com.wiyadama.expensetracker.app-room-runtime-2.6.1-64 /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/f8b9e8c52b2b98eb243772be29cea920/transformed/room-runtime-2.6.1/res
 com.wiyadama.expensetracker.app-jetified-lifecycle-viewmodel-ktx-2.7.0-65 /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/fea519e8dc1df72efd89cebbeb4669da/transformed/jetified-lifecycle-viewmodel-ktx-2.7.0/res
-com.wiyadama.expensetracker.app-resValues-66 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/generated/res/resValues/debug
-com.wiyadama.expensetracker.app-packageDebugResources-67 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
-com.wiyadama.expensetracker.app-packageDebugResources-68 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
-com.wiyadama.expensetracker.app-debug-69 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/build/intermediates/merged_res/debug/mergeDebugResources
-com.wiyadama.expensetracker.app-debug-70 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/debug/res
-com.wiyadama.expensetracker.app-main-71 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/WiyadamaExpenseTracker/app/src/main/res
+com.wiyadama.expensetracker.app-resValues-66 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/generated/res/resValues/debug
+com.wiyadama.expensetracker.app-packageDebugResources-67 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.wiyadama.expensetracker.app-packageDebugResources-68 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.wiyadama.expensetracker.app-debug-69 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.wiyadama.expensetracker.app-debug-70 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/debug/res
+com.wiyadama.expensetracker.app-main-71 /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/res
