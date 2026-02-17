@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:translateX="10.8"
+        android:translateY="10.8">
+        <!-- Wallet icon -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M45,25C35,25 27,33 27,43L27,65C27,75 35,83 45,83L63,83C73,83 81,75 81,65L81,55L75,55C69,55 64,50 64,44C64,38 69,33 75,33L81,33L81,43C81,33 73,25 63,25L45,25ZM75,38C71,38 68,41 68,45C68,49 71,52 75,52L81,52L81,38L75,38ZM75,42C76.5,42 77.5,43 77.5,44.5C77.5,46 76.5,47 75,47C73.5,47 72.5,46 72.5,44.5C72.5,43 73.5,42 75,42Z"/>
+        <!-- Money symbol -->
+        <path
+            android:fillColor="#FFD700"
+            android:pathData="M48,45L48,50L45,50L45,55L48,55L48,60L53,60L53,55L55,55C57.5,55 59.5,53 59.5,50.5C59.5,48 57.5,46 55,46L53,46L53,41L58,41L58,37L53,37L53,32L48,32L48,37L46,37C43.5,37 41.5,39 41.5,41.5C41.5,44 43.5,46 46,46L48,46ZM48,41L46,41C45.5,41 45,41.5 45,42C45,42.5 45.5,43 46,43L48,43L48,41ZM53,50L55,50C55.5,50 56,50.5 56,51C56,51.5 55.5,52 55,52L53,52L53,50Z"/>
+    </group>
+</vector>
