@@ -19,7 +19,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class MemberRepository_Factory implements Factory<MemberRepository> {
   private final Provider<MemberDao> memberDaoProvider;

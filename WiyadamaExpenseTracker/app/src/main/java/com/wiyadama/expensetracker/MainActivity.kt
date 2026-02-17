@@ -61,6 +61,7 @@ fun MainApp(
     var showFilterDialog by remember { mutableStateOf(false) }
     var selectedCategoryId by remember { mutableStateOf<Long?>(null) }
     var editingTransaction by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Transaction?>(null) }
+    var showMonthlyExpenses by remember { mutableStateOf(false) }
 
     val categories by addExpenseViewModel.categories.collectAsStateWithLifecycle()
     val members by addExpenseViewModel.members.collectAsStateWithLifecycle()
@@ -69,26 +70,28 @@ fun MainApp(
     val activeFilters by historyViewModel.activeFilters.collectAsStateWithLifecycle()
     val categoriesWithStats by homeViewModel.categoriesWithStats.collectAsStateWithLifecycle()
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = Color.Transparent,
-            bottomBar = {
-                BottomNavigationBar(
-                    selectedTab = selectedTab,
-                    onTabSelected = { selectedTab = it }
-                )
-            },
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { showAddExpense = true },
+    var showCategoryManagement by remember { mutableStateOf(false) }
+
+    if (showCategoryManagement) {
+        CategoryManagementScreen(
+            onBack = { showCategoryManagement = false }
+        )
+    } else {
+            Scaffold(
+                modifier = Modifier.fillMaxSize(),
+                bottomBar = {
+                    BottomNavigationBar(
+                        selectedTab = selectedTab,
+                        onTabSelected = { selectedTab = it }
+                    )
+                },
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = { showAddExpense = true },
                         modifier = Modifier
                             .padding(bottom = 16.dp)
                             .size(56.dp),
                         shape = RoundedCornerShape(16.dp),
-                        containerColor = Color.Transparent,
                         elevation = FloatingActionButtonDefaults.elevation(
                             defaultElevation = 12.dp
                         )
@@ -116,45 +119,135 @@ fun MainApp(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(
-                            Brush.linearGradient(
-                                colors = listOf(
-                                    Slate50,
-                                    Color.White,
-                                    Color(0xFFF5F3FF)
-                                )
-                            )
-                        )
                         .padding(paddingValues)
                 ) {
                     when (selectedTab) {
-                        0 -> HomeScreen(
-                            onCategoryClick = { categoryId ->
-                                selectedCategoryId = categoryId
+                        0 -> {
+                            // Category Detail Screen Logic inside Home Tab
+                            if (selectedCategoryId != null) {
+                                CategoryDetailScreen(
+                                    categoryId = selectedCategoryId!!,
+                                    onBack = { selectedCategoryId = null }
+                                )
+                            } else if (showMonthlyExpenses) {
+                                MonthlyExpensesScreen(
+                                    transactions = transactions,
+                                    onBack = { showMonthlyExpenses = false }
+                                )
+                            } else {
+                                HomeScreen(
+                                    onCategoryClick = { categoryId ->
+                                        selectedCategoryId = categoryId
+                                    },
+                                    onSeeAllCategoriesClick = {
+                                        showCategoryManagement = true
+                                    },
+                                    onTotalExpensesClick = {
+                                        showMonthlyExpenses = true
+                                    }
+                                )
                             }
-                        )
+                        }
                         1 -> AnalyticsScreen()
                         2 -> {
-                            var showAddMemberDialog by remember { mutableStateOf(false) }
+                            var showMemberDialog by remember { mutableStateOf(false) }
+                            var showShopDialog by remember { mutableStateOf(false) }
+                            var editingMember by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Member?>(null) }
+                            var viewingMember by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Member?>(null) }
+                            var viewingShop by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Shop?>(null) }
                             
-                            MembersScreen(
-                                members = members,
-                                onAddMember = { showAddMemberDialog = true },
-                                onMemberClick = { /* TODO: Navigate to member detail */ }
-                            )
+                            if (viewingMember != null) {
+                                val memberTransactions = transactions.filter { it.memberId == viewingMember!!.id && it.deletedAt == null }
+                                val totalExpenses = memberTransactions.sumOf { it.amountCents }
+                                val txCount = memberTransactions.size
+                                
+                                MemberDetailScreen(
+                                    member = viewingMember!!,
+                                    transactions = memberTransactions,
+                                    categories = categories,
+                                    totalExpenses = totalExpenses,
+                                    transactionCount = txCount,
+                                    onBack = { viewingMember = null },
+                                    onEdit = { 
+                                        editingMember = viewingMember
+                                        showMemberDialog = true 
+                                    },
+                                    onDelete = {
+                                        membersViewModel.deleteMember(viewingMember!!.id)
+                                        viewingMember = null
+                                    }
+                                )
+                            } else if (viewingShop != null) {
+                                val shopTransactions = transactions.filter { it.shopId == viewingShop!!.id && it.deletedAt == null }
+                                val totalExpenses = shopTransactions.sumOf { it.amountCents }
+                                val txCount = shopTransactions.size
+                                
+                                ShopDetailScreen(
+                                    shop = viewingShop!!,
+                                    transactions = shopTransactions,
+                                    categories = categories,
+                                    totalExpenses = totalExpenses,
+                                    transactionCount = txCount,
+                                    onBack = { viewingShop = null },
+                                    onEdit = {
+                                        // TODO: Implement Shop Edit
+                                    },
+                                    onDelete = {
+                                        // TODO: Implement Shop Delete
+                                        viewingShop = null
+                                    }
+                                )
+                            } else {
+                                MembersScreen(
+                                    members = members,
+                                    shops = shops,
+                                    transactions = transactions,
+                                    categories = categories.map { it },
+                                    onAddMember = { 
+                                        editingMember = null
+                                        showMemberDialog = true 
+                                    },
+                                    onAddShop = { showShopDialog = true },
+                                    onMemberClick = { member -> viewingMember = member },
+                                    onShopClick = { shop -> viewingShop = shop }
+                                )
+                            }
                             
-                            if (showAddMemberDialog) {
-                                com.wiyadama.expensetracker.ui.components.AddMemberDialog(
-                                    onDismiss = { showAddMemberDialog = false },
+                            if (showMemberDialog) {
+                                com.wiyadama.expensetracker.ui.components.MemberDialog(
+                                    member = editingMember,
+                                    onDismiss = { 
+                                        showMemberDialog = false
+                                        editingMember = null
+                                    },
                                     onConfirm = { name, color ->
-                                        membersViewModel.addMember(name, color)
-                                        showAddMemberDialog = false
+                                        if (editingMember != null) {
+                                            membersViewModel.updateMember(editingMember!!.copy(name = name, color = color))
+                                        } else {
+                                            membersViewModel.addMember(name, color)
+                                        }
+                                        showMemberDialog = false
+                                        editingMember = null
+                                    }
+                                )
+                            }
+                            
+                            if (showShopDialog) {
+                                com.wiyadama.expensetracker.ui.components.AddShopDialog(
+                                    onDismiss = { showShopDialog = false },
+                                    onConfirm = { name, address ->
+                                        addExpenseViewModel.addShop(name, address) { _ ->
+                                            showShopDialog = false
+                                        }
                                     }
                                 )
                             }
                         }
                         3 -> HistoryScreen(
                             transactions = transactions,
+                            categories = categories.map { it },
+                            members = members,
+                            shops = shops,
                             onTransactionClick = { /* TODO: Navigate to transaction detail */ },
                             onFilterClick = { showFilterDialog = true },
                             onEditTransaction = { transaction ->
@@ -168,7 +261,8 @@ fun MainApp(
                     }
                 }
             }
-        }
+    }
+
     
     // Filter Dialog
     if (showFilterDialog) {
@@ -222,6 +316,9 @@ fun MainApp(
             onAddShop = { name, address, onSuccess ->
                 addExpenseViewModel.addShop(name, address, onSuccess)
             },
+            onAddMember = { name, color, onSuccess ->
+                addExpenseViewModel.addMember(name, color, onSuccess)
+            },
             categories = categories,
             members = members,
             shops = shops,
@@ -237,6 +334,8 @@ fun MainApp(
         )
     }
 }
+
+
 
 @Composable
 fun BottomNavigationBar(

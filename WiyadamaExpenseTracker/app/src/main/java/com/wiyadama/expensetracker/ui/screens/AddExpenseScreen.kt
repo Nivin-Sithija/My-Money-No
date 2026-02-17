@@ -28,10 +28,13 @@ import com.wiyadama.expensetracker.data.entity.Category
 import com.wiyadama.expensetracker.data.entity.Member
 import com.wiyadama.expensetracker.data.entity.Shop
 import com.wiyadama.expensetracker.data.entity.Transaction
+import com.wiyadama.expensetracker.ui.components.AddShopDialog
+import com.wiyadama.expensetracker.ui.components.MemberDialog
 import com.wiyadama.expensetracker.ui.theme.*
 import com.wiyadama.expensetracker.ui.util.getCategoryData
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,6 +42,7 @@ fun AddExpenseScreen(
     onDismiss: () -> Unit,
     onSave: (amount: Int, categoryId: Long, subcategoryId: Long?, memberId: Long?, shopId: Long?, notes: String, date: Long) -> Unit,
     onAddShop: (name: String, address: String, onSuccess: (Shop) -> Unit) -> Unit,
+    onAddMember: (name: String, color: Int, onSuccess: (Member) -> Unit) -> Unit,
     categories: List<Category>,
     members: List<Member>,
     shops: List<Shop>,
@@ -50,6 +54,10 @@ fun AddExpenseScreen(
     var selectedShop by remember { mutableStateOf(shops.find { it.id == editingTransaction?.shopId }) }
     var description by remember { mutableStateOf(editingTransaction?.notes ?: "") }
     var selectedDate by remember { mutableStateOf(editingTransaction?.dateTime ?: System.currentTimeMillis()) }
+    
+    // Dialog states
+    var showMemberDialog by remember { mutableStateOf(false) }
+    var showShopDialog by remember { mutableStateOf(false) }
     
     // Categorize categories
     val mainCategories = categories.filter { it.parentId == null }
@@ -379,56 +387,103 @@ fun AddExpenseScreen(
                                     .padding(20.dp)
                             ) {
                                 Row(
-                                    verticalAlignment = Alignment.CenterVertically
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    modifier = Modifier.fillMaxWidth()
                                 ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Person,
-                                        contentDescription = null,
-                                        tint = Slate600,
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = "Assign to Member (Optional)",
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = Slate600,
-                                        fontWeight = FontWeight.Medium
-                                    )
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Person,
+                                            contentDescription = null,
+                                            tint = Slate600,
+                                            modifier = Modifier.size(20.dp)
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Text(
+                                            text = "Assign to Member (Optional)",
+                                            style = MaterialTheme.typography.labelMedium,
+                                            color = Slate600,
+                                            fontWeight = FontWeight.Medium
+                                        )
+                                    }
+                                    // Add New Member Button
+                                    TextButton(
+                                        onClick = { showMemberDialog = true },
+                                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Add,
+                                            contentDescription = null,
+                                            tint = Indigo600,
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                        Spacer(modifier = Modifier.width(4.dp))
+                                        Text(
+                                            text = "Add New",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = Indigo600,
+                                            fontWeight = FontWeight.SemiBold
+                                        )
+                                    }
                                 }
                                 Spacer(modifier = Modifier.height(12.dp))
                                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    members.forEach { member ->
+                                    if (members.isEmpty()) {
+                                        // Empty state
                                         Surface(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .clickable { 
-                                                    selectedMember = if (selectedMember?.id == member.id) null else member 
-                                                },
+                                            modifier = Modifier.fillMaxWidth(),
                                             shape = RoundedCornerShape(12.dp),
-                                            color = if (selectedMember?.id == member.id) Indigo50 else Slate50,
-                                            border = if (selectedMember?.id == member.id) 
-                                                BorderStroke(2.dp, Indigo500) else null
+                                            color = Slate50,
+                                            border = BorderStroke(1.dp, Slate200)
                                         ) {
                                             Row(
                                                 modifier = Modifier.padding(16.dp),
-                                                verticalAlignment = Alignment.CenterVertically
+                                                horizontalArrangement = Arrangement.Center
                                             ) {
-                                                Icon(
-                                                    imageVector = Icons.Default.AccountCircle,
-                                                    contentDescription = null,
-                                                    tint = if (selectedMember?.id == member.id) Indigo500 else Slate400,
-                                                    modifier = Modifier.size(24.dp)
-                                                )
-                                                Spacer(modifier = Modifier.width(12.dp))
                                                 Text(
-                                                    text = member.name,
-                                                    style = MaterialTheme.typography.bodyMedium,
-                                                    color = if (selectedMember?.id == member.id) Indigo900 else Slate900,
-                                                    fontWeight = if (selectedMember?.id == member.id) FontWeight.SemiBold else FontWeight.Normal
+                                                    text = "No members yet. Click 'Add New' to create one.",
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    color = Slate500
                                                 )
                                             }
                                         }
+                                    } else {
+                                        members.forEach { member ->
+                                            Surface(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .clickable { 
+                                                        selectedMember = if (selectedMember?.id == member.id) null else member 
+                                                    },
+                                                shape = RoundedCornerShape(12.dp),
+                                                color = if (selectedMember?.id == member.id) Indigo50 else Slate50,
+                                                border = if (selectedMember?.id == member.id) 
+                                                    BorderStroke(2.dp, Indigo500) else null
+                                            ) {
+                                                Row(
+                                                    modifier = Modifier.padding(16.dp),
+                                                    verticalAlignment = Alignment.CenterVertically
+                                                ) {
+                                                    Icon(
+                                                        imageVector = Icons.Default.AccountCircle,
+                                                        contentDescription = null,
+                                                        tint = if (selectedMember?.id == member.id) Indigo500 else Slate400,
+                                                        modifier = Modifier.size(24.dp)
+                                                    )
+                                                    Spacer(modifier = Modifier.width(12.dp))
+                                                    Text(
+                                                        text = member.name,
+                                                        style = MaterialTheme.typography.bodyMedium,
+                                                        color = if (selectedMember?.id == member.id) Indigo900 else Slate900,
+                                                        fontWeight = if (selectedMember?.id == member.id) FontWeight.SemiBold else FontWeight.Normal
+                                                    )
+                                                }
+                                            }
+                                        }
                                     }
+                                
                                 }
                             }
                         }
@@ -448,25 +503,70 @@ fun AddExpenseScreen(
                                         .padding(20.dp)
                                 ) {
                                     Row(
-                                        verticalAlignment = Alignment.CenterVertically
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        modifier = Modifier.fillMaxWidth()
                                     ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Store,
-                                            contentDescription = null,
-                                            tint = Slate600,
-                                            modifier = Modifier.size(20.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Text(
-                                            text = "Shop (Optional)",
-                                            style = MaterialTheme.typography.labelMedium,
-                                            color = Slate600,
-                                            fontWeight = FontWeight.Medium
-                                        )
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Store,
+                                                contentDescription = null,
+                                                tint = Slate600,
+                                                modifier = Modifier.size(20.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = "Shop (Optional)",
+                                                style = MaterialTheme.typography.labelMedium,
+                                                color = Slate600,
+                                                fontWeight = FontWeight.Medium
+                                            )
+                                        }
+                                        // Add New Shop Button
+                                        TextButton(
+                                            onClick = { showShopDialog = true },
+                                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Add,
+                                                contentDescription = null,
+                                                tint = Teal600,
+                                                modifier = Modifier.size(16.dp)
+                                            )
+                                            Spacer(modifier = Modifier.width(4.dp))
+                                            Text(
+                                                text = "Add New",
+                                                style = MaterialTheme.typography.labelSmall,
+                                                color = Teal600,
+                                                fontWeight = FontWeight.SemiBold
+                                            )
+                                        }
                                     }
                                     Spacer(modifier = Modifier.height(12.dp))
                                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                        shops.take(3).forEach { shop ->
+                                        if (shops.isEmpty()) {
+                                            // Empty state
+                                            Surface(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                shape = RoundedCornerShape(12.dp),
+                                                color = Slate50,
+                                                border = BorderStroke(1.dp, Slate200)
+                                            ) {
+                                                Row(
+                                                    modifier = Modifier.padding(16.dp),
+                                                    horizontalArrangement = Arrangement.Center
+                                                ) {
+                                                    Text(
+                                                        text = "No shops yet. Click 'Add New' to create one.",
+                                                        style = MaterialTheme.typography.bodySmall,
+                                                        color = Slate500
+                                                    )
+                                                }
+                                            }
+                                        } else {
+                                            shops.take(5).forEach { shop ->
                                             Surface(
                                                 modifier = Modifier
                                                     .fillMaxWidth()
@@ -503,71 +603,97 @@ fun AddExpenseScreen(
                                                                 color = Slate500
                                                             )
                                                         }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                                                    } // end Column(modifier = Modifier.weight(1f))
+                                                } // end Row(modifier = Modifier.padding(16.dp))
+                                            } // end Surface (shop item)
+                                        } // end shops.take(5).forEach
+                                    } // end else (shops not empty)
+                                } // end Column(verticalArrangement = Arrangement.spacedBy(8.dp))
+                            } // end Column(modifier = Modifier...padding(20.dp))
+                        } // end Card (shop selection card)
+                    } // end item
+                } // end if (!isBillCategory)
+            } // end LazyColumn
 
-                // Bottom Button
-                Surface(
+
+            // Bottom Button
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding(),
+                color = Color.White,
+                shadowElevation = 8.dp
+            ) {
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .navigationBarsPadding(),
-                    color = Color.White,
-                    shadowElevation = 8.dp
+                        .padding(24.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    OutlinedButton(
+                        onClick = onDismiss,
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = Slate600
+                        )
                     ) {
-                        OutlinedButton(
-                            onClick = onDismiss,
-                            modifier = Modifier.weight(1f),
-                            colors = ButtonDefaults.outlinedButtonColors(
-                                contentColor = Slate600
-                            )
-                        ) {
-                            Text("Cancel")
-                        }
-                        Button(
-                            onClick = {
-                                val amountCents = (amount.toDoubleOrNull()?.times(100))?.toInt() ?: 0
-                                if (amountCents > 0 && selectedCategory != null) {
-                                    onSave(
-                                        amountCents,
-                                        selectedCategory!!.id,
-                                        null,
-                                        selectedMember?.id,
-                                        selectedShop?.id,
-                                        description,
-                                        selectedDate
-                                    )
-                                }
-                            },
-                            enabled = amount.isNotEmpty() && amount.toDoubleOrNull() != null && selectedCategory != null,
-                            modifier = Modifier.weight(1f),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Indigo600,
-                                disabledContainerColor = Slate300
-                            )
-                        ) {
-                            Text("Add Expense", fontWeight = FontWeight.SemiBold)
-                        }
+                        Text("Cancel")
                     }
+                    Button(
+                        onClick = {
+                            val amountCents = (amount.toDoubleOrNull()?.times(100))?.toInt() ?: 0
+                            if (amountCents > 0 && selectedCategory != null) {
+                                onSave(
+                                    amountCents,
+                                    selectedCategory!!.id,
+                                    null,
+                                    selectedMember?.id,
+                                    selectedShop?.id,
+                                    description,
+                                    selectedDate
+                                )
+                            }
+                        },
+                        enabled = amount.isNotEmpty() && amount.toDoubleOrNull() != null && selectedCategory != null,
+                        modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Indigo600,
+                            disabledContainerColor = Slate300
+                        )
+                    ) {
+                        Text("Add Expense", fontWeight = FontWeight.SemiBold)
+                    }
+                } // end Row (buttons)
+            } // end Surface (bottom button)
+        } // end Column (main content)
+    } // end Card
+} // end Surface (outer)
+
+    // Dialogs
+    if (showMemberDialog) {
+        MemberDialog(
+            onDismiss = { showMemberDialog = false },
+            onConfirm = { name, color ->
+                onAddMember(name, color) { newMember ->
+                    selectedMember = newMember
+                    showMemberDialog = false
                 }
             }
-        }
+        )
     }
-}
 
+    if (showShopDialog) {
+        AddShopDialog(
+            onDismiss = { showShopDialog = false },
+            onConfirm = { name, address ->
+                onAddShop(name, address) { newShop ->
+                    selectedShop = newShop
+                    showShopDialog = false
+                }
+            }
+        )
+    }
+} // end AddExpenseScreen
 @Composable
 fun CategorySelectCard(
     category: Category,

@@ -23,17 +23,19 @@ import com.wiyadama.expensetracker.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddCategoryDialog(
+fun CategoryDialog(
+    category: Category? = null,
     onDismiss: () -> Unit,
-    onSave: (name: String, color: Int, icon: String, parentId: Long?) -> Unit,
+    onSave: (name: String, color: Int, parentId: Long?) -> Unit,
     parentCategories: List<Category> = emptyList()
 ) {
-    var categoryName by remember { mutableStateOf("") }
-    var selectedColor by remember { mutableStateOf(Indigo500) }
-    var selectedIcon by remember { mutableStateOf("Category") }
-    var selectedParent by remember { mutableStateOf<Category?>(null) }
+    var categoryName by remember { mutableStateOf(category?.name ?: "") }
+    var selectedColor by remember { mutableStateOf(Color(category?.color ?: Indigo500.hashCode())) }
+    // Only set parent if we are editing and it has a parent, or default to null
+    var selectedParent by remember { 
+        mutableStateOf(if (category?.parentId != null) parentCategories.find { it.id == category.parentId } else null) 
+    }
     var showColorPicker by remember { mutableStateOf(false) }
-    var showIconPicker by remember { mutableStateOf(false) }
 
     Dialog(onDismissRequest = onDismiss) {
         Card(
@@ -47,7 +49,7 @@ fun AddCategoryDialog(
             ) {
                 // Header
                 Text(
-                    text = "Add Category",
+                    text = if (category == null) "Add Category" else "Edit Category",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     color = Slate900
@@ -89,23 +91,11 @@ fun AddCategoryDialog(
                     )
                 }
 
-                // Icon Picker Button
-                OutlinedButton(
-                    onClick = { showIconPicker = !showIconPicker },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Category,
-                        contentDescription = null,
-                        tint = Slate700
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Text(selectedIcon, color = Slate700)
-                }
 
                 // Parent Category Selector (optional)
-                if (parentCategories.isNotEmpty()) {
+                // Filter out self to prevent circular dependency
+                val validParents = parentCategories.filter { it.id != category?.id }
+                if (validParents.isNotEmpty()) {
                     var expanded by remember { mutableStateOf(false) }
                     ExposedDropdownMenuBox(
                         expanded = expanded,
@@ -136,7 +126,7 @@ fun AddCategoryDialog(
                                     expanded = false
                                 }
                             )
-                            parentCategories.forEach { category ->
+                            validParents.forEach { category ->
                                 DropdownMenuItem(
                                     text = { Text(category.name) },
                                     onClick = {
@@ -167,7 +157,6 @@ fun AddCategoryDialog(
                                 onSave(
                                     categoryName,
                                     selectedColor.hashCode(),
-                                    selectedIcon,
                                     selectedParent?.id
                                 )
                             }

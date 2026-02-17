@@ -19,7 +19,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class MembersViewModel_Factory implements Factory<MembersViewModel> {
   private final Provider<MemberRepository> memberRepositoryProvider;

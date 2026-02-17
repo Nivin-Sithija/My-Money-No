@@ -9,6 +9,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -49,6 +51,8 @@ fun CategoryDetailScreen(
     
     val categoryName = category?.name ?: "Category"
     
+    BackHandler(onBack = onBack)
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -60,6 +64,7 @@ fun CategoryDetailScreen(
             IconButton(
                 onClick = onBack,
                 modifier = Modifier
+                    .statusBarsPadding()
                     .padding(start = 24.dp, top = 8.dp, bottom = 16.dp)
                     .size(44.dp)
                     .clip(RoundedCornerShape(16.dp))

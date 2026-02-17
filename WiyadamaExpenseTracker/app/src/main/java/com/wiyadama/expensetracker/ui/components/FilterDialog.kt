@@ -63,18 +63,73 @@ fun FilterDialog(
                         showDateRangePicker = false
                     }
                 ) {
-                    Text("OK")
+                    Text("OK", color = Indigo600)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDateRangePicker = false }) {
-                    Text("Cancel")
+                    Text("Cancel", color = Slate700)
                 }
-            }
+            },
+            colors = DatePickerDefaults.colors(
+                containerColor = Color.White
+            )
         ) {
             DateRangePicker(
                 state = dateRangePickerState,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(500.dp)
+                    .padding(top = 16.dp),
+                title = {
+                    Text(
+                        text = "Select date range",
+                        modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 12.dp),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                },
+                headline = {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 24.dp, end = 24.dp, bottom = 12.dp)
+                    ) {
+                        Text(
+                            text = if (dateRangePickerState.selectedStartDateMillis != null) 
+                                dateFormatter.format(Date(dateRangePickerState.selectedStartDateMillis!!))
+                                else "Start Date",
+                             style = MaterialTheme.typography.headlineSmall
+                        )
+                        Text(
+                            text = " - ",
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                        Text(
+                            text = if (dateRangePickerState.selectedEndDateMillis != null) 
+                                dateFormatter.format(Date(dateRangePickerState.selectedEndDateMillis!!))
+                                else "End Date",
+                            style = MaterialTheme.typography.headlineSmall
+                        )
+                    }
+                },
+                showModeToggle = false,
+                colors = DatePickerDefaults.colors(
+                    containerColor = Color.White,
+                    titleContentColor = Slate900,
+                    headlineContentColor = Slate900,
+                    weekdayContentColor = Slate700,
+                    subheadContentColor = Slate700,
+                    yearContentColor = Slate700,
+                    currentYearContentColor = Indigo600,
+                    selectedYearContentColor = Color.White,
+                    selectedYearContainerColor = Indigo600,
+                    dayContentColor = Slate900,
+                    disabledDayContentColor = Slate300,
+                    selectedDayContentColor = Color.White,
+                    selectedDayContainerColor = Indigo600,
+                    todayContentColor = Indigo600,
+                    todayDateBorderColor = Indigo600
+                )
             )
         }
     }

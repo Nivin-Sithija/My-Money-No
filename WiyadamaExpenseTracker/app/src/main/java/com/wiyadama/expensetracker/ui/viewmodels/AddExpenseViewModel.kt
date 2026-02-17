@@ -124,4 +124,16 @@ class AddExpenseViewModel @Inject constructor(
             onSuccess(shop.copy(id = shopId))
         }
     }
+    
+    fun addMember(name: String, color: Int, onSuccess: (Member) -> Unit) {
+        viewModelScope.launch {
+            val member = Member(
+                name = name,
+                color = color,
+                createdAt = System.currentTimeMillis()
+            )
+            val memberId = memberRepository.insertMember(member)
+            onSuccess(member.copy(id = memberId))
+        }
+    }
 }

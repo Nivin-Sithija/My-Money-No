@@ -19,7 +19,9 @@ import kotlinx.coroutines.CoroutineScope;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class DatabaseModule_ProvideApplicationScopeFactory implements Factory<CoroutineScope> {
   @Override

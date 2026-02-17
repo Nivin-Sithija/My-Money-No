@@ -22,7 +22,9 @@ import kotlinx.coroutines.CoroutineScope;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class DatabaseModule_ProvideDatabaseFactory implements Factory<WiyadamaDatabase> {
   private final Provider<Context> contextProvider;

@@ -21,7 +21,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class DatabaseModule_ProvideCategoryDaoFactory implements Factory<CategoryDao> {
   private final Provider<WiyadamaDatabase> databaseProvider;

@@ -2,6 +2,7 @@ package com.wiyadama.expensetracker.ui.screens
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,6 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wiyadama.expensetracker.data.entity.Category
+import com.wiyadama.expensetracker.data.entity.Member
+import com.wiyadama.expensetracker.data.entity.Shop
 import com.wiyadama.expensetracker.ui.components.CategoryCard
 import com.wiyadama.expensetracker.ui.theme.*
 import com.wiyadama.expensetracker.ui.util.getCategoryData
@@ -30,12 +33,16 @@ import com.wiyadama.expensetracker.util.DateUtils
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    onCategoryClick: (Long) -> Unit = {}
+    onCategoryClick: (Long) -> Unit = {},
+    onSeeAllCategoriesClick: () -> Unit = {},
+    onTotalExpensesClick: () -> Unit = {}
 ) {
     val totalExpenses by viewModel.totalExpenses.collectAsState()
     val transactionCount by viewModel.transactionCount.collectAsState()
     val recentTransactions by viewModel.recentTransactions.collectAsState()
     val categoriesWithStats by viewModel.categoriesWithStats.collectAsState()
+    val membersList by viewModel.members.collectAsState()
+    val shopsList by viewModel.shops.collectAsState()
     val backupFiles by viewModel.backupFiles.collectAsState()
     val isCreatingBackup by viewModel.isCreatingBackup.collectAsState()
     val isRestoringBackup by viewModel.isRestoringBackup.collectAsState()
@@ -120,7 +127,9 @@ fun HomeScreen(
             ) {
                 // Total Expenses Card
                 Card(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .clickable { onTotalExpensesClick() },
                     shape = RoundedCornerShape(24.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
@@ -233,7 +242,7 @@ fun HomeScreen(
                     fontWeight = FontWeight.SemiBold,
                     color = Slate900
                 )
-                TextButton(onClick = { /* TODO: Navigate to all categories */ }) {
+                TextButton(onClick = onSeeAllCategoriesClick) {
                     Text(
                         text = "See all",
                         style = MaterialTheme.typography.bodyMedium,
@@ -287,9 +296,13 @@ fun HomeScreen(
 
         items(recentTransactions) { transaction ->
             val category = categoriesWithStats.find { it.category.id == transaction.categoryId }?.category
+            val member = membersList.find { it.id == transaction.memberId }
+            val shop = shopsList.find { it.id == transaction.shopId }
             RecentTransactionItem(
-                merchantName = transaction.merchantName ?: "Expense",
+                merchantName = transaction.merchantName?.takeIf { it.isNotBlank() } ?: category?.name ?: "Expense",
                 categoryName = category?.name ?: "Unknown",
+                memberName = member?.name,
+                shopName = shop?.name,
                 notes = transaction.notes,
                 amount = transaction.amountCents,
                 date = transaction.dateTime
@@ -388,10 +401,19 @@ data class CategoryData(
 fun RecentTransactionItem(
     merchantName: String,
     categoryName: String,
+    memberName: String?,
+    shopName: String?,
     notes: String?,
     amount: Int,
     date: Long
 ) {
+    val catData = getCategoryData(categoryName)
+    // Use shop icon if shop is assigned, otherwise category icon
+    val displayIcon = if (shopName != null) Icons.Default.Store else catData.icon
+    val displayBgColors = if (shopName != null) listOf(Teal400, Emerald400) else catData.bgColors
+    val displayIconColor = if (shopName != null) Color.White else catData.iconColor
+    val useSolidBg = shopName != null
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -416,16 +438,14 @@ fun RecentTransactionItem(
                         .size(48.dp)
                         .clip(RoundedCornerShape(12.dp))
                         .background(
-                            Brush.linearGradient(
-                                colors = listOf(Orange400, Amber400)
-                            )
+                            Brush.linearGradient(colors = displayBgColors)
                         ),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ShoppingBag,
+                        imageVector = displayIcon,
                         contentDescription = null,
-                        tint = Color.White,
+                        tint = displayIconColor,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -437,10 +457,15 @@ fun RecentTransactionItem(
                         fontWeight = FontWeight.Medium,
                         color = Slate900
                     )
+                    // Build subtitle: category + optional member + optional shop
+                    val subtitleParts = mutableListOf(categoryName)
+                    if (memberName != null) subtitleParts.add(memberName)
+                    if (shopName != null) subtitleParts.add(shopName)
                     Text(
-                        text = categoryName,
+                        text = subtitleParts.joinToString(" • "),
                         style = MaterialTheme.typography.bodySmall,
-                        color = Indigo500
+                        color = Indigo500,
+                        maxLines = 1
                     )
                     if (notes != null && notes.isNotBlank()) {
                         Text(

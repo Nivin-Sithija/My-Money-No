@@ -19,7 +19,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class HistoryViewModel_Factory implements Factory<HistoryViewModel> {
   private final Provider<TransactionRepository> transactionRepositoryProvider;

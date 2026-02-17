@@ -16,7 +16,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class BackupWorker_AssistedFactory_Impl implements BackupWorker_AssistedFactory {
   private final BackupWorker_Factory delegateFactory;

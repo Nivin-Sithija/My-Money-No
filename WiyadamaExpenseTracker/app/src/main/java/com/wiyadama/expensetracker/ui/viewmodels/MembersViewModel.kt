@@ -36,7 +36,7 @@ class MembersViewModel @Inject constructor(
         }
     }
 
-    fun addMember(name: String, color: String = "#6366F1") {
+    fun addMember(name: String, color: Int? = 0xFF6366F1.toInt()) {
         viewModelScope.launch {
             val member = Member(
                 name = name,

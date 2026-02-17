@@ -18,7 +18,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class WiyadamaApplication_MembersInjector implements MembersInjector<WiyadamaApplication> {
   private final Provider<HiltWorkerFactory> workerFactoryProvider;

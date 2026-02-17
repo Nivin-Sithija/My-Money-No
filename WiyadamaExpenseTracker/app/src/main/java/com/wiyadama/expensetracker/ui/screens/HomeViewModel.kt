@@ -4,8 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wiyadama.expensetracker.data.backup.BackupManager
 import com.wiyadama.expensetracker.data.entity.Category
+import com.wiyadama.expensetracker.data.entity.Member
+import com.wiyadama.expensetracker.data.entity.Shop
 import com.wiyadama.expensetracker.data.entity.Transaction
 import com.wiyadama.expensetracker.data.repository.CategoryRepository
+import com.wiyadama.expensetracker.data.repository.MemberRepository
+import com.wiyadama.expensetracker.data.repository.ShopRepository
 import com.wiyadama.expensetracker.data.repository.TransactionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -23,6 +27,8 @@ data class CategoryWithStats(
 class HomeViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val categoryRepository: CategoryRepository,
+    private val memberRepository: MemberRepository,
+    private val shopRepository: ShopRepository,
     private val backupManager: BackupManager
 ) : ViewModel() {
 
@@ -45,6 +51,12 @@ class HomeViewModel @Inject constructor(
                     .take(10)
             }
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val members: StateFlow<List<Member>> = memberRepository.getAllMembers()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val shops: StateFlow<List<Shop>> = shopRepository.getAllShops()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val categoriesWithStats: StateFlow<List<CategoryWithStats>> = combine(
         categoryRepository.getRootCategories(),

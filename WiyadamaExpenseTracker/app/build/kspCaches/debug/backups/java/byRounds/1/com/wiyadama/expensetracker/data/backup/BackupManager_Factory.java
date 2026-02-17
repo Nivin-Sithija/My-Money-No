@@ -24,7 +24,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class BackupManager_Factory implements Factory<BackupManager> {
   private final Provider<Context> contextProvider;

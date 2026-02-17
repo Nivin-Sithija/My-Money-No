@@ -19,7 +19,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class TransactionRepository_Factory implements Factory<TransactionRepository> {
   private final Provider<TransactionDao> transactionDaoProvider;

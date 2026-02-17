@@ -20,7 +20,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class AnalyticsViewModel_Factory implements Factory<AnalyticsViewModel> {
   private final Provider<TransactionRepository> transactionRepositoryProvider;

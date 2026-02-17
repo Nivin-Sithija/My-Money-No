@@ -19,7 +19,9 @@ import javax.inject.Provider;
     "unchecked",
     "rawtypes",
     "KotlinInternal",
-    "KotlinInternalInJava"
+    "KotlinInternalInJava",
+    "cast",
+    "deprecation"
 })
 public final class ShopRepository_Factory implements Factory<ShopRepository> {
   private final Provider<ShopDao> shopDaoProvider;

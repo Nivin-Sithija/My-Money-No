@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wiyadama.expensetracker.ui.components.CategoryBreakdownChart
+import com.wiyadama.expensetracker.ui.components.CategoryPieChart
 import com.wiyadama.expensetracker.ui.components.MonthlyComparisonChart
 import com.wiyadama.expensetracker.ui.components.SpendingTrendChart
 import com.wiyadama.expensetracker.ui.theme.*
@@ -112,6 +113,50 @@ fun AnalyticsScreen(
                         onClick = { viewModel.setPeriod(AnalyticsPeriod.MONTHLY) },
                         modifier = Modifier.weight(1f)
                     )
+                }
+            }
+        }
+
+        // Insights (moved to top)
+        item {
+            Text(
+                text = "Insights",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = Slate900,
+                modifier = Modifier.padding(start = 24.dp, top = 8.dp, bottom = 12.dp)
+            )
+        }
+
+        items(insights.chunked(3)) { batch ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                batch.forEachIndexed { index, insight ->
+                    val globalIndex = insights.indexOf(insight)
+                    InsightCard(
+                        title = insight.title,
+                        subtitle = insight.subtitle,
+                        value = insight.value,
+                        icon = when (globalIndex) {
+                            0 -> Icons.Default.TrendingUp
+                            1 -> Icons.Default.Repeat
+                            else -> Icons.Default.Warning
+                        },
+                        accentColor = when (globalIndex) {
+                            0 -> Orange500
+                            1 -> Blue500
+                            else -> Red500
+                        },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                // Fill empty space if odd number
+                if (batch.size == 1) {
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }
@@ -296,43 +341,6 @@ fun AnalyticsScreen(
                 }
             }
         }
-
-        // Insights
-        item {
-            Text(
-                text = "Insights",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-                color = Slate900,
-                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 16.dp)
-            )
-        }
-
-        item {
-            LazyRow(
-                contentPadding = PaddingValues(horizontal = 24.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(insights.size) { index ->
-                    val insight = insights[index]
-                    InsightCard(
-                        title = insight.title,
-                        subtitle = insight.subtitle,
-                        value = insight.value,
-                        icon = when (index) {
-                            0 -> Icons.Default.TrendingUp
-                            1 -> Icons.Default.Repeat
-                            else -> Icons.Default.Warning
-                        },
-                        gradientColors = when (index) {
-                            0 -> listOf(Orange500, Amber500)
-                            1 -> listOf(Blue500, Teal500)
-                            else -> listOf(Red500, Pink500)
-                        }
-                    )
-                }
-            }
-        }
     }
 }
 
@@ -480,60 +488,58 @@ fun InsightCard(
     subtitle: String,
     value: String,
     icon: androidx.compose.ui.graphics.vector.ImageVector,
-    gradientColors: List<Color>
+    accentColor: Color,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier.width(200.dp),
+        modifier = modifier,
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Brush.linearGradient(gradientColors))
                 .padding(20.dp)
         ) {
-            Column {
-                Box(
-                    modifier = Modifier
-                        .size(44.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(Color.White.copy(alpha = 0.2f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.White.copy(alpha = 0.8f),
-                    fontWeight = FontWeight.Medium
-                )
-                Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
-                    fontWeight = FontWeight.SemiBold
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = value,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold
+            Box(
+                modifier = Modifier
+                    .size(44.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(accentColor.copy(alpha = 0.12f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = accentColor,
+                    modifier = Modifier.size(22.dp)
                 )
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodySmall,
+                color = Slate500,
+                fontWeight = FontWeight.Medium
+            )
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.titleMedium,
+                color = Slate900,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = value,
+                style = MaterialTheme.typography.headlineSmall,
+                color = accentColor,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
