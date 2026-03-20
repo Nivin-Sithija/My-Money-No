@@ -47,7 +47,7 @@ public final class MemberDao_Impl implements MemberDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR REPLACE INTO `members` (`id`,`name`,`phone`,`email`,`color`,`createdAt`,`updatedAt`) VALUES (nullif(?, 0),?,?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `members` (`id`,`name`,`phone`,`email`,`color`,`imagePath`,`createdAt`,`updatedAt`) VALUES (nullif(?, 0),?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -70,8 +70,13 @@ public final class MemberDao_Impl implements MemberDao {
         } else {
           statement.bindLong(5, entity.getColor());
         }
-        statement.bindLong(6, entity.getCreatedAt());
-        statement.bindLong(7, entity.getUpdatedAt());
+        if (entity.getImagePath() == null) {
+          statement.bindNull(6);
+        } else {
+          statement.bindString(6, entity.getImagePath());
+        }
+        statement.bindLong(7, entity.getCreatedAt());
+        statement.bindLong(8, entity.getUpdatedAt());
       }
     };
     this.__deletionAdapterOfMember = new EntityDeletionOrUpdateAdapter<Member>(__db) {
@@ -91,7 +96,7 @@ public final class MemberDao_Impl implements MemberDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE OR ABORT `members` SET `id` = ?,`name` = ?,`phone` = ?,`email` = ?,`color` = ?,`createdAt` = ?,`updatedAt` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `members` SET `id` = ?,`name` = ?,`phone` = ?,`email` = ?,`color` = ?,`imagePath` = ?,`createdAt` = ?,`updatedAt` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -114,9 +119,14 @@ public final class MemberDao_Impl implements MemberDao {
         } else {
           statement.bindLong(5, entity.getColor());
         }
-        statement.bindLong(6, entity.getCreatedAt());
-        statement.bindLong(7, entity.getUpdatedAt());
-        statement.bindLong(8, entity.getId());
+        if (entity.getImagePath() == null) {
+          statement.bindNull(6);
+        } else {
+          statement.bindString(6, entity.getImagePath());
+        }
+        statement.bindLong(7, entity.getCreatedAt());
+        statement.bindLong(8, entity.getUpdatedAt());
+        statement.bindLong(9, entity.getId());
       }
     };
   }
@@ -190,6 +200,7 @@ public final class MemberDao_Impl implements MemberDao {
           final int _cursorIndexOfPhone = CursorUtil.getColumnIndexOrThrow(_cursor, "phone");
           final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
           final int _cursorIndexOfColor = CursorUtil.getColumnIndexOrThrow(_cursor, "color");
+          final int _cursorIndexOfImagePath = CursorUtil.getColumnIndexOrThrow(_cursor, "imagePath");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updatedAt");
           final List<Member> _result = new ArrayList<Member>(_cursor.getCount());
@@ -217,11 +228,17 @@ public final class MemberDao_Impl implements MemberDao {
             } else {
               _tmpColor = _cursor.getInt(_cursorIndexOfColor);
             }
+            final String _tmpImagePath;
+            if (_cursor.isNull(_cursorIndexOfImagePath)) {
+              _tmpImagePath = null;
+            } else {
+              _tmpImagePath = _cursor.getString(_cursorIndexOfImagePath);
+            }
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
             final long _tmpUpdatedAt;
             _tmpUpdatedAt = _cursor.getLong(_cursorIndexOfUpdatedAt);
-            _item = new Member(_tmpId,_tmpName,_tmpPhone,_tmpEmail,_tmpColor,_tmpCreatedAt,_tmpUpdatedAt);
+            _item = new Member(_tmpId,_tmpName,_tmpPhone,_tmpEmail,_tmpColor,_tmpImagePath,_tmpCreatedAt,_tmpUpdatedAt);
             _result.add(_item);
           }
           return _result;
@@ -255,6 +272,7 @@ public final class MemberDao_Impl implements MemberDao {
           final int _cursorIndexOfPhone = CursorUtil.getColumnIndexOrThrow(_cursor, "phone");
           final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
           final int _cursorIndexOfColor = CursorUtil.getColumnIndexOrThrow(_cursor, "color");
+          final int _cursorIndexOfImagePath = CursorUtil.getColumnIndexOrThrow(_cursor, "imagePath");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updatedAt");
           final Member _result;
@@ -281,11 +299,17 @@ public final class MemberDao_Impl implements MemberDao {
             } else {
               _tmpColor = _cursor.getInt(_cursorIndexOfColor);
             }
+            final String _tmpImagePath;
+            if (_cursor.isNull(_cursorIndexOfImagePath)) {
+              _tmpImagePath = null;
+            } else {
+              _tmpImagePath = _cursor.getString(_cursorIndexOfImagePath);
+            }
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
             final long _tmpUpdatedAt;
             _tmpUpdatedAt = _cursor.getLong(_cursorIndexOfUpdatedAt);
-            _result = new Member(_tmpId,_tmpName,_tmpPhone,_tmpEmail,_tmpColor,_tmpCreatedAt,_tmpUpdatedAt);
+            _result = new Member(_tmpId,_tmpName,_tmpPhone,_tmpEmail,_tmpColor,_tmpImagePath,_tmpCreatedAt,_tmpUpdatedAt);
           } else {
             _result = null;
           }
@@ -315,6 +339,7 @@ public final class MemberDao_Impl implements MemberDao {
           final int _cursorIndexOfPhone = CursorUtil.getColumnIndexOrThrow(_cursor, "phone");
           final int _cursorIndexOfEmail = CursorUtil.getColumnIndexOrThrow(_cursor, "email");
           final int _cursorIndexOfColor = CursorUtil.getColumnIndexOrThrow(_cursor, "color");
+          final int _cursorIndexOfImagePath = CursorUtil.getColumnIndexOrThrow(_cursor, "imagePath");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updatedAt");
           final Member _result;
@@ -341,11 +366,17 @@ public final class MemberDao_Impl implements MemberDao {
             } else {
               _tmpColor = _cursor.getInt(_cursorIndexOfColor);
             }
+            final String _tmpImagePath;
+            if (_cursor.isNull(_cursorIndexOfImagePath)) {
+              _tmpImagePath = null;
+            } else {
+              _tmpImagePath = _cursor.getString(_cursorIndexOfImagePath);
+            }
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
             final long _tmpUpdatedAt;
             _tmpUpdatedAt = _cursor.getLong(_cursorIndexOfUpdatedAt);
-            _result = new Member(_tmpId,_tmpName,_tmpPhone,_tmpEmail,_tmpColor,_tmpCreatedAt,_tmpUpdatedAt);
+            _result = new Member(_tmpId,_tmpName,_tmpPhone,_tmpEmail,_tmpColor,_tmpImagePath,_tmpCreatedAt,_tmpUpdatedAt);
           } else {
             _result = null;
           }

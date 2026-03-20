@@ -92,32 +92,35 @@ fun MainApp(
                     )
                 },
                 floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = { showAddExpense = true },
-                        modifier = Modifier
-                            .padding(bottom = 16.dp)
-                            .size(56.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        elevation = FloatingActionButtonDefaults.elevation(
-                            defaultElevation = 12.dp
-                        )
-                    ) {
-                        Box(
+                    // Only show FAB on tabs other than Income (tab 1)
+                    if (selectedTab != 1) {
+                        FloatingActionButton(
+                            onClick = { showAddExpense = true },
                             modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    Brush.linearGradient(
-                                        colors = listOf(Indigo500, Purple500, Pink500)
-                                    )
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = "Add Expense",
-                                tint = Color.White,
-                                modifier = Modifier.size(28.dp)
+                                .padding(bottom = 16.dp)
+                                .size(56.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(
+                                defaultElevation = 12.dp
                             )
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        Brush.linearGradient(
+                                            colors = listOf(Indigo500, Purple500, Pink500)
+                                        )
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Add,
+                                    contentDescription = "Add Expense",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(28.dp)
+                                )
+                            }
                         }
                     }
                 }
@@ -241,11 +244,11 @@ fun MainApp(
                                         showMemberDialog = false
                                         editingMember = null
                                     },
-                                    onConfirm = { name, color ->
+                                    onConfirm = { name, color, imagePath ->
                                         if (editingMember != null) {
-                                            membersViewModel.updateMember(editingMember!!.copy(name = name, color = color))
+                                            membersViewModel.updateMember(editingMember!!.copy(name = name, color = color, imagePath = imagePath))
                                         } else {
-                                            membersViewModel.addMember(name, color)
+                                            membersViewModel.addMember(name, color, imagePath)
                                         }
                                         showMemberDialog = false
                                         editingMember = null
@@ -256,8 +259,8 @@ fun MainApp(
                             if (showShopDialog) {
                                 com.wiyadama.expensetracker.ui.components.AddShopDialog(
                                     onDismiss = { showShopDialog = false },
-                                    onConfirm = { name, address ->
-                                        addExpenseViewModel.addShop(name, address) { _ ->
+                                    onConfirm = { name, address, imagePath ->
+                                        addExpenseViewModel.addShop(name, address, imagePath) { _ ->
                                             showShopDialog = false
                                         }
                                     }
@@ -334,11 +337,11 @@ fun MainApp(
                 showAddExpense = false
                 editingTransaction = null
             },
-            onAddShop = { name, address, onSuccess ->
-                addExpenseViewModel.addShop(name, address, onSuccess)
+            onAddShop = { name, address, imagePath, onSuccess ->
+                addExpenseViewModel.addShop(name, address, imagePath, onSuccess)
             },
-            onAddMember = { name, color, onSuccess ->
-                addExpenseViewModel.addMember(name, color, onSuccess)
+            onAddMember = { name, color, imagePath, onSuccess ->
+                addExpenseViewModel.addMember(name, color, imagePath, onSuccess)
             },
             categories = categories,
             members = members,

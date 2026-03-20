@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.wiyadama.expensetracker.app-mergeDebugResources-69:/values-as/values-as.xml",
+            "outputFile": "com.wiyadama.expensetracker.app-mergeDebugResources-70:/values-as/values-as.xml",
             "map": [
                 {
                     "source": "/Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/5c98b08647e919d96eaf24c678f214e4/transformed/appcompat-1.6.1/res/values-as/values-as.xml",

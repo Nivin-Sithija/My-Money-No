@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.wiyadama.expensetracker.app-mergeDebugResources-69:/values-v29/values-v29.xml",
+            "outputFile": "com.wiyadama.expensetracker.app-mergeDebugResources-70:/values-v29/values-v29.xml",
             "map": [
                 {
                     "source": "/Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/00d915d459bb30743ca46cf054fbe696/transformed/jetified-core-splashscreen-1.0.1/res/values-v29/values-v29.xml",

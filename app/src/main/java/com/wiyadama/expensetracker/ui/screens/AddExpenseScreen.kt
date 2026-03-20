@@ -1,14 +1,10 @@
 package com.wiyadama.expensetracker.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -20,10 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.wiyadama.expensetracker.data.entity.Category
 import com.wiyadama.expensetracker.data.entity.Member
 import com.wiyadama.expensetracker.data.entity.Shop
@@ -35,14 +32,13 @@ import com.wiyadama.expensetracker.ui.util.getCategoryData
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddExpenseScreen(
     onDismiss: () -> Unit,
     onSave: (amount: Int, categoryId: Long, subcategoryId: Long?, memberId: Long?, shopId: Long?, notes: String, date: Long) -> Unit,
-    onAddShop: (name: String, address: String, onSuccess: (Shop) -> Unit) -> Unit,
-    onAddMember: (name: String, color: Int, onSuccess: (Member) -> Unit) -> Unit,
+    onAddShop: (name: String, address: String, imagePath: String?, onSuccess: (Shop) -> Unit) -> Unit,
+    onAddMember: (name: String, color: Int, imagePath: String?, onSuccess: (Member) -> Unit) -> Unit,
     categories: List<Category>,
     members: List<Member>,
     shops: List<Shop>,
@@ -55,31 +51,32 @@ fun AddExpenseScreen(
     var description by remember { mutableStateOf(editingTransaction?.notes ?: "") }
     var selectedDate by remember { mutableLongStateOf(editingTransaction?.dateTime ?: System.currentTimeMillis()) }
     
-    // Dialog states
     var showMemberDialog by remember { mutableStateOf(false) }
     var showShopDialog by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
+    var showCategoryPicker by remember { mutableStateOf(false) }
     
-    // Categorize categories
     val mainCategories = categories.filter { it.parentId == null }
-    val isBillCategory = selectedCategory?.name?.contains("Bill", ignoreCase = true) == true || 
-                        selectedCategory?.name in listOf("Bills & Utilities", "Water", "Electricity", "Telephone Bills")
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.Black.copy(alpha = 0.5f)
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false
+        )
     ) {
         Card(
             modifier = Modifier
-                .fillMaxSize()
-                .statusBarsPadding(),
-            shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(horizontal = 16.dp),
+            shape = RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxWidth()
             ) {
-                // Header
+                // Compact Header
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -88,7 +85,7 @@ fun AddExpenseScreen(
                                 colors = listOf(Indigo600, Purple600)
                             )
                         )
-                        .padding(24.dp)
+                        .padding(16.dp)
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -96,8 +93,8 @@ fun AddExpenseScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Add Expense",
-                            style = MaterialTheme.typography.headlineSmall,
+                            text = if (editingTransaction != null) "Edit Expense" else "Add Expense",
+                            style = MaterialTheme.typography.titleLarge,
                             color = Color.White,
                             fontWeight = FontWeight.Bold
                         )
@@ -111,613 +108,198 @@ fun AddExpenseScreen(
                     }
                 }
 
-                // Scrollable content
-                LazyColumn(
+                // Compact Form
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .weight(1f),
-                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    // Category Selection - NOW AT TOP
-                    item {
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    // Category Selector (First)
+                    OutlinedCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { showCategoryPicker = true },
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(20.dp)
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Category,
-                                        contentDescription = null,
-                                        tint = Slate600,
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = "Category",
-                                        style = MaterialTheme.typography.titleMedium,
-                                        color = Slate900,
-                                        fontWeight = FontWeight.SemiBold
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(12.dp))
-                                
-                                var categoryExpanded by remember { mutableStateOf(false) }
-                                
-                                ExposedDropdownMenuBox(
-                                    expanded = categoryExpanded,
-                                    onExpandedChange = { categoryExpanded = it }
-                                ) {
-                                    OutlinedTextField(
-                                        value = selectedCategory?.name ?: "Select Category",
-                                        onValueChange = {},
-                                        readOnly = true,
-                                        trailingIcon = {
-                                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = categoryExpanded)
-                                        },
-                                        leadingIcon = selectedCategory?.let { category ->
-                                            {
-                                                val (icon, _, _, iconColor) = getCategoryData(category.name)
-                                                Icon(
-                                                    imageVector = icon,
-                                                    contentDescription = null,
-                                                    tint = iconColor
-                                                )
-                                            }
-                                        },
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .menuAnchor(),
-                                        colors = OutlinedTextFieldDefaults.colors(
-                                            focusedBorderColor = Indigo500,
-                                            unfocusedBorderColor = Slate200
-                                        ),
-                                        shape = RoundedCornerShape(12.dp)
-                                    )
-                                    
-                                    ExposedDropdownMenu(
-                                        expanded = categoryExpanded,
-                                        onDismissRequest = { categoryExpanded = false }
-                                    ) {
-                                        mainCategories.forEach { category ->
-                                            val (icon, _, _, iconColor) = getCategoryData(category.name)
-                                            DropdownMenuItem(
-                                                text = {
-                                                    Row(
-                                                        verticalAlignment = Alignment.CenterVertically,
-                                                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                                                    ) {
-                                                        Icon(
-                                                            imageVector = icon,
-                                                            contentDescription = null,
-                                                            tint = iconColor,
-                                                            modifier = Modifier.size(24.dp)
-                                                        )
-                                                        Text(category.name, fontWeight = FontWeight.SemiBold)
-                                                    }
-                                                },
-                                                onClick = {
-                                                    selectedCategory = category
-                                                    categoryExpanded = false
-                                                },
-                                                leadingIcon = {
-                                                    if (selectedCategory?.id == category.id) {
-                                                        Icon(
-                                                            imageVector = Icons.Default.Check,
-                                                            contentDescription = null,
-                                                            tint = Indigo600
-                                                        )
-                                                    }
-                                                }
-                                            )
-                                            
-                                            // Handle Subcategories
-                                            categories.filter { it.parentId == category.id }.sortedBy { it.sortOrder }.forEach { subcategory ->
-                                                val (subIcon, _, _, subIconColor) = getCategoryData(subcategory.name)
-                                                DropdownMenuItem(
-                                                    text = {
-                                                        Row(
-                                                            verticalAlignment = Alignment.CenterVertically,
-                                                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                                                            modifier = Modifier.padding(start = 24.dp)
-                                                        ) {
-                                                            Icon(
-                                                                imageVector = Icons.Default.SubdirectoryArrowRight,
-                                                                contentDescription = null,
-                                                                tint = Slate400,
-                                                                modifier = Modifier.size(16.dp)
-                                                            )
-                                                            Icon(
-                                                                imageVector = subIcon,
-                                                                contentDescription = null,
-                                                                tint = subIconColor,
-                                                                modifier = Modifier.size(20.dp)
-                                                            )
-                                                            Text(subcategory.name, style = MaterialTheme.typography.bodyMedium)
-                                                        }
-                                                    },
-                                                    onClick = {
-                                                        selectedCategory = subcategory
-                                                        categoryExpanded = false
-                                                    },
-                                                    leadingIcon = {
-                                                        if (selectedCategory?.id == subcategory.id) {
-                                                            Icon(
-                                                                imageVector = Icons.Default.Check,
-                                                                contentDescription = null,
-                                                                tint = Indigo600
-                                                            )
-                                                        }
-                                                    }
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                    // Amount Input - NOW BELOW CATEGORY
-                    item {
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(20.dp)
-                            ) {
-                                Text(
-                                    text = "Amount",
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = Slate600,
-                                    fontWeight = FontWeight.Medium
+                                Icon(
+                                    imageVector = selectedCategory?.let { getCategoryData(it.name).icon } ?: Icons.Default.Category,
+                                    contentDescription = null,
+                                    tint = selectedCategory?.let { getCategoryData(it.name).iconColor } ?: Slate400
                                 )
-                                Spacer(modifier = Modifier.height(12.dp))
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = "$",
-                                        style = MaterialTheme.typography.headlineMedium,
-                                        color = Slate400
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    OutlinedTextField(
-                                        value = amount,
-                                        onValueChange = { 
-                                            if (it.isEmpty() || it.all { char -> char.isDigit() || char == '.' }) {
-                                                amount = it
-                                            }
-                                        },
-                                        textStyle = MaterialTheme.typography.headlineMedium.copy(
-                                            fontWeight = FontWeight.Bold,
-                                            color = Slate900
-                                        ),
-                                        placeholder = {
-                                            Text(
-                                                "0.00",
-                                                style = MaterialTheme.typography.headlineMedium,
-                                                color = Slate300
-                                            )
-                                        },
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                                        modifier = Modifier.fillMaxWidth(),
-                                        colors = OutlinedTextFieldDefaults.colors(
-                                            focusedBorderColor = Indigo500,
-                                            unfocusedBorderColor = Slate200
-                                        )
-                                    )
-                                }
+                                Text(
+                                    text = selectedCategory?.name ?: "Select Category",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = if (selectedCategory != null) Slate900 else Slate400
+                                )
                             }
+                            Icon(
+                                imageVector = Icons.Default.ChevronRight,
+                                contentDescription = null,
+                                tint = Slate400
+                            )
                         }
                     }
 
+                    // Amount Input (After Category)
+                    OutlinedTextField(
+                        value = amount,
+                        onValueChange = { if (it.isEmpty() || it.all { char -> char.isDigit() || char == '.' }) amount = it },
+                        label = { Text("Amount (LKR)") },
+                        leadingIcon = {
+                            Icon(Icons.Default.AttachMoney, contentDescription = null)
+                        },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Indigo500,
+                            unfocusedBorderColor = Slate200
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
                     // Description
-                    item {
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(20.dp)
-                            ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Description,
-                                        contentDescription = null,
-                                        tint = Slate600,
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = "Description",
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = Slate600,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(12.dp))
-                                OutlinedTextField(
-                                    value = description,
-                                    onValueChange = { description = it },
-                                    placeholder = { Text("What did you spend on?", color = Slate400) },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    minLines = 3,
-                                    colors = OutlinedTextFieldDefaults.colors(
-                                        focusedBorderColor = Indigo500,
-                                        unfocusedBorderColor = Slate200
-                                    )
-                                )
-                            }
-                        }
+                    OutlinedTextField(
+                        value = description,
+                        onValueChange = { description = it },
+                        label = { Text("Description (Optional)") },
+                        modifier = Modifier.fillMaxWidth(),
+                        maxLines = 2,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Indigo500,
+                            unfocusedBorderColor = Slate200
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+
+                    // Compact Row for Member, Shop, Date
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        // Member
+                        CompactSelectorCard(
+                            icon = Icons.Default.Person,
+                            label = selectedMember?.name ?: "Member",
+                            onClick = { showMemberDialog = true },
+                            modifier = Modifier.weight(1f)
+                        )
+                        
+                        // Shop
+                        CompactSelectorCard(
+                            icon = Icons.Default.Store,
+                            label = selectedShop?.name ?: "Shop",
+                            onClick = { showShopDialog = true },
+                            modifier = Modifier.weight(1f)
+                        )
                     }
 
                     // Date
-                    item {
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-                            modifier = Modifier.clickable { showDatePicker = true }
+                    OutlinedCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { showDatePicker = true },
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(20.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.CalendarToday,
-                                        contentDescription = null,
-                                        tint = Slate600,
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(12.dp))
-                                    Column {
-                                        Text(
-                                            text = "Date",
-                                            style = MaterialTheme.typography.labelMedium,
-                                            color = Slate600
-                                        )
-                                        Text(
-                                            text = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date(selectedDate)),
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            color = Slate900,
-                                            fontWeight = FontWeight.Medium
-                                        )
-                                    }
-                                }
                                 Icon(
-                                    imageVector = Icons.Default.ChevronRight,
+                                    imageVector = Icons.Default.CalendarToday,
                                     contentDescription = null,
-                                    tint = Slate400
+                                    tint = Slate600
+                                )
+                                Text(
+                                    text = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(Date(selectedDate)),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Slate900
                                 )
                             }
+                            Icon(
+                                imageVector = Icons.Default.ChevronRight,
+                                contentDescription = null,
+                                tint = Slate400
+                            )
                         }
                     }
+                }
 
-                    // Member Selection
-                    item {
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(20.dp)
-                            ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Person,
-                                            contentDescription = null,
-                                            tint = Slate600,
-                                            modifier = Modifier.size(20.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(8.dp))
-                                        Text(
-                                            text = "Assign to Member (Optional)",
-                                            style = MaterialTheme.typography.labelMedium,
-                                            color = Slate600,
-                                            fontWeight = FontWeight.Medium
-                                        )
-                                    }
-                                    // Add New Member Button
-                                    TextButton(
-                                        onClick = { showMemberDialog = true },
-                                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Add,
-                                            contentDescription = null,
-                                            tint = Indigo600,
-                                            modifier = Modifier.size(16.dp)
-                                        )
-                                        Spacer(modifier = Modifier.width(4.dp))
-                                        Text(
-                                            text = "Add New",
-                                            style = MaterialTheme.typography.labelSmall,
-                                            color = Indigo600,
-                                            fontWeight = FontWeight.SemiBold
-                                        )
-                                    }
-                                }
-                                Spacer(modifier = Modifier.height(12.dp))
-                                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                    if (members.isEmpty()) {
-                                        // Empty state
-                                        Surface(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            shape = RoundedCornerShape(12.dp),
-                                            color = Slate50,
-                                            border = BorderStroke(1.dp, Slate200)
-                                        ) {
-                                            Row(
-                                                modifier = Modifier.padding(16.dp),
-                                                horizontalArrangement = Arrangement.Center
-                                            ) {
-                                                Text(
-                                                    text = "No members yet. Click 'Add New' to create one.",
-                                                    style = MaterialTheme.typography.bodySmall,
-                                                    color = Slate500
-                                                )
-                                            }
-                                        }
-                                    } else {
-                                        members.forEach { member ->
-                                            Surface(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .clickable { 
-                                                        selectedMember = if (selectedMember?.id == member.id) null else member 
-                                                    },
-                                                shape = RoundedCornerShape(12.dp),
-                                                color = if (selectedMember?.id == member.id) Indigo50 else Slate50,
-                                                border = if (selectedMember?.id == member.id) 
-                                                    BorderStroke(2.dp, Indigo500) else null
-                                            ) {
-                                                Row(
-                                                    modifier = Modifier.padding(16.dp),
-                                                    verticalAlignment = Alignment.CenterVertically
-                                                ) {
-                                                    Icon(
-                                                        imageVector = Icons.Default.AccountCircle,
-                                                        contentDescription = null,
-                                                        tint = if (selectedMember?.id == member.id) Indigo500 else Slate400,
-                                                        modifier = Modifier.size(24.dp)
-                                                    )
-                                                    Spacer(modifier = Modifier.width(12.dp))
-                                                    Text(
-                                                        text = member.name,
-                                                        style = MaterialTheme.typography.bodyMedium,
-                                                        color = if (selectedMember?.id == member.id) Indigo900 else Slate900,
-                                                        fontWeight = if (selectedMember?.id == member.id) FontWeight.SemiBold else FontWeight.Normal
-                                                    )
-                                                }
-                                            }
-                                        }
-                                    }
-                                
-                                }
-                            }
-                        }
-                    }
-
-                    // Shop Selection (only if not a bill category)
-                    if (!isBillCategory) {
-                        item {
-                            Card(
-                                shape = RoundedCornerShape(16.dp),
-                                colors = CardDefaults.cardColors(containerColor = Color.White),
-                                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-                            ) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(20.dp)
-                                ) {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        modifier = Modifier.fillMaxWidth()
-                                    ) {
-                                        Row(
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.Store,
-                                                contentDescription = null,
-                                                tint = Slate600,
-                                                modifier = Modifier.size(20.dp)
-                                            )
-                                            Spacer(modifier = Modifier.width(8.dp))
-                                            Text(
-                                                text = "Shop (Optional)",
-                                                style = MaterialTheme.typography.labelMedium,
-                                                color = Slate600,
-                                                fontWeight = FontWeight.Medium
-                                            )
-                                        }
-                                        // Add New Shop Button
-                                        TextButton(
-                                            onClick = { showShopDialog = true },
-                                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.Add,
-                                                contentDescription = null,
-                                                tint = Teal600,
-                                                modifier = Modifier.size(16.dp)
-                                            )
-                                            Spacer(modifier = Modifier.width(4.dp))
-                                            Text(
-                                                text = "Add New",
-                                                style = MaterialTheme.typography.labelSmall,
-                                                color = Teal600,
-                                                fontWeight = FontWeight.SemiBold
-                                            )
-                                        }
-                                    }
-                                    Spacer(modifier = Modifier.height(12.dp))
-                                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                                        if (shops.isEmpty()) {
-                                            // Empty state
-                                            Surface(
-                                                modifier = Modifier.fillMaxWidth(),
-                                                shape = RoundedCornerShape(12.dp),
-                                                color = Slate50,
-                                                border = BorderStroke(1.dp, Slate200)
-                                            ) {
-                                                Row(
-                                                    modifier = Modifier.padding(16.dp),
-                                                    horizontalArrangement = Arrangement.Center
-                                                ) {
-                                                    Text(
-                                                        text = "No shops yet. Click 'Add New' to create one.",
-                                                        style = MaterialTheme.typography.bodySmall,
-                                                        color = Slate500
-                                                    )
-                                                }
-                                            }
-                                        } else {
-                                            shops.take(5).forEach { shop ->
-                                            Surface(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .clickable { 
-                                                        selectedShop = if (selectedShop?.id == shop.id) null else shop 
-                                                    },
-                                                shape = RoundedCornerShape(12.dp),
-                                                color = if (selectedShop?.id == shop.id) Teal50 else Slate50,
-                                                border = if (selectedShop?.id == shop.id) 
-                                                    BorderStroke(2.dp, Teal500) else null
-                                            ) {
-                                                Row(
-                                                    modifier = Modifier.padding(16.dp),
-                                                    verticalAlignment = Alignment.CenterVertically
-                                                ) {
-                                                    Icon(
-                                                        imageVector = Icons.Default.Storefront,
-                                                        contentDescription = null,
-                                                        tint = if (selectedShop?.id == shop.id) Teal500 else Slate400,
-                                                        modifier = Modifier.size(24.dp)
-                                                    )
-                                                    Spacer(modifier = Modifier.width(12.dp))
-                                                    Column(modifier = Modifier.weight(1f)) {
-                                                        Text(
-                                                            text = shop.name,
-                                                            style = MaterialTheme.typography.bodyMedium,
-                                                            color = if (selectedShop?.id == shop.id) Teal900 else Slate900,
-                                                            fontWeight = if (selectedShop?.id == shop.id) FontWeight.SemiBold else FontWeight.Normal
-                                                        )
-                                                        if (!shop.address.isNullOrEmpty()) {
-                                                            Text(
-                                                                text = shop.address,
-                                                                style = MaterialTheme.typography.bodySmall,
-                                                                color = Slate500
-                                                            )
-                                                        }
-                                                    } // end Column(modifier = Modifier.weight(1f))
-                                                } // end Row(modifier = Modifier.padding(16.dp))
-                                            } // end Surface (shop item)
-                                        } // end shops.take(5).forEach
-                                    } // end else (shops not empty)
-                                } // end Column(verticalArrangement = Arrangement.spacedBy(8.dp))
-                            } // end Column(modifier = Modifier...padding(20.dp))
-                        } // end Card (shop selection card)
-                    } // end item
-                } // end if (!isBillCategory)
-            } // end LazyColumn
-
-
-            // Bottom Button
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .navigationBarsPadding(),
-                color = Color.White,
-                shadowElevation = 8.dp
-            ) {
-                Row(
+                // Bottom Buttons
+                Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(24.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        .navigationBarsPadding(),
+                    color = Color.White,
+                    shadowElevation = 8.dp
                 ) {
-                    OutlinedButton(
-                        onClick = onDismiss,
-                        modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = Slate600
-                        )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        Text("Cancel")
+                        OutlinedButton(
+                            onClick = onDismiss,
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = Slate600
+                            )
+                        ) {
+                            Text("Cancel")
+                        }
+                        Button(
+                            onClick = {
+                                val amountCents = (amount.toDoubleOrNull()?.times(100))?.toInt() ?: 0
+                                if (amountCents > 0 && selectedCategory != null) {
+                                    onSave(
+                                        amountCents,
+                                        selectedCategory!!.id,
+                                        null,
+                                        selectedMember?.id,
+                                        selectedShop?.id,
+                                        description,
+                                        selectedDate
+                                    )
+                                }
+                            },
+                            modifier = Modifier.weight(1f),
+                            enabled = amount.isNotEmpty() && amount.toDoubleOrNull() != null && selectedCategory != null,
+                            colors = ButtonDefaults.buttonColors(containerColor = Indigo600)
+                        ) {
+                            Text("Save")
+                        }
                     }
-                    Button(
-                        onClick = {
-                            val amountCents = (amount.toDoubleOrNull()?.times(100))?.toInt() ?: 0
-                            if (amountCents > 0 && selectedCategory != null) {
-                                onSave(
-                                    amountCents,
-                                    selectedCategory!!.id,
-                                    null,
-                                    selectedMember?.id,
-                                    selectedShop?.id,
-                                    description,
-                                    selectedDate
-                                )
-                            }
-                        },
-                        enabled = amount.isNotEmpty() && amount.toDoubleOrNull() != null && selectedCategory != null,
-                        modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Indigo600,
-                            disabledContainerColor = Slate300
-                        )
-                    ) {
-                        Text("Add Expense", fontWeight = FontWeight.SemiBold)
-                    }
-                } // end Row (buttons)
-            } // end Surface (bottom button)
-        } // end Column (main content)
-    } // end Card
-} // end Surface (outer)
+                }
+            }
+        }
+    }
 
     // Dialogs
     if (showMemberDialog) {
         MemberDialog(
             onDismiss = { showMemberDialog = false },
-            onConfirm = { name, color ->
-                onAddMember(name, color) { newMember ->
+            onConfirm = { name, color, imagePath ->
+                onAddMember(name, color, imagePath) { newMember ->
                     selectedMember = newMember
                     showMemberDialog = false
                 }
@@ -728,63 +310,223 @@ fun AddExpenseScreen(
     if (showShopDialog) {
         AddShopDialog(
             onDismiss = { showShopDialog = false },
-            onConfirm = { name, address ->
-                onAddShop(name, address) { newShop ->
+            onConfirm = { name, address, imagePath ->
+                onAddShop(name, address, imagePath) { newShop ->
                     selectedShop = newShop
                     showShopDialog = false
                 }
             }
         )
     }
-} // end AddExpenseScreen
-@Composable
-fun CategorySelectCard(
-    category: Category,
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    val (icon, gradientColors, bgColors, iconColor) = getCategoryData(category.name)
 
-    Card(
-        modifier = Modifier
-            .aspectRatio(1f)
-            .clickable(onClick = onClick),
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = if (selected) Indigo50 else Color.White
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = if (selected) 4.dp else 2.dp),
-        border = if (selected) BorderStroke(2.dp, Indigo500) else null
+    if (showDatePicker) {
+        DatePickerDialog(
+            onDateSelected = { date ->
+                selectedDate = date
+                showDatePicker = false
+            },
+            onDismiss = { showDatePicker = false },
+            initialDate = selectedDate
+        )
+    }
+
+    if (showCategoryPicker) {
+        CategoryPickerDialog(
+            categories = categories,
+            selectedCategory = selectedCategory,
+            onCategorySelected = { category ->
+                selectedCategory = category
+                showCategoryPicker = false
+            },
+            onDismiss = { showCategoryPicker = false }
+        )
+    }
+}
+
+@Composable
+fun CompactSelectorCard(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    OutlinedCard(
+        modifier = modifier.clickable(onClick = onClick),
+        shape = RoundedCornerShape(12.dp)
     ) {
-        Column(
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                .padding(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(Brush.linearGradient(colors = bgColors)),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = category.name,
-                    tint = iconColor,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(12.dp))
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = Slate600,
+                modifier = Modifier.size(18.dp)
+            )
             Text(
-                text = category.name,
+                text = label,
                 style = MaterialTheme.typography.bodySmall,
-                color = if (selected) Indigo900 else Slate700,
-                fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,
-                maxLines = 2
+                color = Slate700,
+                maxLines = 1
             )
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CategoryPickerDialog(
+    categories: List<Category>,
+    selectedCategory: Category?,
+    onCategorySelected: (Category) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val mainCategories = categories.filter { it.parentId == null }
+    val subcategoriesMap = categories.filter { it.parentId != null }.groupBy { it.parentId }
+    
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Select Category", style = MaterialTheme.typography.titleMedium) },
+        text = {
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                mainCategories.forEach { mainCategory ->
+                    item {
+                        val catData = getCategoryData(mainCategory.name)
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { onCategorySelected(mainCategory) },
+                            colors = CardDefaults.cardColors(
+                                containerColor = if (selectedCategory?.id == mainCategory.id) Indigo50 else Color.White
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(32.dp)
+                                        .clip(RoundedCornerShape(8.dp))
+                                        .background(catData.iconColor.copy(alpha = 0.12f)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = catData.icon,
+                                        contentDescription = null,
+                                        tint = catData.iconColor,
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                }
+                                Text(
+                                    text = mainCategory.name,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Slate900
+                                )
+                            }
+                        }
+                    }
+                    
+                    // Show subcategories
+                    subcategoriesMap[mainCategory.id]?.let { subcategories ->
+                        items(subcategories) { subCategory ->
+                            val subCatData = getCategoryData(subCategory.name)
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 24.dp)
+                                    .clickable { onCategorySelected(subCategory) },
+                                colors = CardDefaults.cardColors(
+                                    containerColor = if (selectedCategory?.id == subCategory.id) Indigo50 else Slate50
+                                ),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(10.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(28.dp)
+                                            .clip(RoundedCornerShape(6.dp))
+                                            .background(subCatData.iconColor.copy(alpha = 0.12f)),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            imageVector = subCatData.icon,
+                                            contentDescription = null,
+                                            tint = subCatData.iconColor,
+                                            modifier = Modifier.size(14.dp)
+                                        )
+                                    }
+                                    Text(
+                                        text = subCategory.name,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        fontWeight = if (selectedCategory?.id == subCategory.id) FontWeight.SemiBold else FontWeight.Normal,
+                                        color = Slate700
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Close")
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DatePickerDialog(
+    onDateSelected: (Long) -> Unit,
+    onDismiss: () -> Unit,
+    initialDate: Long
+) {
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = initialDate
+    )
+    
+    DatePickerDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    datePickerState.selectedDateMillis?.let { date ->
+                        onDateSelected(date)
+                    }
+                }
+            ) {
+                Text("OK")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    ) {
+        DatePicker(
+            state = datePickerState
+        )
     }
 }

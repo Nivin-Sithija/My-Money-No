@@ -36,11 +36,12 @@ class MembersViewModel @Inject constructor(
         }
     }
 
-    fun addMember(name: String, color: Int? = 0xFF6366F1.toInt()) {
+    fun addMember(name: String, color: Int? = 0xFF6366F1.toInt(), imagePath: String? = null) {
         viewModelScope.launch {
             val member = Member(
                 name = name,
                 color = color,
+                imagePath = imagePath,
                 createdAt = System.currentTimeMillis()
             )
             memberRepository.insertMember(member)

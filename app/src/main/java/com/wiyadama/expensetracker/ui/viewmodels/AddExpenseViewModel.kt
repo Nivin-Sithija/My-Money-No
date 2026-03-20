@@ -113,11 +113,12 @@ class AddExpenseViewModel @Inject constructor(
         }
     }
 
-    fun addShop(name: String, address: String = "", onSuccess: (Shop) -> Unit) {
+    fun addShop(name: String, address: String = "", imagePath: String? = null, onSuccess: (Shop) -> Unit) {
         viewModelScope.launch {
             val shop = Shop(
                 name = name,
                 address = address.ifBlank { null },
+                imagePath = imagePath,
                 createdAt = System.currentTimeMillis()
             )
             val shopId = shopRepository.insertShop(shop)
@@ -125,11 +126,12 @@ class AddExpenseViewModel @Inject constructor(
         }
     }
     
-    fun addMember(name: String, color: Int, onSuccess: (Member) -> Unit) {
+    fun addMember(name: String, color: Int, imagePath: String? = null, onSuccess: (Member) -> Unit) {
         viewModelScope.launch {
             val member = Member(
                 name = name,
                 color = color,
+                imagePath = imagePath,
                 createdAt = System.currentTimeMillis()
             )
             val memberId = memberRepository.insertMember(member)

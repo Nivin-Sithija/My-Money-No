@@ -42,6 +42,7 @@ fun HomeScreen(
     val transactionCount by viewModel.transactionCount.collectAsState()
     val recentTransactions by viewModel.recentTransactions.collectAsState()
     val categoriesWithStats by viewModel.categoriesWithStats.collectAsState()
+    val allCategoriesList by viewModel.allCategoriesList.collectAsState()
     val membersList by viewModel.members.collectAsState()
     val shopsList by viewModel.shops.collectAsState()
     val backupFiles by viewModel.backupFiles.collectAsState()
@@ -130,6 +131,7 @@ fun HomeScreen(
                 Card(
                     modifier = Modifier
                         .weight(1f)
+                        .height(160.dp)
                         .clickable { onTotalExpensesClick() },
                     shape = RoundedCornerShape(24.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -166,9 +168,7 @@ fun HomeScreen(
                             text = CurrencyFormatter.formatWithSymbol(totalExpenses, "LKR"),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            color = Slate900,
-                            maxLines = 1,
-                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                            color = Slate900
                         )
                         Text(
                             text = "This month",
@@ -181,7 +181,9 @@ fun HomeScreen(
 
                 // Transactions Count Card
                 Card(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(160.dp),
                     shape = RoundedCornerShape(24.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
@@ -300,12 +302,13 @@ fun HomeScreen(
         }
 
         items(recentTransactions) { transaction ->
-            val category = categoriesWithStats.find { it.category.id == transaction.categoryId }?.category
+            val category = allCategoriesList.find { it.id == transaction.categoryId }
             val member = membersList.find { it.id == transaction.memberId }
             val shop = shopsList.find { it.id == transaction.shopId }
+            val displayName = category?.name ?: transaction.merchantName?.takeIf { it.isNotBlank() } ?: transaction.notes?.takeIf { it.isNotBlank() } ?: "Expense"
             RecentTransactionItem(
-                merchantName = transaction.merchantName?.takeIf { it.isNotBlank() } ?: category?.name ?: "Expense",
-                categoryName = category?.name ?: "Unknown",
+                merchantName = transaction.merchantName?.takeIf { it.isNotBlank() } ?: displayName,
+                categoryName = displayName,
                 memberName = member?.name,
                 shopName = shop?.name,
                 notes = transaction.notes,

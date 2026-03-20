@@ -8,9 +8,14 @@ object DateUtils {
     private fun getTimeFormatter() = SimpleDateFormat("h:mm a", Locale.getDefault())
     private fun getDateTimeFormatter() = SimpleDateFormat("MMM d, yyyy h:mm a", Locale.getDefault())
     private fun getDayFormatter() = SimpleDateFormat("EEE", Locale.getDefault())
+    private fun getCompactDateFormatter() = SimpleDateFormat("MMM dd", Locale.getDefault())
 
     fun formatDate(timestamp: Long): String {
         return getDataFormatter().format(Date(timestamp))
+    }
+
+    fun formatCompactDate(timestamp: Long): String {
+        return getCompactDateFormatter().format(Date(timestamp))
     }
 
     fun formatTime(timestamp: Long): String {

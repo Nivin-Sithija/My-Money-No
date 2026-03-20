@@ -15,6 +15,7 @@ data class Member(
     val phone: String? = null,
     val email: String? = null,
     val color: Int? = null,
+    val imagePath: String? = null,
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

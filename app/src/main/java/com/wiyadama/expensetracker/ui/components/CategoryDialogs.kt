@@ -185,31 +185,42 @@ fun ColorPicker(
         Blue500, Slate500
     )
 
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        colors.forEach { color ->
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(color)
-                    .clickable { onColorSelected(color) }
-                    .then(
-                        if (color == selectedColor) {
-                            Modifier.background(Color.White.copy(alpha = 0.3f))
-                        } else Modifier
-                    ),
-                contentAlignment = Alignment.Center
+        // Split colors into rows of 4
+        colors.chunked(4).forEach { rowColors ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                if (color == selectedColor) {
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(20.dp)
-                    )
+                rowColors.forEach { color ->
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(CircleShape)
+                            .background(color)
+                            .clickable { onColorSelected(color) }
+                            .then(
+                                if (color == selectedColor) {
+                                    Modifier.background(Color.White.copy(alpha = 0.3f))
+                                } else Modifier
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (color == selectedColor) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+                    }
+                }
+                // Fill empty space if row has less than 4 colors
+                repeat(4 - rowColors.size) {
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }

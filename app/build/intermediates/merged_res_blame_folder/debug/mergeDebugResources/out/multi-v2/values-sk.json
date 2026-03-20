@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.wiyadama.expensetracker.app-mergeDebugResources-69:/values-sk/values-sk.xml",
+            "outputFile": "com.wiyadama.expensetracker.app-mergeDebugResources-70:/values-sk/values-sk.xml",
             "map": [
                 {
                     "source": "/Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/29615e278a2d957fd7819a43b43e1b78/transformed/jetified-foundation-release/res/values-sk/values-sk.xml",

@@ -49,7 +49,7 @@ public final class ShopDao_Impl implements ShopDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR REPLACE INTO `shops` (`id`,`name`,`address`,`lastUsedAt`,`createdAt`,`updatedAt`) VALUES (nullif(?, 0),?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `shops` (`id`,`name`,`address`,`imagePath`,`lastUsedAt`,`createdAt`,`updatedAt`) VALUES (nullif(?, 0),?,?,?,?,?,?)";
       }
 
       @Override
@@ -62,9 +62,14 @@ public final class ShopDao_Impl implements ShopDao {
         } else {
           statement.bindString(3, entity.getAddress());
         }
-        statement.bindLong(4, entity.getLastUsedAt());
-        statement.bindLong(5, entity.getCreatedAt());
-        statement.bindLong(6, entity.getUpdatedAt());
+        if (entity.getImagePath() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, entity.getImagePath());
+        }
+        statement.bindLong(5, entity.getLastUsedAt());
+        statement.bindLong(6, entity.getCreatedAt());
+        statement.bindLong(7, entity.getUpdatedAt());
       }
     };
     this.__deletionAdapterOfShop = new EntityDeletionOrUpdateAdapter<Shop>(__db) {
@@ -84,7 +89,7 @@ public final class ShopDao_Impl implements ShopDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE OR ABORT `shops` SET `id` = ?,`name` = ?,`address` = ?,`lastUsedAt` = ?,`createdAt` = ?,`updatedAt` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `shops` SET `id` = ?,`name` = ?,`address` = ?,`imagePath` = ?,`lastUsedAt` = ?,`createdAt` = ?,`updatedAt` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -97,10 +102,15 @@ public final class ShopDao_Impl implements ShopDao {
         } else {
           statement.bindString(3, entity.getAddress());
         }
-        statement.bindLong(4, entity.getLastUsedAt());
-        statement.bindLong(5, entity.getCreatedAt());
-        statement.bindLong(6, entity.getUpdatedAt());
-        statement.bindLong(7, entity.getId());
+        if (entity.getImagePath() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, entity.getImagePath());
+        }
+        statement.bindLong(5, entity.getLastUsedAt());
+        statement.bindLong(6, entity.getCreatedAt());
+        statement.bindLong(7, entity.getUpdatedAt());
+        statement.bindLong(8, entity.getId());
       }
     };
     this.__preparedStmtOfUpdateLastUsed = new SharedSQLiteStatement(__db) {
@@ -208,6 +218,7 @@ public final class ShopDao_Impl implements ShopDao {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
           final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
           final int _cursorIndexOfAddress = CursorUtil.getColumnIndexOrThrow(_cursor, "address");
+          final int _cursorIndexOfImagePath = CursorUtil.getColumnIndexOrThrow(_cursor, "imagePath");
           final int _cursorIndexOfLastUsedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "lastUsedAt");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updatedAt");
@@ -224,13 +235,19 @@ public final class ShopDao_Impl implements ShopDao {
             } else {
               _tmpAddress = _cursor.getString(_cursorIndexOfAddress);
             }
+            final String _tmpImagePath;
+            if (_cursor.isNull(_cursorIndexOfImagePath)) {
+              _tmpImagePath = null;
+            } else {
+              _tmpImagePath = _cursor.getString(_cursorIndexOfImagePath);
+            }
             final long _tmpLastUsedAt;
             _tmpLastUsedAt = _cursor.getLong(_cursorIndexOfLastUsedAt);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
             final long _tmpUpdatedAt;
             _tmpUpdatedAt = _cursor.getLong(_cursorIndexOfUpdatedAt);
-            _item = new Shop(_tmpId,_tmpName,_tmpAddress,_tmpLastUsedAt,_tmpCreatedAt,_tmpUpdatedAt);
+            _item = new Shop(_tmpId,_tmpName,_tmpAddress,_tmpImagePath,_tmpLastUsedAt,_tmpCreatedAt,_tmpUpdatedAt);
             _result.add(_item);
           }
           return _result;
@@ -261,6 +278,7 @@ public final class ShopDao_Impl implements ShopDao {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
           final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
           final int _cursorIndexOfAddress = CursorUtil.getColumnIndexOrThrow(_cursor, "address");
+          final int _cursorIndexOfImagePath = CursorUtil.getColumnIndexOrThrow(_cursor, "imagePath");
           final int _cursorIndexOfLastUsedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "lastUsedAt");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updatedAt");
@@ -277,13 +295,19 @@ public final class ShopDao_Impl implements ShopDao {
             } else {
               _tmpAddress = _cursor.getString(_cursorIndexOfAddress);
             }
+            final String _tmpImagePath;
+            if (_cursor.isNull(_cursorIndexOfImagePath)) {
+              _tmpImagePath = null;
+            } else {
+              _tmpImagePath = _cursor.getString(_cursorIndexOfImagePath);
+            }
             final long _tmpLastUsedAt;
             _tmpLastUsedAt = _cursor.getLong(_cursorIndexOfLastUsedAt);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
             final long _tmpUpdatedAt;
             _tmpUpdatedAt = _cursor.getLong(_cursorIndexOfUpdatedAt);
-            _item = new Shop(_tmpId,_tmpName,_tmpAddress,_tmpLastUsedAt,_tmpCreatedAt,_tmpUpdatedAt);
+            _item = new Shop(_tmpId,_tmpName,_tmpAddress,_tmpImagePath,_tmpLastUsedAt,_tmpCreatedAt,_tmpUpdatedAt);
             _result.add(_item);
           }
           return _result;
@@ -315,6 +339,7 @@ public final class ShopDao_Impl implements ShopDao {
           final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
           final int _cursorIndexOfName = CursorUtil.getColumnIndexOrThrow(_cursor, "name");
           final int _cursorIndexOfAddress = CursorUtil.getColumnIndexOrThrow(_cursor, "address");
+          final int _cursorIndexOfImagePath = CursorUtil.getColumnIndexOrThrow(_cursor, "imagePath");
           final int _cursorIndexOfLastUsedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "lastUsedAt");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updatedAt");
@@ -330,13 +355,19 @@ public final class ShopDao_Impl implements ShopDao {
             } else {
               _tmpAddress = _cursor.getString(_cursorIndexOfAddress);
             }
+            final String _tmpImagePath;
+            if (_cursor.isNull(_cursorIndexOfImagePath)) {
+              _tmpImagePath = null;
+            } else {
+              _tmpImagePath = _cursor.getString(_cursorIndexOfImagePath);
+            }
             final long _tmpLastUsedAt;
             _tmpLastUsedAt = _cursor.getLong(_cursorIndexOfLastUsedAt);
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
             final long _tmpUpdatedAt;
             _tmpUpdatedAt = _cursor.getLong(_cursorIndexOfUpdatedAt);
-            _result = new Shop(_tmpId,_tmpName,_tmpAddress,_tmpLastUsedAt,_tmpCreatedAt,_tmpUpdatedAt);
+            _result = new Shop(_tmpId,_tmpName,_tmpAddress,_tmpImagePath,_tmpLastUsedAt,_tmpCreatedAt,_tmpUpdatedAt);
           } else {
             _result = null;
           }

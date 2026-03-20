@@ -1,5 +1,6 @@
 package com.wiyadama.expensetracker.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -33,17 +34,26 @@ fun IncomeScreen(
 ) {
     val allIncomes by viewModel.allIncomes.collectAsState()
     val rentalProperties by viewModel.rentalProperties.collectAsState()
+    val propertiesWithTransactions by viewModel.propertiesWithTransactions.collectAsState()
     
     var selectedTab by remember { mutableIntStateOf(0) }
     var showAddIncomeDialog by remember { mutableStateOf(false) }
     var showAddPropertyDialog by remember { mutableStateOf(false) }
     var showManageCategoriesDialog by remember { mutableStateOf(false) }
+    var editingProperty by remember { mutableStateOf<RentalProperty?>(null) }
     
     val tabs = listOf("House Rent", "IET Salary", "Solar")
     val categoryTypes = listOf("HOUSE_RENT", "IET_SALARY", "SOLAR")
     
     val filteredIncomes = allIncomes.filter { it.categoryType == categoryTypes[selectedTab] }
     val totalIncome = filteredIncomes.sumOf { it.amountCents }
+    
+    // Generate current month transactions for all properties on first load
+    LaunchedEffect(rentalProperties) {
+        rentalProperties.forEach { property ->
+            viewModel.generateCurrentMonthTransaction(property)
+        }
+    }
 
     LazyColumn(
         modifier = Modifier
@@ -100,44 +110,73 @@ fun IncomeScreen(
             }
         }
 
-        item {
-            Card(
+        items(tabs.chunked(2)) { tabPair ->
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 16.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    .padding(horizontal = 24.dp, vertical = 6.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(6.dp),
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    tabs.forEachIndexed { index, title ->
-                        val isSelected = selectedTab == index
-                        Button(
-                            onClick = { selectedTab = index },
+                tabPair.forEachIndexed { pairIndex, title ->
+                    val index = tabs.indexOf(title)
+                    val isSelected = selectedTab == index
+                    Card(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clickable { selectedTab = index },
+                        shape = RoundedCornerShape(20.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = if (isSelected) Color.White else Color.White
+                        ),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = if (isSelected) 8.dp else 4.dp
+                        ),
+                        border = if (isSelected) BorderStroke(2.dp, Emerald600) else null
+                    ) {
+                        Column(
                             modifier = Modifier
-                                .weight(1f)
-                                .height(44.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (isSelected) Emerald600 else Slate50,
-                                contentColor = if (isSelected) Color.White else Slate700
-                            ),
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = if (isSelected) 4.dp else 0.dp
-                            )
+                                .fillMaxWidth()
+                                .padding(20.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .clip(RoundedCornerShape(16.dp))
+                                    .background(
+                                        Brush.linearGradient(
+                                            colors = if (isSelected) 
+                                                listOf(Emerald500, Teal500) 
+                                            else 
+                                                listOf(Slate100, Slate50)
+                                        )
+                                    ),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = when (index) {
+                                        0 -> Icons.Default.Home
+                                        1 -> Icons.Default.Work
+                                        else -> Icons.Default.WbSunny
+                                    },
+                                    contentDescription = null,
+                                    tint = if (isSelected) Color.White else Slate500,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(12.dp))
                             Text(
                                 text = title,
                                 style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium
+                                fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium,
+                                color = if (isSelected) Emerald600 else Slate600,
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center
                             )
                         }
                     }
+                }
+                if (tabPair.size == 1) {
+                    Spacer(modifier = Modifier.weight(1f))
                 }
             }
         }
@@ -202,8 +241,8 @@ fun IncomeScreen(
                 }
             }
 
-            val shops = rentalProperties.filter { it.type == "SHOP" }
-            val houses = rentalProperties.filter { it.type == "HOUSE" }
+            val shops = propertiesWithTransactions.filter { it.property.type == "SHOP" }
+            val houses = propertiesWithTransactions.filter { it.property.type == "HOUSE" }
 
             if (shops.isNotEmpty()) {
                 item {
@@ -215,13 +254,19 @@ fun IncomeScreen(
                         modifier = Modifier.padding(start = 24.dp, top = 8.dp, bottom = 8.dp)
                     )
                 }
-                items(shops) { property ->
+                items(shops) { propertyWithTx ->
                     RentalPropertyCard(
-                        property = property,
+                        property = propertyWithTx.property,
+                        currentTransaction = propertyWithTx.currentMonthTransaction,
                         onPaymentClick = { 
-                            viewModel.updatePropertyPayment(property.id, System.currentTimeMillis(), property.monthlyRent)
+                            propertyWithTx.currentMonthTransaction?.let { tx ->
+                                viewModel.togglePaymentStatus(tx.id)
+                            }
                         },
-                        onEditClick = { },
+                        onEditClick = { 
+                            editingProperty = propertyWithTx.property
+                            showAddPropertyDialog = true
+                        },
                         viewModel = viewModel
                     )
                 }
@@ -237,13 +282,19 @@ fun IncomeScreen(
                         modifier = Modifier.padding(start = 24.dp, top = 16.dp, bottom = 8.dp)
                     )
                 }
-                items(houses) { property ->
+                items(houses) { propertyWithTx ->
                     RentalPropertyCard(
-                        property = property,
+                        property = propertyWithTx.property,
+                        currentTransaction = propertyWithTx.currentMonthTransaction,
                         onPaymentClick = { 
-                            viewModel.updatePropertyPayment(property.id, System.currentTimeMillis(), property.monthlyRent)
+                            propertyWithTx.currentMonthTransaction?.let { tx ->
+                                viewModel.togglePaymentStatus(tx.id)
+                            }
                         },
-                        onEditClick = { },
+                        onEditClick = { 
+                            editingProperty = propertyWithTx.property
+                            showAddPropertyDialog = true
+                        },
                         viewModel = viewModel
                     )
                 }
@@ -373,10 +424,244 @@ fun IncomeScreen(
 
     if (showAddPropertyDialog) {
         AddPropertyDialog(
-            onDismiss = { showAddPropertyDialog = false },
-            onConfirm = { property ->
-                viewModel.addProperty(property)
+            property = editingProperty,
+            onDismiss = { 
                 showAddPropertyDialog = false
+                editingProperty = null
+            },
+            onConfirm = { property ->
+                if (editingProperty != null) {
+                    viewModel.updateProperty(editingProperty!!.copy(
+                        name = property.name,
+                        type = property.type,
+                        currentTenant = property.currentTenant,
+                        monthlyRent = property.monthlyRent,
+                        advancePayment = property.advancePayment,
+                        notes = property.notes
+                    ))
+                } else {
+                    viewModel.addProperty(property)
+                }
+                showAddPropertyDialog = false
+                editingProperty = null
+            }
+        )
+    }
+
+    if (showManageCategoriesDialog) {
+        ManageIncomeCategoriesDialog(
+            currentCategories = tabs,
+            onDismiss = { showManageCategoriesDialog = false }
+        )
+    }
+}
+
+@Composable
+fun ManageIncomeCategoriesDialog(
+    currentCategories: List<String>,
+    onDismiss: () -> Unit
+) {
+    var categories by remember { mutableStateOf(currentCategories.toMutableList()) }
+    var showAddDialog by remember { mutableStateOf(false) }
+    var editingIndex by remember { mutableStateOf<Int?>(null) }
+    var editingName by remember { mutableStateOf("") }
+    
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { 
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = null,
+                        tint = Emerald600
+                    )
+                    Text("Manage Income Categories")
+                }
+            }
+        },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                categories.forEachIndexed { index, category ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = CardDefaults.cardColors(containerColor = Slate50)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.AttachMoney,
+                                    contentDescription = null,
+                                    tint = Emerald600,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                                Text(
+                                    text = category,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Medium,
+                                    color = Slate900
+                                )
+                            }
+                            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                IconButton(
+                                    onClick = { 
+                                        editingIndex = index
+                                        editingName = category
+                                    },
+                                    modifier = Modifier.size(32.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Edit,
+                                        contentDescription = "Edit",
+                                        tint = Indigo600,
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
+                                IconButton(
+                                    onClick = { 
+                                        categories = categories.toMutableList().apply { removeAt(index) }
+                                    },
+                                    modifier = Modifier.size(32.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = "Delete",
+                                        tint = Red600,
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                OutlinedButton(
+                    onClick = { showAddDialog = true },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    border = BorderStroke(1.dp, Emerald600)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                        tint = Emerald600,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Add New Category",
+                        color = Emerald600,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = onDismiss,
+                colors = ButtonDefaults.buttonColors(containerColor = Emerald600),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text("Done")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel", color = Slate600)
+            }
+        },
+        shape = RoundedCornerShape(24.dp)
+    )
+    
+    if (showAddDialog) {
+        var newCategoryName by remember { mutableStateOf("") }
+        AlertDialog(
+            onDismissRequest = { showAddDialog = false },
+            title = { Text("Add Income Category") },
+            text = {
+                OutlinedTextField(
+                    value = newCategoryName,
+                    onValueChange = { newCategoryName = it },
+                    label = { Text("Category Name") },
+                    placeholder = { Text("e.g., Freelance, Dividends") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (newCategoryName.isNotBlank()) {
+                            categories = categories.toMutableList().apply { add(newCategoryName) }
+                            showAddDialog = false
+                        }
+                    },
+                    enabled = newCategoryName.isNotBlank()
+                ) {
+                    Text("Add")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showAddDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+    
+    editingIndex?.let { index ->
+        AlertDialog(
+            onDismissRequest = { editingIndex = null },
+            title = { Text("Edit Category") },
+            text = {
+                OutlinedTextField(
+                    value = editingName,
+                    onValueChange = { editingName = it },
+                    label = { Text("Category Name") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (editingName.isNotBlank()) {
+                            categories = categories.toMutableList().apply { set(index, editingName) }
+                            editingIndex = null
+                        }
+                    },
+                    enabled = editingName.isNotBlank()
+                ) {
+                    Text("Save")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { editingIndex = null }) {
+                    Text("Cancel")
+                }
             }
         )
     }
@@ -385,17 +670,13 @@ fun IncomeScreen(
 @Composable
 fun RentalPropertyCard(
     property: RentalProperty,
+    currentTransaction: com.wiyadama.expensetracker.data.entity.RentTransaction?,
     onPaymentClick: () -> Unit,
     onEditClick: () -> Unit,
     viewModel: IncomeViewModel
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val isPaid = property.lastPaidDate?.let {
-        val calendar = Calendar.getInstance()
-        val lastPaidCalendar = Calendar.getInstance().apply { timeInMillis = it }
-        calendar.get(Calendar.MONTH) == lastPaidCalendar.get(Calendar.MONTH) &&
-        calendar.get(Calendar.YEAR) == lastPaidCalendar.get(Calendar.YEAR)
-    } ?: false
+    val status = currentTransaction?.status ?: com.wiyadama.expensetracker.data.entity.RentPaymentStatus.UNPAID
 
     Card(
         modifier = Modifier
@@ -460,30 +741,34 @@ fun RentalPropertyCard(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            if (isPaid) {
-                                Surface(
-                                    shape = RoundedCornerShape(8.dp),
-                                    color = Emerald50
-                                ) {
+                            val (statusText, statusBgColor, statusTextColor) = when (status) {
+                                com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PAID -> 
+                                    Triple("Paid", Emerald50, Emerald700)
+                                com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PARTIAL -> 
+                                    Triple("Partial", Color(0xFFFEF3C7), Color(0xFFB45309))
+                                com.wiyadama.expensetracker.data.entity.RentPaymentStatus.OVERDUE -> 
+                                    Triple("Overdue", Red100, Red700)
+                                com.wiyadama.expensetracker.data.entity.RentPaymentStatus.UNPAID -> 
+                                    Triple("Unpaid", Slate100, Slate700)
+                            }
+                            Surface(
+                                shape = RoundedCornerShape(8.dp),
+                                color = statusBgColor
+                            ) {
+                                Text(
+                                    text = statusText,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = statusTextColor,
+                                    fontWeight = FontWeight.Medium,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                )
+                            }
+                            if (status == com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PARTIAL) {
+                                currentTransaction?.let { tx ->
                                     Text(
-                                        text = "Paid",
+                                        text = "${CurrencyFormatter.formatWithSymbol(tx.paidAmount, "LKR")} / ${CurrencyFormatter.formatWithSymbol(tx.expectedAmount, "LKR")}",
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = Emerald700,
-                                        fontWeight = FontWeight.Medium,
-                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                                    )
-                                }
-                            } else {
-                                Surface(
-                                    shape = RoundedCornerShape(8.dp),
-                                    color = Red100
-                                ) {
-                                    Text(
-                                        text = "Unpaid",
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = Red700,
-                                        fontWeight = FontWeight.Medium,
-                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                                        color = Slate500
                                     )
                                 }
                             }
@@ -511,24 +796,63 @@ fun RentalPropertyCard(
                 HorizontalDivider(color = Slate100)
                 Spacer(modifier = Modifier.height(12.dp))
 
-                if (property.lastPaidDate != null) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "Last Payment:",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Slate500
-                        )
-                        Text(
-                            text = DateUtils.formatDate(property.lastPaidDate),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Slate700,
-                            fontWeight = FontWeight.Medium
-                        )
+                currentTransaction?.let { tx ->
+                    if (tx.paidDate != null) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "Payment Date:",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Slate500
+                            )
+                            Text(
+                                text = DateUtils.formatDate(tx.paidDate),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Slate700,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
+                    
+                    if (tx.paidAmount > 0 && tx.paidAmount < tx.expectedAmount) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "Paid Amount:",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Slate500
+                            )
+                            Text(
+                                text = CurrencyFormatter.formatWithSymbol(tx.paidAmount, "LKR"),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Emerald700,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "Remaining:",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Slate500
+                            )
+                            Text(
+                                text = CurrencyFormatter.formatWithSymbol(tx.expectedAmount - tx.paidAmount, "LKR"),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Red700,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
 
                 if (property.advancePayment > 0) {
@@ -565,7 +889,7 @@ fun RentalPropertyCard(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    if (!isPaid) {
+                    if (status != com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PAID) {
                         Button(
                             onClick = onPaymentClick,
                             modifier = Modifier.weight(1f),
@@ -655,10 +979,10 @@ fun IncomeItemCard(income: Income) {
                 }
             }
             Text(
-                text = "+${CurrencyFormatter.formatWithSymbol(income.amountCents, "LKR")}",
+                text = CurrencyFormatter.formatWithSymbol(income.amountCents, "LKR"),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
-                color = Emerald600
+                color = Slate900
             )
         }
     }
@@ -722,20 +1046,21 @@ fun AddIncomeDialog(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddPropertyDialog(
+    property: RentalProperty? = null,
     onDismiss: () -> Unit,
     onConfirm: (RentalProperty) -> Unit
 ) {
-    var name by remember { mutableStateOf("") }
-    var type by remember { mutableStateOf("SHOP") }
-    var tenant by remember { mutableStateOf("") }
-    var monthlyRent by remember { mutableStateOf("") }
-    var advance by remember { mutableStateOf("") }
-    var notes by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf(property?.name ?: "") }
+    var type by remember { mutableStateOf(property?.type ?: "SHOP") }
+    var tenant by remember { mutableStateOf(property?.currentTenant ?: "") }
+    var monthlyRent by remember { mutableStateOf(if (property?.monthlyRent != null) (property.monthlyRent / 100).toString() else "") }
+    var advance by remember { mutableStateOf(if (property?.advancePayment != null && property.advancePayment > 0) (property.advancePayment / 100).toString() else "") }
+    var notes by remember { mutableStateOf(property?.notes ?: "") }
     var expanded by remember { mutableStateOf(false) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add Rental Property") },
+        title = { Text(if (property != null) "Edit Rental Property" else "Add Rental Property") },
         text = {
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp)

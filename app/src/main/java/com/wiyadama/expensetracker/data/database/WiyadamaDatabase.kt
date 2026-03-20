@@ -19,9 +19,10 @@ import kotlinx.coroutines.launch
         Transaction::class,
         BackupMeta::class,
         Income::class,
-        RentalProperty::class
+        RentalProperty::class,
+        RentTransaction::class
     ],
-    version = 3,
+    version = 6,
     exportSchema = true
 )
 abstract class WiyadamaDatabase : RoomDatabase() {
@@ -32,6 +33,7 @@ abstract class WiyadamaDatabase : RoomDatabase() {
     abstract fun backupMetaDao(): BackupMetaDao
     abstract fun incomeDao(): IncomeDao
     abstract fun rentalPropertyDao(): RentalPropertyDao
+    abstract fun rentTransactionDao(): RentTransactionDao
 
     companion object {
         @Volatile
@@ -80,6 +82,55 @@ abstract class WiyadamaDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Add imagePath column to members table
+                db.execSQL("ALTER TABLE members ADD COLUMN imagePath TEXT")
+                
+                // Add imagePath column to shops table
+                db.execSQL("ALTER TABLE shops ADD COLUMN imagePath TEXT")
+            }
+        }
+
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Add Grocery category if it doesn't exist
+                val now = System.currentTimeMillis()
+                db.execSQL("""
+                    INSERT OR IGNORE INTO categories (name, parentId, isSystem, sortOrder, color, createdAt, updatedAt)
+                    SELECT 'Grocery', NULL, 1, 15, ${0xFF6366F1.toInt()}, $now, $now
+                    WHERE NOT EXISTS (SELECT 1 FROM categories WHERE name = 'Grocery')
+                """.trimIndent())
+            }
+        }
+
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Create rent_transactions table
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS rent_transactions (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        propertyId INTEGER NOT NULL,
+                        dueDate INTEGER NOT NULL,
+                        expectedAmount INTEGER NOT NULL,
+                        paidAmount INTEGER NOT NULL DEFAULT 0,
+                        status TEXT NOT NULL DEFAULT 'UNPAID',
+                        paidDate INTEGER,
+                        notes TEXT,
+                        paymentMethod TEXT,
+                        createdAt INTEGER NOT NULL,
+                        updatedAt INTEGER NOT NULL,
+                        FOREIGN KEY(propertyId) REFERENCES rental_properties(id) ON DELETE CASCADE
+                    )
+                """.trimIndent())
+                
+                // Create indices for rent_transactions
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_rent_transactions_propertyId ON rent_transactions(propertyId)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_rent_transactions_dueDate ON rent_transactions(dueDate)")
+                db.execSQL("CREATE INDEX IF NOT EXISTS index_rent_transactions_status ON rent_transactions(status)")
+            }
+        }
+
         fun getDatabase(context: Context, scope: CoroutineScope): WiyadamaDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -88,7 +139,7 @@ abstract class WiyadamaDatabase : RoomDatabase() {
                     "my_money_no.db"
                 )
                     .setJournalMode(JournalMode.WRITE_AHEAD_LOGGING)
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                     .addCallback(SeedDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
@@ -217,9 +268,14 @@ abstract class WiyadamaDatabase : RoomDatabase() {
                 Category(name = "Food and Dining", isSystem = true, sortOrder = 14, createdAt = now, updatedAt = now)
             ))
 
-            // 15. Entertainment
+            // 15. Grocery
             saveId(categoryDao.insertCategory(
-                Category(name = "Entertainment", isSystem = true, sortOrder = 15, createdAt = now, updatedAt = now)
+                Category(name = "Grocery", isSystem = true, sortOrder = 15, createdAt = now, updatedAt = now)
+            ))
+
+            // 16. Entertainment
+            saveId(categoryDao.insertCategory(
+                Category(name = "Entertainment", isSystem = true, sortOrder = 16, createdAt = now, updatedAt = now)
             ))
         }
     }

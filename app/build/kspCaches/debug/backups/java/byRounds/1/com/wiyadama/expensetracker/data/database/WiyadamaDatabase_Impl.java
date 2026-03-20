@@ -19,6 +19,8 @@ import com.wiyadama.expensetracker.data.dao.IncomeDao;
 import com.wiyadama.expensetracker.data.dao.IncomeDao_Impl;
 import com.wiyadama.expensetracker.data.dao.MemberDao;
 import com.wiyadama.expensetracker.data.dao.MemberDao_Impl;
+import com.wiyadama.expensetracker.data.dao.RentTransactionDao;
+import com.wiyadama.expensetracker.data.dao.RentTransactionDao_Impl;
 import com.wiyadama.expensetracker.data.dao.RentalPropertyDao;
 import com.wiyadama.expensetracker.data.dao.RentalPropertyDao_Impl;
 import com.wiyadama.expensetracker.data.dao.ShopDao;
@@ -55,18 +57,20 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
 
   private volatile RentalPropertyDao _rentalPropertyDao;
 
+  private volatile RentTransactionDao _rentTransactionDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(3) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(6) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS `members` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `phone` TEXT, `email` TEXT, `color` INTEGER, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `members` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `phone` TEXT, `email` TEXT, `color` INTEGER, `imagePath` TEXT, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_members_name` ON `members` (`name`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `categories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `parentId` INTEGER, `isSystem` INTEGER NOT NULL, `sortOrder` INTEGER NOT NULL, `requiresMember` INTEGER NOT NULL, `color` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, FOREIGN KEY(`parentId`) REFERENCES `categories`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_categories_parentId_sortOrder` ON `categories` (`parentId`, `sortOrder`)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_categories_name` ON `categories` (`name`)");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `shops` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `address` TEXT, `lastUsedAt` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `shops` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `address` TEXT, `imagePath` TEXT, `lastUsedAt` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_shops_name` ON `shops` (`name`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `transactions` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dateTime` INTEGER NOT NULL, `amountCents` INTEGER NOT NULL, `currency` TEXT NOT NULL, `categoryId` INTEGER NOT NULL, `memberId` INTEGER, `shopId` INTEGER, `merchantName` TEXT, `paymentMethod` TEXT NOT NULL, `notes` TEXT, `deletedAt` INTEGER, `revision` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, FOREIGN KEY(`categoryId`) REFERENCES `categories`(`id`) ON UPDATE NO ACTION ON DELETE RESTRICT , FOREIGN KEY(`memberId`) REFERENCES `members`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL , FOREIGN KEY(`shopId`) REFERENCES `shops`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL )");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_transactions_dateTime` ON `transactions` (`dateTime`)");
@@ -77,8 +81,12 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `backup_meta` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `createdAt` INTEGER NOT NULL, `type` TEXT NOT NULL, `path` TEXT NOT NULL, `checksum` TEXT NOT NULL, `size` INTEGER NOT NULL, `appVersion` TEXT NOT NULL, `schemaVersion` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `incomes` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dateTime` INTEGER NOT NULL, `amountCents` INTEGER NOT NULL, `currency` TEXT NOT NULL, `categoryType` TEXT NOT NULL, `propertyId` INTEGER, `notes` TEXT, `paymentMethod` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `rental_properties` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL, `currentTenant` TEXT, `monthlyRent` INTEGER NOT NULL, `lastPaidDate` INTEGER, `advancePayment` INTEGER NOT NULL, `notes` TEXT, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `rent_transactions` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `propertyId` INTEGER NOT NULL, `dueDate` INTEGER NOT NULL, `expectedAmount` INTEGER NOT NULL, `paidAmount` INTEGER NOT NULL, `status` TEXT NOT NULL, `paidDate` INTEGER, `notes` TEXT, `paymentMethod` TEXT, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, FOREIGN KEY(`propertyId`) REFERENCES `rental_properties`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_rent_transactions_propertyId` ON `rent_transactions` (`propertyId`)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_rent_transactions_dueDate` ON `rent_transactions` (`dueDate`)");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_rent_transactions_status` ON `rent_transactions` (`status`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4637a53bc4974a2f31d7110c1304315b')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '468de65e48386416130edf8416140515')");
       }
 
       @Override
@@ -90,6 +98,7 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
         db.execSQL("DROP TABLE IF EXISTS `backup_meta`");
         db.execSQL("DROP TABLE IF EXISTS `incomes`");
         db.execSQL("DROP TABLE IF EXISTS `rental_properties`");
+        db.execSQL("DROP TABLE IF EXISTS `rent_transactions`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -134,12 +143,13 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
       @NonNull
       public RoomOpenHelper.ValidationResult onValidateSchema(
           @NonNull final SupportSQLiteDatabase db) {
-        final HashMap<String, TableInfo.Column> _columnsMembers = new HashMap<String, TableInfo.Column>(7);
+        final HashMap<String, TableInfo.Column> _columnsMembers = new HashMap<String, TableInfo.Column>(8);
         _columnsMembers.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMembers.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMembers.put("phone", new TableInfo.Column("phone", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMembers.put("email", new TableInfo.Column("email", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMembers.put("color", new TableInfo.Column("color", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsMembers.put("imagePath", new TableInfo.Column("imagePath", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMembers.put("createdAt", new TableInfo.Column("createdAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsMembers.put("updatedAt", new TableInfo.Column("updatedAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysMembers = new HashSet<TableInfo.ForeignKey>(0);
@@ -174,10 +184,11 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
                   + " Expected:\n" + _infoCategories + "\n"
                   + " Found:\n" + _existingCategories);
         }
-        final HashMap<String, TableInfo.Column> _columnsShops = new HashMap<String, TableInfo.Column>(6);
+        final HashMap<String, TableInfo.Column> _columnsShops = new HashMap<String, TableInfo.Column>(7);
         _columnsShops.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsShops.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsShops.put("address", new TableInfo.Column("address", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsShops.put("imagePath", new TableInfo.Column("imagePath", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsShops.put("lastUsedAt", new TableInfo.Column("lastUsedAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsShops.put("createdAt", new TableInfo.Column("createdAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsShops.put("updatedAt", new TableInfo.Column("updatedAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
@@ -281,9 +292,34 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
                   + " Expected:\n" + _infoRentalProperties + "\n"
                   + " Found:\n" + _existingRentalProperties);
         }
+        final HashMap<String, TableInfo.Column> _columnsRentTransactions = new HashMap<String, TableInfo.Column>(11);
+        _columnsRentTransactions.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("propertyId", new TableInfo.Column("propertyId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("dueDate", new TableInfo.Column("dueDate", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("expectedAmount", new TableInfo.Column("expectedAmount", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("paidAmount", new TableInfo.Column("paidAmount", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("status", new TableInfo.Column("status", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("paidDate", new TableInfo.Column("paidDate", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("notes", new TableInfo.Column("notes", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("paymentMethod", new TableInfo.Column("paymentMethod", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("createdAt", new TableInfo.Column("createdAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentTransactions.put("updatedAt", new TableInfo.Column("updatedAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysRentTransactions = new HashSet<TableInfo.ForeignKey>(1);
+        _foreignKeysRentTransactions.add(new TableInfo.ForeignKey("rental_properties", "CASCADE", "NO ACTION", Arrays.asList("propertyId"), Arrays.asList("id")));
+        final HashSet<TableInfo.Index> _indicesRentTransactions = new HashSet<TableInfo.Index>(3);
+        _indicesRentTransactions.add(new TableInfo.Index("index_rent_transactions_propertyId", false, Arrays.asList("propertyId"), Arrays.asList("ASC")));
+        _indicesRentTransactions.add(new TableInfo.Index("index_rent_transactions_dueDate", false, Arrays.asList("dueDate"), Arrays.asList("ASC")));
+        _indicesRentTransactions.add(new TableInfo.Index("index_rent_transactions_status", false, Arrays.asList("status"), Arrays.asList("ASC")));
+        final TableInfo _infoRentTransactions = new TableInfo("rent_transactions", _columnsRentTransactions, _foreignKeysRentTransactions, _indicesRentTransactions);
+        final TableInfo _existingRentTransactions = TableInfo.read(db, "rent_transactions");
+        if (!_infoRentTransactions.equals(_existingRentTransactions)) {
+          return new RoomOpenHelper.ValidationResult(false, "rent_transactions(com.wiyadama.expensetracker.data.entity.RentTransaction).\n"
+                  + " Expected:\n" + _infoRentTransactions + "\n"
+                  + " Found:\n" + _existingRentTransactions);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "4637a53bc4974a2f31d7110c1304315b", "8b13811bfc91beada10da3b10365b75e");
+    }, "468de65e48386416130edf8416140515", "1f74750a6d8c839df2ca1a48d74c9c62");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -294,7 +330,7 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "members","categories","shops","transactions","backup_meta","incomes","rental_properties");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "members","categories","shops","transactions","backup_meta","incomes","rental_properties","rent_transactions");
   }
 
   @Override
@@ -317,6 +353,7 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
       _db.execSQL("DELETE FROM `backup_meta`");
       _db.execSQL("DELETE FROM `incomes`");
       _db.execSQL("DELETE FROM `rental_properties`");
+      _db.execSQL("DELETE FROM `rent_transactions`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -341,6 +378,7 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
     _typeConvertersMap.put(BackupMetaDao.class, BackupMetaDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(IncomeDao.class, IncomeDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(RentalPropertyDao.class, RentalPropertyDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(RentTransactionDao.class, RentTransactionDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -453,6 +491,20 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
           _rentalPropertyDao = new RentalPropertyDao_Impl(this);
         }
         return _rentalPropertyDao;
+      }
+    }
+  }
+
+  @Override
+  public RentTransactionDao rentTransactionDao() {
+    if (_rentTransactionDao != null) {
+      return _rentTransactionDao;
+    } else {
+      synchronized(this) {
+        if(_rentTransactionDao == null) {
+          _rentTransactionDao = new RentTransactionDao_Impl(this);
+        }
+        return _rentTransactionDao;
       }
     }
   }

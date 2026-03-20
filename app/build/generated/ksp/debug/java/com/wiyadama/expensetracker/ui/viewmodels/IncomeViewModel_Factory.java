@@ -1,6 +1,7 @@
 package com.wiyadama.expensetracker.ui.viewmodels;
 
 import com.wiyadama.expensetracker.data.repository.IncomeRepository;
+import com.wiyadama.expensetracker.data.repository.RentTransactionRepository;
 import com.wiyadama.expensetracker.data.repository.RentalPropertyRepository;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
@@ -29,24 +30,30 @@ public final class IncomeViewModel_Factory implements Factory<IncomeViewModel> {
 
   private final Provider<RentalPropertyRepository> rentalPropertyRepositoryProvider;
 
+  private final Provider<RentTransactionRepository> rentTransactionRepositoryProvider;
+
   public IncomeViewModel_Factory(Provider<IncomeRepository> incomeRepositoryProvider,
-      Provider<RentalPropertyRepository> rentalPropertyRepositoryProvider) {
+      Provider<RentalPropertyRepository> rentalPropertyRepositoryProvider,
+      Provider<RentTransactionRepository> rentTransactionRepositoryProvider) {
     this.incomeRepositoryProvider = incomeRepositoryProvider;
     this.rentalPropertyRepositoryProvider = rentalPropertyRepositoryProvider;
+    this.rentTransactionRepositoryProvider = rentTransactionRepositoryProvider;
   }
 
   @Override
   public IncomeViewModel get() {
-    return newInstance(incomeRepositoryProvider.get(), rentalPropertyRepositoryProvider.get());
+    return newInstance(incomeRepositoryProvider.get(), rentalPropertyRepositoryProvider.get(), rentTransactionRepositoryProvider.get());
   }
 
   public static IncomeViewModel_Factory create(Provider<IncomeRepository> incomeRepositoryProvider,
-      Provider<RentalPropertyRepository> rentalPropertyRepositoryProvider) {
-    return new IncomeViewModel_Factory(incomeRepositoryProvider, rentalPropertyRepositoryProvider);
+      Provider<RentalPropertyRepository> rentalPropertyRepositoryProvider,
+      Provider<RentTransactionRepository> rentTransactionRepositoryProvider) {
+    return new IncomeViewModel_Factory(incomeRepositoryProvider, rentalPropertyRepositoryProvider, rentTransactionRepositoryProvider);
   }
 
   public static IncomeViewModel newInstance(IncomeRepository incomeRepository,
-      RentalPropertyRepository rentalPropertyRepository) {
-    return new IncomeViewModel(incomeRepository, rentalPropertyRepository);
+      RentalPropertyRepository rentalPropertyRepository,
+      RentTransactionRepository rentTransactionRepository) {
+    return new IncomeViewModel(incomeRepository, rentalPropertyRepository, rentTransactionRepository);
   }
 }

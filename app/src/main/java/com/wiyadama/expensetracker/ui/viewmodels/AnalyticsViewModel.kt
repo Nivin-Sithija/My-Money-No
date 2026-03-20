@@ -28,25 +28,33 @@ class AnalyticsViewModel @Inject constructor(
     private val _categories = MutableStateFlow<List<Category>>(emptyList())
     val categories: StateFlow<List<Category>> = _categories
 
-    val totalSpending: StateFlow<Int> = transactionRepository.getAllTransactions()
-        .map { transactions ->
-            transactions.filter { it.deletedAt == null }
-                .sumOf { it.amountCents }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val totalSpending: StateFlow<Int> = combine(
+        transactionRepository.getAllTransactions(),
+        categoryRepository.getRootCategories()
+    ) { transactions, categories ->
+        val bankCardCategory = categories.find { it.name == "Bank Card Payments" }
+        val bankCardSubcategoryIds = categories.filter { it.parentId == bankCardCategory?.id }.map { it.id }
+        val excludedCategoryIds = setOfNotNull(bankCardCategory?.id) + bankCardSubcategoryIds
+        
+        transactions.filter { it.deletedAt == null && it.categoryId !in excludedCategoryIds }
+            .sumOf { it.amountCents }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     val categoryBreakdown: StateFlow<List<CategorySpending>> = combine(
         transactionRepository.getAllTransactions(),
         categoryRepository.getRootCategories()
     ) { transactions, categories ->
-        val activeTransactions = transactions.filter { it.deletedAt == null }
+        val bankCardCategory = categories.find { it.name == "Bank Card Payments" }
+        val bankCardSubcategoryIds = categories.filter { it.parentId == bankCardCategory?.id }.map { it.id }
+        val excludedCategoryIds = setOfNotNull(bankCardCategory?.id) + bankCardSubcategoryIds
+        
+        val activeTransactions = transactions.filter { it.deletedAt == null && it.categoryId !in excludedCategoryIds }
         val total = activeTransactions.sumOf { it.amountCents }.toFloat()
         
         if (total == 0f || categories.isEmpty()) return@combine emptyList()
 
         val categoryMap = categories.associateBy { it.id }
         val spendingByCategory = activeTransactions
-            .filter { it.deletedAt == null }
             .groupBy { it.categoryId }
             .mapNotNull { (categoryId, txns) ->
                 val category = categoryMap[categoryId] ?: return@mapNotNull null
@@ -68,9 +76,14 @@ class AnalyticsViewModel @Inject constructor(
 
     val trendData: StateFlow<List<TrendDataPoint>> = combine(
         _selectedPeriod,
-        transactionRepository.getAllTransactions()
-    ) { period, transactions ->
-        val activeTransactions = transactions.filter { it.deletedAt == null }
+        transactionRepository.getAllTransactions(),
+        categoryRepository.getRootCategories()
+    ) { period, transactions, categories ->
+        val bankCardCategory = categories.find { it.name == "Bank Card Payments" }
+        val bankCardSubcategoryIds = categories.filter { it.parentId == bankCardCategory?.id }.map { it.id }
+        val excludedCategoryIds = setOfNotNull(bankCardCategory?.id) + bankCardSubcategoryIds
+        
+        val activeTransactions = transactions.filter { it.deletedAt == null && it.categoryId !in excludedCategoryIds }
         val calendar = Calendar.getInstance()
         val dateFormat = when (period) {
             AnalyticsPeriod.DAILY -> SimpleDateFormat("EEE", Locale.getDefault())
@@ -151,56 +164,71 @@ class AnalyticsViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     // Period comparison data
-    val thisMonthSpending: StateFlow<Int> = transactionRepository.getAllTransactions()
-        .map { transactions ->
-            val calendar = Calendar.getInstance()
-            calendar.set(Calendar.DAY_OF_MONTH, 1)
-            calendar.set(Calendar.HOUR_OF_DAY, 0)
-            calendar.set(Calendar.MINUTE, 0)
-            calendar.set(Calendar.SECOND, 0)
-            val startOfMonth = calendar.timeInMillis
-            
-            transactions
-                .filter { it.deletedAt == null && it.dateTime >= startOfMonth }
-                .sumOf { it.amountCents }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val thisMonthSpending: StateFlow<Int> = combine(
+        transactionRepository.getAllTransactions(),
+        categoryRepository.getRootCategories()
+    ) { transactions, categories ->
+        val bankCardCategory = categories.find { it.name == "Bank Card Payments" }
+        val bankCardSubcategoryIds = categories.filter { it.parentId == bankCardCategory?.id }.map { it.id }
+        val excludedCategoryIds = setOfNotNull(bankCardCategory?.id) + bankCardSubcategoryIds
+        
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        val startOfMonth = calendar.timeInMillis
+        
+        transactions
+            .filter { it.deletedAt == null && it.dateTime >= startOfMonth && it.categoryId !in excludedCategoryIds }
+            .sumOf { it.amountCents }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
-    val lastMonthSpending: StateFlow<Int> = transactionRepository.getAllTransactions()
-        .map { transactions ->
-            val calendar = Calendar.getInstance()
-            calendar.add(Calendar.MONTH, -1)
-            calendar.set(Calendar.DAY_OF_MONTH, 1)
-            calendar.set(Calendar.HOUR_OF_DAY, 0)
-            calendar.set(Calendar.MINUTE, 0)
-            calendar.set(Calendar.SECOND, 0)
-            val startOfLastMonth = calendar.timeInMillis
-            calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
-            calendar.set(Calendar.HOUR_OF_DAY, 23)
-            calendar.set(Calendar.MINUTE, 59)
-            calendar.set(Calendar.SECOND, 59)
-            val endOfLastMonth = calendar.timeInMillis
-            
-            transactions
-                .filter { it.deletedAt == null && it.dateTime in startOfLastMonth..endOfLastMonth }
-                .sumOf { it.amountCents }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val lastMonthSpending: StateFlow<Int> = combine(
+        transactionRepository.getAllTransactions(),
+        categoryRepository.getRootCategories()
+    ) { transactions, categories ->
+        val bankCardCategory = categories.find { it.name == "Bank Card Payments" }
+        val bankCardSubcategoryIds = categories.filter { it.parentId == bankCardCategory?.id }.map { it.id }
+        val excludedCategoryIds = setOfNotNull(bankCardCategory?.id) + bankCardSubcategoryIds
+        
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.MONTH, -1)
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        val startOfLastMonth = calendar.timeInMillis
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        val endOfLastMonth = calendar.timeInMillis
+        
+        transactions
+            .filter { it.deletedAt == null && it.dateTime in startOfLastMonth..endOfLastMonth && it.categoryId !in excludedCategoryIds }
+            .sumOf { it.amountCents }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
-    val averageMonthlySpending: StateFlow<Int> = transactionRepository.getAllTransactions()
-        .map { transactions ->
-            val activeTransactions = transactions.filter { it.deletedAt == null }
-            if (activeTransactions.isEmpty()) return@map 0
-            
-            val oldestTransaction = activeTransactions.minByOrNull { it.dateTime }?.dateTime ?: return@map 0
-            val now = System.currentTimeMillis()
-            val monthsDiff = ((now - oldestTransaction) / (30L * 24 * 60 * 60 * 1000)).toInt() + 1
-            
-            if (monthsDiff == 0) return@map 0
-            
-            activeTransactions.sumOf { it.amountCents } / monthsDiff
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val averageMonthlySpending: StateFlow<Int> = combine(
+        transactionRepository.getAllTransactions(),
+        categoryRepository.getRootCategories()
+    ) { transactions, categories ->
+        val bankCardCategory = categories.find { it.name == "Bank Card Payments" }
+        val bankCardSubcategoryIds = categories.filter { it.parentId == bankCardCategory?.id }.map { it.id }
+        val excludedCategoryIds = setOfNotNull(bankCardCategory?.id) + bankCardSubcategoryIds
+        
+        val activeTransactions = transactions.filter { it.deletedAt == null && it.categoryId !in excludedCategoryIds }
+        if (activeTransactions.isEmpty()) return@combine 0
+        
+        val oldestTransaction = activeTransactions.minByOrNull { it.dateTime }?.dateTime ?: return@combine 0
+        val now = System.currentTimeMillis()
+        val monthsDiff = ((now - oldestTransaction) / (30L * 24 * 60 * 60 * 1000)).toInt() + 1
+        
+        if (monthsDiff == 0) return@combine 0
+        
+        activeTransactions.sumOf { it.amountCents } / monthsDiff
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     // Insights
     data class Insight(
@@ -211,9 +239,13 @@ class AnalyticsViewModel @Inject constructor(
 
     val insights: StateFlow<List<Insight>> = combine(
         transactionRepository.getAllTransactions(),
-        categoryRepository.getRootCategories()
+        categoryRepository.getAllCategories()
     ) { transactions, categories ->
-        val activeTransactions = transactions.filter { it.deletedAt == null }
+        val bankCardCategory = categories.find { it.name == "Bank Card Payments" }
+        val bankCardSubcategoryIds = categories.filter { it.parentId == bankCardCategory?.id }.map { it.id }
+        val excludedCategoryIds = setOfNotNull(bankCardCategory?.id) + bankCardSubcategoryIds
+        
+        val activeTransactions = transactions.filter { it.deletedAt == null && it.categoryId !in excludedCategoryIds }
         if (activeTransactions.isEmpty() || categories.isEmpty()) return@combine emptyList()
 
         val insightsList = mutableListOf<Insight>()

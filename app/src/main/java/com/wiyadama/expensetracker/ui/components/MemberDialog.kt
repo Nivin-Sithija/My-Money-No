@@ -1,5 +1,11 @@
 package com.wiyadama.expensetracker.ui.components
 
+import android.net.Uri
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -9,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -16,9 +23,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import coil.compose.rememberAsyncImagePainter
 import com.wiyadama.expensetracker.data.entity.Member
 import com.wiyadama.expensetracker.ui.theme.*
 
@@ -26,13 +35,31 @@ import com.wiyadama.expensetracker.ui.theme.*
 fun MemberDialog(
     member: Member? = null,
     onDismiss: () -> Unit,
-    onConfirm: (name: String, color: Int) -> Unit
+    onConfirm: (name: String, color: Int, imagePath: String?) -> Unit
 ) {
+    val context = LocalContext.current
     var memberName by remember { mutableStateOf(member?.name ?: "") }
     // Convert Int color to hex String, default to Indigo if null
     val defaultColorHex = "#6366F1"
     val initialColorHex = member?.color?.let { String.format("#%06X", (0xFFFFFF and it)) } ?: defaultColorHex
     var selectedColor by remember { mutableStateOf(initialColorHex) }
+    var selectedImageUri by remember { mutableStateOf<Uri?>(member?.imagePath?.let { Uri.parse(it) }) }
+    
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            try {
+                context.contentResolver.takePersistableUriPermission(
+                    it,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (e: SecurityException) {
+                // Permission already granted or not available
+            }
+        }
+        selectedImageUri = uri
+    }
     
     // Predefined colors for member selection
     val memberColors = listOf(
@@ -76,6 +103,43 @@ fun MemberDialog(
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         color = Slate900
+                    )
+                }
+                
+                // Image Picker
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(CircleShape)
+                            .background(Slate100)
+                            .clickable { imagePickerLauncher.launch("image/*") },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (selectedImageUri != null) {
+                            Image(
+                                painter = rememberAsyncImagePainter(selectedImageUri),
+                                contentDescription = "Member photo",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.AddAPhoto,
+                                contentDescription = "Add photo",
+                                tint = Slate400,
+                                modifier = Modifier.size(40.dp)
+                            )
+                        }
+                    }
+                    Text(
+                        text = "Tap to ${if (selectedImageUri != null) "change" else "add"} photo",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Slate500
                     )
                 }
                 
@@ -163,7 +227,7 @@ fun MemberDialog(
                             if (memberName.isNotBlank()) {
                                 // Convert hex string to Int color
                                 val colorInt = android.graphics.Color.parseColor(selectedColor)
-                                onConfirm(memberName.trim(), colorInt)
+                                onConfirm(memberName.trim(), colorInt, selectedImageUri?.toString())
                             }
                         },
                         enabled = memberName.isNotBlank(),

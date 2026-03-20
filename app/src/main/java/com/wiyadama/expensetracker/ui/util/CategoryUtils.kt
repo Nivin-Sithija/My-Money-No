@@ -18,7 +18,7 @@ fun getCategoryData(name: String): CategoryData {
         "Bank Card Payments", "Amex Card", "Combank Card" -> CategoryData(
             Icons.Default.CreditCard,
             listOf(Indigo400, Blue400),
-            listOf(Indigo50, Slate50),
+            listOf(Color(0xFFF5F7FF), Color(0xFFEEF2FF)),
             Indigo500
         )
         "Medical Expenses" -> CategoryData(
@@ -48,7 +48,7 @@ fun getCategoryData(name: String): CategoryData {
         "Telephone" -> CategoryData(
             Icons.Default.Phone,
             listOf(Emerald400, Green500),
-            listOf(Emerald50, Slate50),
+            listOf(Color(0xFFF0FDF4), Color(0xFFDCFCE7)),
             Green500
         )
         "Shopping" -> CategoryData(
@@ -60,7 +60,7 @@ fun getCategoryData(name: String): CategoryData {
         "Seafood and Farm Shops" -> CategoryData(
             Icons.Default.ShoppingCart,
             listOf(Cyan400, Blue400),
-            listOf(Slate50, Slate100),
+            listOf(Color(0xFFF0F9FF), Color(0xFFE0F2FE)),
             Cyan400
         )
         "Sithija Boarding Fees" -> CategoryData(
@@ -99,16 +99,22 @@ fun getCategoryData(name: String): CategoryData {
             BackgroundColors.FoodDiningBg,
             Orange500
         )
+        "Grocery" -> CategoryData(
+            Icons.Default.ShoppingCart,
+            listOf(Emerald400, Green500),
+            listOf(Emerald50, Color(0xFFDCFCE7)),
+            Emerald600
+        )
         "Entertainment" -> CategoryData(
             Icons.Default.MusicNote,
             listOf(Fuchsia400, Purple400),
-            listOf(Purple50, Slate50),
+            listOf(Color(0xFFFDF4FF), Color(0xFFFAF5FF)),
             Fuchsia400
         )
         else -> CategoryData(
             Icons.Default.Category,
             listOf(Slate400, Slate500),
-            listOf(Slate50, Slate100),
+            listOf(Color(0xFFFCFCFD), Color(0xFFF8FAFC)),
             Slate600
         )
     }

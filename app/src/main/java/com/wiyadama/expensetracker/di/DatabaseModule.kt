@@ -65,4 +65,9 @@ object DatabaseModule {
     fun provideRentalPropertyDao(database: WiyadamaDatabase): RentalPropertyDao {
         return database.rentalPropertyDao()
     }
+
+    @Provides
+    fun provideRentTransactionDao(database: WiyadamaDatabase): RentTransactionDao {
+        return database.rentTransactionDao()
+    }
 }

@@ -1,8 +1,10 @@
 package com.wiyadama.expensetracker.ui.screens
 
+import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,8 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.wiyadama.expensetracker.data.entity.Category
 import com.wiyadama.expensetracker.data.entity.Member
 import com.wiyadama.expensetracker.data.entity.Shop
@@ -345,12 +349,21 @@ fun ExpandableMemberCard(
                             ),
                         contentAlignment = Alignment.Center
                     ) {
-                        Text(
-                            text = member.name.firstOrNull()?.toString()?.uppercase() ?: "?",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
+                        if (member.imagePath != null) {
+                            Image(
+                                painter = rememberAsyncImagePainter(Uri.parse(member.imagePath)),
+                                contentDescription = "Member photo",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Text(
+                                text = member.name.firstOrNull()?.toString()?.uppercase() ?: "?",
+                                style = MaterialTheme.typography.titleLarge,
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
 
                     Column {
@@ -482,12 +495,21 @@ fun ExpandableShopCard(
                             ),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Store,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(24.dp)
-                        )
+                        if (shop.imagePath != null) {
+                            Image(
+                                painter = rememberAsyncImagePainter(Uri.parse(shop.imagePath)),
+                                contentDescription = "Shop photo",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Default.Store,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
 
                     Column {

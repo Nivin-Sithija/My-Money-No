@@ -74,7 +74,7 @@ class HomeViewModel @Inject constructor(
         allTransactions
             .map { transactions -> 
                 transactions
-                    .filter { it.deletedAt == null }
+                    .filter { it.deletedAt == null && it.dateTime >= currentMonthStart }
                     .sortedByDescending { it.dateTime }
                     .take(10)
             }
@@ -86,23 +86,38 @@ class HomeViewModel @Inject constructor(
     val shops: StateFlow<List<Shop>> = shopRepository.getAllShops()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val allCategoriesList: StateFlow<List<Category>> = allCategories
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     val categoriesWithStats: StateFlow<List<CategoryWithStats>> = combine(
         allCategories,
         allTransactions
     ) { allCategories, transactions ->
-        val rootCategories = allCategories.filter { it.parentId == null }
-        rootCategories.map { category ->
-            val subcategoryIds = allCategories.filter { it.parentId == category.id }.map { it.id }
-            val relevantIds = setOf(category.id) + subcategoryIds
-            val categoryTransactions = transactions.filter { 
-                it.categoryId in relevantIds && it.deletedAt == null && it.dateTime >= currentMonthStart
+        // Only show main categories (parentId == null)
+        val mainCategories = allCategories.filter { it.parentId == null }
+        val subcategoriesMap = allCategories.filter { it.parentId != null }.groupBy { it.parentId }
+        
+        mainCategories.map { mainCategory ->
+            // Get transactions for main category
+            val mainCategoryTransactions = transactions.filter { 
+                it.categoryId == mainCategory.id && it.deletedAt == null && it.dateTime >= currentMonthStart
             }
+            
+            // Get transactions for all subcategories
+            val subcategoryIds = subcategoriesMap[mainCategory.id]?.map { it.id } ?: emptyList()
+            val subcategoryTransactions = transactions.filter { 
+                it.categoryId in subcategoryIds && it.deletedAt == null && it.dateTime >= currentMonthStart
+            }
+            
+            // Combine main category and subcategory transactions
+            val allCategoryTransactions = mainCategoryTransactions + subcategoryTransactions
+            
             CategoryWithStats(
-                category = category,
-                totalSpent = categoryTransactions.sumOf { it.amountCents },
-                transactionCount = categoryTransactions.size
+                category = mainCategory,
+                totalSpent = allCategoryTransactions.sumOf { it.amountCents },
+                transactionCount = allCategoryTransactions.size
             )
-        }.sortedByDescending { it.transactionCount }
+        }.filter { it.transactionCount > 0 }.sortedByDescending { it.transactionCount }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     
     private val _backupFiles = MutableStateFlow<List<File>>(emptyList())

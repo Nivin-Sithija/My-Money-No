@@ -312,14 +312,27 @@ fun HistoryTransactionItemWithActions(
                     Column(
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text(
-                            text = category?.name ?: "Unknown",
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Medium,
-                            color = Slate900,
-                            maxLines = 1,
-                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
-                        )
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = category?.name ?: "Unknown",
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Slate900,
+                                modifier = Modifier.weight(1f, fill = false),
+                                maxLines = 1,
+                                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "-${CurrencyFormatter.formatWithSymbol(transaction.amountCents, "LKR")}",
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = if (transaction.deletedAt != null) Red900 else Slate900
+                            )
+                        }
                         val subtitleParts = mutableListOf<String>()
                         val description = transaction.merchantName ?: transaction.notes
                         if (!description.isNullOrBlank()) subtitleParts.add(description)
@@ -336,9 +349,10 @@ fun HistoryTransactionItemWithActions(
                             )
                         }
                         Text(
-                            text = DateUtils.formatDate(transaction.dateTime),
+                            text = DateUtils.formatCompactDate(transaction.dateTime),
                             style = MaterialTheme.typography.bodySmall,
-                            color = Slate400
+                            color = Slate400,
+                            maxLines = 1
                         )
                         if (transaction.deletedAt != null) {
                             Text(
@@ -353,45 +367,29 @@ fun HistoryTransactionItemWithActions(
                     }
                 }
 
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.End
-                    ) {
-                        Text(
-                            text = "-${CurrencyFormatter.formatWithSymbol(transaction.amountCents, "LKR")}",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = if (transaction.deletedAt != null) Red900 else Slate900
-                        )
-                    }
-                    
-                    if (transaction.deletedAt == null) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                            IconButton(
-                                onClick = { onEdit(transaction) },
-                                modifier = Modifier.size(36.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Edit,
-                                    contentDescription = "Edit",
-                                    tint = Indigo600,
-                                    modifier = Modifier.size(20.dp)
-                                )
-                            }
-                            IconButton(
-                                onClick = { onDelete(transaction) },
-                                modifier = Modifier.size(36.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Delete,
-                                    contentDescription = "Delete",
-                                    tint = Red600,
-                                    modifier = Modifier.size(20.dp)
-                                )
-                            }
+                if (transaction.deletedAt == null) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        IconButton(
+                            onClick = { onEdit(transaction) },
+                            modifier = Modifier.size(32.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Edit,
+                                contentDescription = "Edit",
+                                tint = Indigo600,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                        IconButton(
+                            onClick = { onDelete(transaction) },
+                            modifier = Modifier.size(32.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Delete",
+                                tint = Red600,
+                                modifier = Modifier.size(18.dp)
+                            )
                         }
                     }
                 }
@@ -604,113 +602,129 @@ fun FilterBottomSheet(
     onDismiss: () -> Unit,
     onApplyFilters: (startDate: Long?, endDate: Long?, categoryId: Long?, memberId: Long?, shopId: Long?) -> Unit
 ) {
-    var startDate by remember { mutableStateOf<Long?>(null) }
-    var endDate by remember { mutableStateOf<Long?>(null) }
-    var selectedCategory by remember { mutableStateOf<Long?>(null) }
-    var selectedMember by remember { mutableStateOf<Long?>(null) }
-    var selectedShop by remember { mutableStateOf<Long?>(null) }
-
-    ModalBottomSheet(
+    AlertDialog(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        containerColor = Slate50,
-        dragHandle = { BottomSheetDefaults.DragHandle() }
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().navigationBarsPadding()
-        ) {
-            // Header
+        containerColor = Color.White,
+        title = {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Filter Transactions",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Slate900,
-                    fontWeight = FontWeight.Bold
-                )
-                IconButton(onClick = onDismiss) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Close",
-                        tint = Slate500
+                        imageVector = Icons.Default.FilterList,
+                        contentDescription = null,
+                        tint = Teal600
+                    )
+                    Text(
+                        text = "Filter Transactions",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
                     )
                 }
             }
-
-            LazyColumn(
-                modifier = Modifier.weight(1f, fill = false),
-                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 8.dp),
+        },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                item {
-                    Text(text = "Date Range", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = Slate900)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
-                        Column(modifier = Modifier.padding(16.dp)) { Text(text = "Date range picker will be implemented", style = MaterialTheme.typography.bodyMedium, color = Slate500) }
+                Text(
+                    text = "Coming soon: Advanced filtering options",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Slate600
+                )
+                
+                Divider(color = Slate200)
+                
+                Text(
+                    text = "Available filters will include:",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Slate500,
+                    fontWeight = FontWeight.SemiBold
+                )
+                
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = null,
+                            tint = Slate400,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Text(
+                            text = "Date Range",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Slate700
+                        )
                     }
-                }
-
-                item {
-                    Text(text = "Category", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = Slate900)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
-                        Column(modifier = Modifier.padding(16.dp)) { Text(text = "Category selector", style = MaterialTheme.typography.bodyMedium, color = Slate500) }
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Category,
+                            contentDescription = null,
+                            tint = Slate400,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Text(
+                            text = "Category",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Slate700
+                        )
                     }
-                }
-
-                item {
-                    Text(text = "Member", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = Slate900)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
-                        Column(modifier = Modifier.padding(16.dp)) { Text(text = "Member selector", style = MaterialTheme.typography.bodyMedium, color = Slate500) }
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = null,
+                            tint = Slate400,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Text(
+                            text = "Member",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Slate700
+                        )
                     }
-                }
-
-                item {
-                    Text(text = "Shop", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = Slate900)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
-                        Column(modifier = Modifier.padding(16.dp)) { Text(text = "Shop selector", style = MaterialTheme.typography.bodyMedium, color = Slate500) }
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Store,
+                            contentDescription = null,
+                            tint = Slate400,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Text(
+                            text = "Shop",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Slate700
+                        )
                     }
                 }
             }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(24.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+        },
+        confirmButton = {
+            Button(
+                onClick = onDismiss,
+                colors = ButtonDefaults.buttonColors(containerColor = Teal600),
+                shape = RoundedCornerShape(12.dp)
             ) {
-                OutlinedButton(
-                    onClick = {
-                        startDate = null
-                        endDate = null
-                        selectedCategory = null
-                        selectedMember = null
-                        selectedShop = null
-                    },
-                    modifier = Modifier.weight(1f).height(48.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Slate700)
-                ) {
-                    Text(text = "Clear", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                }
-                Button(
-                    onClick = {
-                        onApplyFilters(startDate, endDate, selectedCategory, selectedMember, selectedShop)
-                    },
-                    modifier = Modifier.weight(1f).height(48.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Teal600)
-                ) {
-                    Text(text = "Apply Filters", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                }
+                Text("OK")
             }
-        }
-    }
+        },
+        shape = RoundedCornerShape(24.dp)
+    )
 }
