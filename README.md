@@ -1,6 +1,9 @@
-# Wiyadama Expense Tracker
+# My-Money-No
 
-A modern, offline-first expense tracking Android application built with Jetpack Compose.
+As a housewife my mum was writing expenses in a diary book for her to remember.So I decided why not make her life a bit easier?
+Also the name of app was inspired by my dads famous words which he repeats when we buy him a gift from his own money.😅
+
+This is a modern, offline-first expense tracking Android application built with Kotlin using Jetpack Compose.
 
 ## Key Features
 - **Transaction Management**: Add, edit, and categorize expenses.
@@ -15,7 +18,4 @@ A modern, offline-first expense tracking Android application built with Jetpack 
 - **Database**: Room Database
 - **Build System**: Gradle
 
-## How to Run
-1. Open the project in Android Studio.
-2. Sync Gradle files.
-3. Select a device/emulator and click **Run**.
+
