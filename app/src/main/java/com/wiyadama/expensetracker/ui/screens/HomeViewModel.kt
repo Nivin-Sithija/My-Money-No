@@ -32,18 +32,46 @@ class HomeViewModel @Inject constructor(
     private val backupManager: BackupManager
 ) : ViewModel() {
 
-    val totalExpenses: StateFlow<Int> = transactionRepository.getAllTransactions()
-        .map { transactions -> 
-            transactions.filter { it.deletedAt == null }.sumOf { it.amountCents }
-        }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    private val currentMonthStart = com.wiyadama.expensetracker.util.DateUtils.getStartOfMonth(System.currentTimeMillis())
+    
+    private val allTransactions = transactionRepository.getAllTransactions()
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), replay = 1)
+    
+    private val allCategories = categoryRepository.getAllCategories()
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(5000), replay = 1)
 
-    val transactionCount: StateFlow<Int> = transactionRepository.getAllTransactions()
-        .map { transactions -> transactions.count { it.deletedAt == null } }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val totalExpenses: StateFlow<Int> = combine(
+        allTransactions,
+        allCategories
+    ) { transactions, categories ->
+        val bankCardCategory = categories.find { it.name == "Bank Card Payments" }
+        val bankCardSubcategoryIds = categories.filter { it.parentId == bankCardCategory?.id }.map { it.id }
+        val excludedCategoryIds = setOfNotNull(bankCardCategory?.id) + bankCardSubcategoryIds
+        
+        transactions.filter { 
+            it.deletedAt == null && 
+            it.dateTime >= currentMonthStart &&
+            it.categoryId !in excludedCategoryIds
+        }.sumOf { it.amountCents }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+
+    val transactionCount: StateFlow<Int> = combine(
+        allTransactions,
+        allCategories
+    ) { transactions, categories ->
+        val bankCardCategory = categories.find { it.name == "Bank Card Payments" }
+        val bankCardSubcategoryIds = categories.filter { it.parentId == bankCardCategory?.id }.map { it.id }
+        val excludedCategoryIds = setOfNotNull(bankCardCategory?.id) + bankCardSubcategoryIds
+        
+        transactions.count { 
+            it.deletedAt == null && 
+            it.dateTime >= currentMonthStart &&
+            it.categoryId !in excludedCategoryIds
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     val recentTransactions: StateFlow<List<Transaction>> =
-        transactionRepository.getAllTransactions()
+        allTransactions
             .map { transactions -> 
                 transactions
                     .filter { it.deletedAt == null }
@@ -59,19 +87,22 @@ class HomeViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val categoriesWithStats: StateFlow<List<CategoryWithStats>> = combine(
-        categoryRepository.getRootCategories(),
-        transactionRepository.getAllTransactions()
-    ) { categories, transactions ->
-        categories.map { category ->
+        allCategories,
+        allTransactions
+    ) { allCategories, transactions ->
+        val rootCategories = allCategories.filter { it.parentId == null }
+        rootCategories.map { category ->
+            val subcategoryIds = allCategories.filter { it.parentId == category.id }.map { it.id }
+            val relevantIds = setOf(category.id) + subcategoryIds
             val categoryTransactions = transactions.filter { 
-                it.categoryId == category.id && it.deletedAt == null 
+                it.categoryId in relevantIds && it.deletedAt == null && it.dateTime >= currentMonthStart
             }
             CategoryWithStats(
                 category = category,
                 totalSpent = categoryTransactions.sumOf { it.amountCents },
                 transactionCount = categoryTransactions.size
             )
-        }
+        }.sortedByDescending { it.transactionCount }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     
     private val _backupFiles = MutableStateFlow<List<File>>(emptyList())

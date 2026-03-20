@@ -9,6 +9,7 @@ import com.wiyadama.expensetracker.ui.viewmodels.AnalyticsViewModel_HiltModules;
 import com.wiyadama.expensetracker.ui.viewmodels.CategoryDetailViewModel_HiltModules;
 import com.wiyadama.expensetracker.ui.viewmodels.CategoryManagementViewModel_HiltModules;
 import com.wiyadama.expensetracker.ui.viewmodels.HistoryViewModel_HiltModules;
+import com.wiyadama.expensetracker.ui.viewmodels.IncomeViewModel_HiltModules;
 import com.wiyadama.expensetracker.ui.viewmodels.MembersViewModel_HiltModules;
 import dagger.Binds;
 import dagger.Component;
@@ -171,6 +172,7 @@ public final class WiyadamaApplication_HiltComponents {
           HiltWrapper_SavedStateHandleModule.class,
           HistoryViewModel_HiltModules.KeyModule.class,
           HomeViewModel_HiltModules.KeyModule.class,
+          IncomeViewModel_HiltModules.KeyModule.class,
           MembersViewModel_HiltModules.KeyModule.class,
           ActivityCBuilderModule.class,
           ViewModelCBuilderModule.class
@@ -216,6 +218,7 @@ public final class WiyadamaApplication_HiltComponents {
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
           HistoryViewModel_HiltModules.BindsModule.class,
           HomeViewModel_HiltModules.BindsModule.class,
+          IncomeViewModel_HiltModules.BindsModule.class,
           MembersViewModel_HiltModules.BindsModule.class
       }
   )

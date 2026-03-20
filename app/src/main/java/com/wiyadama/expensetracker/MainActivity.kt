@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.wiyadama.expensetracker.ui.screens.*
 import com.wiyadama.expensetracker.ui.theme.*
@@ -32,17 +33,20 @@ class MainActivity : ComponentActivity() {
     private val membersViewModel: MembersViewModel by viewModels()
     private val historyViewModel: HistoryViewModel by viewModels()
     private val addExpenseViewModel: AddExpenseViewModel by viewModels()
+    private val incomeViewModel: com.wiyadama.expensetracker.ui.viewmodels.IncomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            WiyadamaExpenseTrackerTheme {
+            MyMoneyTheme {
                 MainApp(
                     homeViewModel = homeViewModel,
                     membersViewModel = membersViewModel,
                     historyViewModel = historyViewModel,
-                    addExpenseViewModel = addExpenseViewModel
+                    addExpenseViewModel = addExpenseViewModel,
+                    incomeViewModel = incomeViewModel
                 )
             }
         }
@@ -54,12 +58,14 @@ fun MainApp(
     homeViewModel: HomeViewModel,
     membersViewModel: MembersViewModel,
     historyViewModel: HistoryViewModel,
-    addExpenseViewModel: AddExpenseViewModel
+    addExpenseViewModel: AddExpenseViewModel,
+    incomeViewModel: com.wiyadama.expensetracker.ui.viewmodels.IncomeViewModel
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     var showAddExpense by remember { mutableStateOf(false) }
     var showFilterDialog by remember { mutableStateOf(false) }
     var selectedCategoryId by remember { mutableStateOf<Long?>(null) }
+    var categoryBackStack by remember { mutableStateOf<List<Long>>(emptyList()) }
     var editingTransaction by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Transaction?>(null) }
     var showMonthlyExpenses by remember { mutableStateOf(false) }
 
@@ -127,7 +133,20 @@ fun MainApp(
                             if (selectedCategoryId != null) {
                                 CategoryDetailScreen(
                                     categoryId = selectedCategoryId!!,
-                                    onBack = { selectedCategoryId = null }
+                                    onBack = { 
+                                        if (categoryBackStack.size > 1) {
+                                            val newStack = categoryBackStack.dropLast(1)
+                                            categoryBackStack = newStack
+                                            selectedCategoryId = newStack.last()
+                                        } else {
+                                            selectedCategoryId = null
+                                            categoryBackStack = emptyList()
+                                        }
+                                    },
+                                    onSubcategoryClick = { subId ->
+                                        categoryBackStack = categoryBackStack + subId
+                                        selectedCategoryId = subId
+                                    }
                                 )
                             } else if (showMonthlyExpenses) {
                                 MonthlyExpensesScreen(
@@ -138,6 +157,7 @@ fun MainApp(
                                 HomeScreen(
                                     onCategoryClick = { categoryId ->
                                         selectedCategoryId = categoryId
+                                        categoryBackStack = listOf(categoryId)
                                     },
                                     onSeeAllCategoriesClick = {
                                         showCategoryManagement = true
@@ -148,8 +168,9 @@ fun MainApp(
                                 )
                             }
                         }
-                        1 -> AnalyticsScreen()
-                        2 -> {
+                        1 -> IncomeScreen(viewModel = incomeViewModel)
+                        2 -> AnalyticsScreen()
+                        3 -> {
                             var showMemberDialog by remember { mutableStateOf(false) }
                             var showShopDialog by remember { mutableStateOf(false) }
                             var editingMember by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Member?>(null) }
@@ -243,7 +264,7 @@ fun MainApp(
                                 )
                             }
                         }
-                        3 -> HistoryScreen(
+                        4 -> HistoryScreen(
                             transactions = transactions,
                             categories = categories.map { it },
                             members = members,
@@ -326,13 +347,6 @@ fun MainApp(
         )
     }
     
-    // Category Detail Screen
-    selectedCategoryId?.let { categoryId ->
-        CategoryDetailScreen(
-            categoryId = categoryId,
-            onBack = { selectedCategoryId = null }
-        )
-    }
 }
 
 
@@ -342,15 +356,10 @@ fun BottomNavigationBar(
     selectedTab: Int,
     onTabSelected: (Int) -> Unit
 ) {
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        color = Color.White.copy(alpha = 0.6f),
-        shadowElevation = 8.dp
+    NavigationBar(
+        containerColor = Color.White,
+        tonalElevation = 8.dp
     ) {
-        NavigationBar(
-            containerColor = Color.Transparent,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-        ) {
             NavigationBarItem(
                 icon = {
                     Icon(
@@ -359,13 +368,32 @@ fun BottomNavigationBar(
                         modifier = Modifier.size(24.dp)
                     )
                 },
-                label = { Text("Home", style = MaterialTheme.typography.labelMedium) },
+                label = { Text("Home", style = MaterialTheme.typography.labelSmall) },
                 selected = selectedTab == 0,
                 onClick = { onTabSelected(0) },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Indigo500,
-                    selectedTextColor = Indigo500,
-                    indicatorColor = Color(0xFFEEF2FF),
+                    selectedIconColor = Indigo600,
+                    selectedTextColor = Indigo600,
+                    indicatorColor = Indigo50,
+                    unselectedIconColor = Slate400,
+                    unselectedTextColor = Slate400
+                )
+            )
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        Icons.Default.AttachMoney,
+                        contentDescription = "Income",
+                        modifier = Modifier.size(24.dp)
+                    )
+                },
+                label = { Text("Income", style = MaterialTheme.typography.labelSmall) },
+                selected = selectedTab == 1,
+                onClick = { onTabSelected(1) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = Emerald600,
+                    selectedTextColor = Emerald600,
+                    indicatorColor = Emerald50,
                     unselectedIconColor = Slate400,
                     unselectedTextColor = Slate400
                 )
@@ -378,13 +406,13 @@ fun BottomNavigationBar(
                         modifier = Modifier.size(24.dp)
                     )
                 },
-                label = { Text("Analytics", style = MaterialTheme.typography.labelMedium) },
-                selected = selectedTab == 1,
-                onClick = { onTabSelected(1) },
+                label = { Text("Analytics", style = MaterialTheme.typography.labelSmall) },
+                selected = selectedTab == 2,
+                onClick = { onTabSelected(2) },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Teal500,
-                    selectedTextColor = Teal500,
-                    indicatorColor = Color(0xFFF0FDFA),
+                    selectedIconColor = Teal600,
+                    selectedTextColor = Teal600,
+                    indicatorColor = Teal50,
                     unselectedIconColor = Slate400,
                     unselectedTextColor = Slate400
                 )
@@ -397,13 +425,13 @@ fun BottomNavigationBar(
                         modifier = Modifier.size(24.dp)
                     )
                 },
-                label = { Text("Members", style = MaterialTheme.typography.labelMedium) },
-                selected = selectedTab == 2,
-                onClick = { onTabSelected(2) },
+                label = { Text("Members", style = MaterialTheme.typography.labelSmall) },
+                selected = selectedTab == 3,
+                onClick = { onTabSelected(3) },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Purple500,
-                    selectedTextColor = Purple500,
-                    indicatorColor = Color(0xFFFAF5FF),
+                    selectedIconColor = Purple600,
+                    selectedTextColor = Purple600,
+                    indicatorColor = Purple50,
                     unselectedIconColor = Slate400,
                     unselectedTextColor = Slate400
                 )
@@ -416,9 +444,9 @@ fun BottomNavigationBar(
                         modifier = Modifier.size(24.dp)
                     )
                 },
-                label = { Text("History", style = MaterialTheme.typography.labelMedium) },
-                selected = selectedTab == 3,
-                onClick = { onTabSelected(3) },
+                label = { Text("History", style = MaterialTheme.typography.labelSmall) },
+                selected = selectedTab == 4,
+                onClick = { onTabSelected(4) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Slate700,
                     selectedTextColor = Slate700,
@@ -427,6 +455,5 @@ fun BottomNavigationBar(
                     unselectedTextColor = Slate400
                 )
             )
-        }
     }
 }

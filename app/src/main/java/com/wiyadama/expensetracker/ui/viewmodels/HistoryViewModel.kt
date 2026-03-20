@@ -102,44 +102,6 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
-    fun filterByDateRange(startDate: Long, endDate: Long) {
-        viewModelScope.launch {
-            transactionRepository.getTransactionsByDateRange(startDate, endDate).collect { txList ->
-                _transactions.value = txList
-            }
-        }
-    }
-
-    fun filterByCategory(categoryId: Long) {
-        viewModelScope.launch {
-            transactionRepository.getTransactionsByCategory(categoryId).collect { txList ->
-                _transactions.value = txList
-            }
-        }
-    }
-
-    fun filterByMember(memberId: Long) {
-        viewModelScope.launch {
-            transactionRepository.getTransactionsByMember(memberId).collect { txList ->
-                _transactions.value = txList
-            }
-        }
-    }
-
-    fun filterByShop(shopId: Long) {
-        viewModelScope.launch {
-            transactionRepository.getTransactionsByShop(shopId).collect { txList ->
-                _transactions.value = txList
-            }
-        }
-    }
-
-    fun deleteTransaction(transactionId: Long) {
-        viewModelScope.launch {
-            transactionRepository.softDeleteTransaction(transactionId)
-        }
-    }
-
     fun restoreTransaction(transactionId: Long) {
         viewModelScope.launch {
             transactionRepository.restoreTransaction(transactionId)

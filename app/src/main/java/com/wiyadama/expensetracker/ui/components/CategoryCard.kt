@@ -35,13 +35,13 @@ fun CategoryCard(
         modifier = modifier
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.8f)),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
+                .padding(16.dp)
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 // Icon
@@ -60,22 +60,28 @@ fun CategoryCard(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
                     text = name,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = Slate600,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    minLines = 2,
+                    maxLines = 2,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                    lineHeight = androidx.compose.ui.unit.TextUnit(16f, androidx.compose.ui.unit.TextUnitType.Sp)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
                     text = CurrencyFormatter.formatWithSymbol(totalExpense, "LKR"),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Slate900
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = Slate900,
+                    maxLines = 1,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -83,7 +89,9 @@ fun CategoryCard(
                 Text(
                     text = "$transactions expenses",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Slate400
+                    color = Slate400,
+                    maxLines = 1,
+                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                 )
             }
         }

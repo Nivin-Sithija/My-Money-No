@@ -27,7 +27,7 @@ import com.wiyadama.expensetracker.ui.theme.*
 @Preview(showBackground = true, backgroundColor = 0xFFF8FAFC, heightDp = 800)
 @Composable
 fun PreviewMemberDetailScreen() {
-    WiyadamaExpenseTrackerTheme {
+    MyMoneyTheme {
         MemberDetailScreen(
             member = Member(
                 id = 1,
@@ -64,7 +64,7 @@ fun PreviewMemberDetailScreen() {
 @Preview(showBackground = true, backgroundColor = 0xFFF8FAFC, heightDp = 800)
 @Composable
 fun PreviewMembersScreen() {
-    WiyadamaExpenseTrackerTheme {
+    MyMoneyTheme {
         MembersScreen(
             members = listOf(
                 Member(id = 1, name = "John", color = 0xFF6366F1.toInt()),
@@ -103,7 +103,7 @@ fun PreviewMembersScreen() {
 @Preview(showBackground = true, backgroundColor = 0xFFF8FAFC, heightDp = 800)
 @Composable
 fun PreviewShopDetailScreen() {
-    WiyadamaExpenseTrackerTheme {
+    MyMoneyTheme {
         ShopDetailScreen(
             shop = Shop(
                 id = 1,

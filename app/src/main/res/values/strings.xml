@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Wiyadama Expense Tracker</string>
+    <string name="app_name">My Money No</string>
     
     <!-- Navigation -->
     <string name="nav_home">Home</string>
@@ -10,7 +10,7 @@
     
     <!-- Home Screen -->
     <string name="home_title">Overview</string>
-    <string name="home_subtitle">Expense Tracker</string>
+    <string name="home_subtitle">My Money No</string>
     <string name="total_expenses">Total Expenses</string>
     <string name="transactions">Transactions</string>
     <string name="this_month">This month</string>

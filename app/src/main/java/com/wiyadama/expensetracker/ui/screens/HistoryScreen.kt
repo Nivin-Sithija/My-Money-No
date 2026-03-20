@@ -57,6 +57,10 @@ fun HistoryScreen(
             }
         }
     }
+    
+    var transactionToDelete by remember { mutableStateOf<Transaction?>(null) }
+    var transactionToEdit by remember { mutableStateOf<Transaction?>(null) }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -167,8 +171,8 @@ fun HistoryScreen(
                 member = member,
                 shop = shop,
                 onClick = { onTransactionClick(transaction) },
-                onEdit = { onEditTransaction(transaction) },
-                onDelete = { onDeleteTransaction(transaction) }
+                onEdit = { transactionToEdit = transaction },
+                onDelete = { transactionToDelete = transaction }
             )
         }
 
@@ -210,6 +214,40 @@ fun HistoryScreen(
             }
         }
     }
+
+    if (transactionToDelete != null) {
+        AlertDialog(
+            onDismissRequest = { transactionToDelete = null },
+            title = { Text("Delete Transaction") },
+            text = { Text("Are you sure you want to delete this past transaction?") },
+            confirmButton = {
+                TextButton(onClick = { 
+                    onDeleteTransaction(transactionToDelete!!)
+                    transactionToDelete = null 
+                }) { Text("Delete", color = MaterialTheme.colorScheme.error) }
+            },
+            dismissButton = {
+                TextButton(onClick = { transactionToDelete = null }) { Text("Cancel") }
+            }
+        )
+    }
+
+    if (transactionToEdit != null) {
+        AlertDialog(
+            onDismissRequest = { transactionToEdit = null },
+            title = { Text("Edit Transaction") },
+            text = { Text("Are you sure you want to edit this past transaction?") },
+            confirmButton = {
+                TextButton(onClick = { 
+                    onEditTransaction(transactionToEdit!!)
+                    transactionToEdit = null 
+                }) { Text("Edit") }
+            },
+            dismissButton = {
+                TextButton(onClick = { transactionToEdit = null }) { Text("Cancel") }
+            }
+        )
+    }
 }
 
 @Composable
@@ -219,8 +257,8 @@ fun HistoryTransactionItemWithActions(
     member: Member?,
     shop: Shop?,
     onClick: () -> Unit,
-    onEdit: () -> Unit,
-    onDelete: () -> Unit
+    onEdit: (Transaction) -> Unit,
+    onDelete: (Transaction) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     val catData = getCategoryData(category?.name ?: "")
@@ -271,26 +309,32 @@ fun HistoryTransactionItemWithActions(
                         )
                     }
                     Spacer(modifier = Modifier.width(12.dp))
-                    Column {
+                    Column(
+                        modifier = Modifier.weight(1f)
+                    ) {
                         Text(
                             text = category?.name ?: "Unknown",
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium,
-                            color = Slate900
+                            color = Slate900,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
-                        // Show description + member/shop subtitle
                         val subtitleParts = mutableListOf<String>()
                         val description = transaction.merchantName ?: transaction.notes
                         if (!description.isNullOrBlank()) subtitleParts.add(description)
                         if (member != null) subtitleParts.add(member.name)
                         if (shop != null) subtitleParts.add(shop.name)
                         
-                        Text(
-                            text = subtitleParts.joinToString(" \u2022 "),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Indigo500,
-                            maxLines = 1
-                        )
+                        if (subtitleParts.isNotEmpty()) {
+                            Text(
+                                text = subtitleParts.joinToString(" • "),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Indigo500,
+                                maxLines = 1,
+                                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                            )
+                        }
                         Text(
                             text = DateUtils.formatDate(transaction.dateTime),
                             style = MaterialTheme.typography.bodySmall,
@@ -301,7 +345,9 @@ fun HistoryTransactionItemWithActions(
                                 text = "Deleted on ${DateUtils.formatDateTime(transaction.deletedAt)}",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = Red500,
-                                fontWeight = FontWeight.Medium
+                                fontWeight = FontWeight.Medium,
+                                maxLines = 1,
+                                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                             )
                         }
                     }
@@ -325,7 +371,7 @@ fun HistoryTransactionItemWithActions(
                     if (transaction.deletedAt == null) {
                         Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                             IconButton(
-                                onClick = onEdit,
+                                onClick = { onEdit(transaction) },
                                 modifier = Modifier.size(36.dp)
                             ) {
                                 Icon(
@@ -336,7 +382,7 @@ fun HistoryTransactionItemWithActions(
                                 )
                             }
                             IconButton(
-                                onClick = onDelete,
+                                onClick = { onDelete(transaction) },
                                 modifier = Modifier.size(36.dp)
                             ) {
                                 Icon(
@@ -552,6 +598,7 @@ fun HistoryTransactionItem(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterBottomSheet(
     onDismiss: () -> Unit,
@@ -563,192 +610,105 @@ fun FilterBottomSheet(
     var selectedMember by remember { mutableStateOf<Long?>(null) }
     var selectedShop by remember { mutableStateOf<Long?>(null) }
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.Black.copy(alpha = 0.5f)
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        containerColor = Slate50,
+        dragHandle = { BottomSheetDefaults.DragHandle() }
     ) {
-        Card(
-            modifier = Modifier
-                .fillMaxSize()
-                .statusBarsPadding(),
-            shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-            colors = CardDefaults.cardColors(containerColor = Slate50)
+        Column(
+            modifier = Modifier.fillMaxWidth().navigationBarsPadding()
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize()
+            // Header
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                // Header
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            Brush.linearGradient(
-                                colors = listOf(Teal600, Emerald600)
-                            )
-                        )
-                        .padding(24.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Filter Transactions",
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
-                        )
-                        IconButton(onClick = onDismiss) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Close",
-                                tint = Color.White
-                            )
-                        }
+                Text(
+                    text = "Filter Transactions",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Slate900,
+                    fontWeight = FontWeight.Bold
+                )
+                IconButton(onClick = onDismiss) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close",
+                        tint = Slate500
+                    )
+                }
+            }
+
+            LazyColumn(
+                modifier = Modifier.weight(1f, fill = false),
+                contentPadding = PaddingValues(horizontal = 24.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                item {
+                    Text(text = "Date Range", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = Slate900)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                        Column(modifier = Modifier.padding(16.dp)) { Text(text = "Date range picker will be implemented", style = MaterialTheme.typography.bodyMedium, color = Slate500) }
                     }
                 }
 
-                LazyColumn(
-                    modifier = Modifier.weight(1f),
-                    contentPadding = PaddingValues(24.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    item {
-                        Text(
-                            text = "Date Range",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Slate900
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White)
-                        ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    text = "Date range picker will be implemented",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Slate500
-                                )
-                            }
-                        }
-                    }
-
-                    item {
-                        Text(
-                            text = "Category",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Slate900
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White)
-                        ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    text = "Category selector",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Slate500
-                                )
-                            }
-                        }
-                    }
-
-                    item {
-                        Text(
-                            text = "Member",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Slate900
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White)
-                        ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    text = "Member selector",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Slate500
-                                )
-                            }
-                        }
-                    }
-
-                    item {
-                        Text(
-                            text = "Shop",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Slate900
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Card(
-                            shape = RoundedCornerShape(16.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White)
-                        ) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    text = "Shop selector",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Slate500
-                                )
-                            }
-                        }
+                item {
+                    Text(text = "Category", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = Slate900)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                        Column(modifier = Modifier.padding(16.dp)) { Text(text = "Category selector", style = MaterialTheme.typography.bodyMedium, color = Slate500) }
                     }
                 }
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(24.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                item {
+                    Text(text = "Member", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = Slate900)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                        Column(modifier = Modifier.padding(16.dp)) { Text(text = "Member selector", style = MaterialTheme.typography.bodyMedium, color = Slate500) }
+                    }
+                }
+
+                item {
+                    Text(text = "Shop", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, color = Slate900)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Card(shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
+                        Column(modifier = Modifier.padding(16.dp)) { Text(text = "Shop selector", style = MaterialTheme.typography.bodyMedium, color = Slate500) }
+                    }
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                OutlinedButton(
+                    onClick = {
+                        startDate = null
+                        endDate = null
+                        selectedCategory = null
+                        selectedMember = null
+                        selectedShop = null
+                    },
+                    modifier = Modifier.weight(1f).height(48.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Slate700)
                 ) {
-                    OutlinedButton(
-                        onClick = {
-                            startDate = null
-                            endDate = null
-                            selectedCategory = null
-                            selectedMember = null
-                            selectedShop = null
-                        },
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = Slate700
-                        )
-                    ) {
-                        Text(
-                            text = "Clear",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                    Button(
-                        onClick = {
-                            onApplyFilters(startDate, endDate, selectedCategory, selectedMember, selectedShop)
-                        },
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(56.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Teal600
-                        )
-                    ) {
-                        Text(
-                            text = "Apply Filters",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
+                    Text(text = "Clear", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                }
+                Button(
+                    onClick = {
+                        onApplyFilters(startDate, endDate, selectedCategory, selectedMember, selectedShop)
+                    },
+                    modifier = Modifier.weight(1f).height(48.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Teal600)
+                ) {
+                    Text(text = "Apply Filters", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
                 }
             }
         }

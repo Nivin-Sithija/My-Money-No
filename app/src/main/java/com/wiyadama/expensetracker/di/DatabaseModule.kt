@@ -55,4 +55,14 @@ object DatabaseModule {
     fun provideBackupMetaDao(database: WiyadamaDatabase): BackupMetaDao {
         return database.backupMetaDao()
     }
+
+    @Provides
+    fun provideIncomeDao(database: WiyadamaDatabase): IncomeDao {
+        return database.incomeDao()
+    }
+
+    @Provides
+    fun provideRentalPropertyDao(database: WiyadamaDatabase): RentalPropertyDao {
+        return database.rentalPropertyDao()
+    }
 }

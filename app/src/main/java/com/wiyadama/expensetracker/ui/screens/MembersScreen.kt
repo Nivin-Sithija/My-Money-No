@@ -59,7 +59,7 @@ fun MembersScreen(
                     .fillMaxWidth()
                     .background(
                         Brush.linearGradient(
-                            colors = listOf(Purple600, Pink600)
+                            colors = listOf(Indigo600, Purple600)
                         )
                     )
                     .padding(24.dp)
@@ -106,7 +106,7 @@ fun MembersScreen(
                                 .height(44.dp),
                             shape = RoundedCornerShape(12.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (isSelected) Purple600 else Slate100,
+                                containerColor = if (isSelected) Indigo600 else Slate50,
                                 contentColor = if (isSelected) Color.White else Slate700
                             ),
                             elevation = ButtonDefaults.buttonElevation(
@@ -311,11 +311,11 @@ fun ExpandableMemberCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp, vertical = 6.dp)
+            .padding(horizontal = 16.dp, vertical = 4.dp)
             .clickable { expanded = !expanded },
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.5.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -448,11 +448,11 @@ fun ExpandableShopCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp, vertical = 6.dp)
+            .padding(horizontal = 16.dp, vertical = 4.dp)
             .clickable { expanded = !expanded },
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.5.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxWidth()

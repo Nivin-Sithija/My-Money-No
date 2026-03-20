@@ -117,50 +117,6 @@ fun AnalyticsScreen(
             }
         }
 
-        // Insights (moved to top)
-        item {
-            Text(
-                text = "Insights",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-                color = Slate900,
-                modifier = Modifier.padding(start = 24.dp, top = 8.dp, bottom = 12.dp)
-            )
-        }
-
-        items(insights.chunked(3)) { batch ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 6.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                batch.forEachIndexed { index, insight ->
-                    val globalIndex = insights.indexOf(insight)
-                    InsightCard(
-                        title = insight.title,
-                        subtitle = insight.subtitle,
-                        value = insight.value,
-                        icon = when (globalIndex) {
-                            0 -> Icons.Default.TrendingUp
-                            1 -> Icons.Default.Repeat
-                            else -> Icons.Default.Warning
-                        },
-                        accentColor = when (globalIndex) {
-                            0 -> Orange500
-                            1 -> Blue500
-                            else -> Red500
-                        },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                // Fill empty space if odd number
-                if (batch.size == 1) {
-                    Spacer(modifier = Modifier.weight(1f))
-                }
-            }
-        }
-
         // Spending Trend Chart
         item {
             Card(
@@ -227,6 +183,45 @@ fun AnalyticsScreen(
                     SpendingTrendChart(
                         data = trendData,
                         modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
+        }
+
+        // Insights 
+        item {
+            Text(
+                text = "Insights",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.SemiBold,
+                color = Slate900,
+                modifier = Modifier.padding(start = 24.dp, top = 16.dp, bottom = 12.dp)
+            )
+        }
+
+        item {
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(horizontal = 24.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(insights) { insight ->
+                    val globalIndex = insights.indexOf(insight)
+                    InsightCard(
+                        title = insight.title,
+                        subtitle = insight.subtitle,
+                        value = insight.value,
+                        icon = when (globalIndex) {
+                            0 -> Icons.Default.TrendingUp
+                            1 -> Icons.Default.Repeat
+                            else -> Icons.Default.Warning
+                        },
+                        accentColor = when (globalIndex) {
+                            0 -> Orange500
+                            1 -> Blue500
+                            else -> Red500
+                        },
+                        modifier = Modifier.width(200.dp)
                     )
                 }
             }

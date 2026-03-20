@@ -58,6 +58,7 @@ fun AddExpenseScreen(
     // Dialog states
     var showMemberDialog by remember { mutableStateOf(false) }
     var showShopDialog by remember { mutableStateOf(false) }
+    var showDatePicker by remember { mutableStateOf(false) }
     
     // Categorize categories
     val mainCategories = categories.filter { it.parentId == null }
@@ -73,7 +74,7 @@ fun AddExpenseScreen(
                 .fillMaxSize()
                 .statusBarsPadding(),
             shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-            colors = CardDefaults.cardColors(containerColor = Slate50)
+            colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
             Column(
                 modifier = Modifier.fillMaxSize()
@@ -113,10 +114,10 @@ fun AddExpenseScreen(
                 // Scrollable content
                 LazyColumn(
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    contentPadding = PaddingValues(24.dp),
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                        .fillMaxSize()
+                        .weight(1f),
+                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     // Category Selection - NOW AT TOP
                     item {
@@ -200,7 +201,7 @@ fun AddExpenseScreen(
                                                             tint = iconColor,
                                                             modifier = Modifier.size(24.dp)
                                                         )
-                                                        Text(category.name)
+                                                        Text(category.name, fontWeight = FontWeight.SemiBold)
                                                     }
                                                 },
                                                 onClick = {
@@ -217,6 +218,47 @@ fun AddExpenseScreen(
                                                     }
                                                 }
                                             )
+                                            
+                                            // Handle Subcategories
+                                            categories.filter { it.parentId == category.id }.sortedBy { it.sortOrder }.forEach { subcategory ->
+                                                val (subIcon, _, _, subIconColor) = getCategoryData(subcategory.name)
+                                                DropdownMenuItem(
+                                                    text = {
+                                                        Row(
+                                                            verticalAlignment = Alignment.CenterVertically,
+                                                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                                            modifier = Modifier.padding(start = 24.dp)
+                                                        ) {
+                                                            Icon(
+                                                                imageVector = Icons.Default.SubdirectoryArrowRight,
+                                                                contentDescription = null,
+                                                                tint = Slate400,
+                                                                modifier = Modifier.size(16.dp)
+                                                            )
+                                                            Icon(
+                                                                imageVector = subIcon,
+                                                                contentDescription = null,
+                                                                tint = subIconColor,
+                                                                modifier = Modifier.size(20.dp)
+                                                            )
+                                                            Text(subcategory.name, style = MaterialTheme.typography.bodyMedium)
+                                                        }
+                                                    },
+                                                    onClick = {
+                                                        selectedCategory = subcategory
+                                                        categoryExpanded = false
+                                                    },
+                                                    leadingIcon = {
+                                                        if (selectedCategory?.id == subcategory.id) {
+                                                            Icon(
+                                                                imageVector = Icons.Default.Check,
+                                                                contentDescription = null,
+                                                                tint = Indigo600
+                                                            )
+                                                        }
+                                                    }
+                                                )
+                                            }
                                         }
                                     }
                                 }
@@ -332,7 +374,8 @@ fun AddExpenseScreen(
                         Card(
                             shape = RoundedCornerShape(16.dp),
                             colors = CardDefaults.cardColors(containerColor = Color.White),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                            modifier = Modifier.clickable { showDatePicker = true }
                         ) {
                             Row(
                                 modifier = Modifier

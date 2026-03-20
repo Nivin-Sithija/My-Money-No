@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 @Preview(showBackground = true, backgroundColor = 0xFFF8FAFC)
 @Composable
 fun PreviewCategoryCard() {
-    WiyadamaExpenseTrackerTheme {
+    MyMoneyTheme {
         CategoryCardItem(
             category = Category(
                 id = 1,
@@ -42,7 +42,7 @@ fun PreviewCategoryCard() {
 @Preview(showBackground = true, backgroundColor = 0xFFF8FAFC)
 @Composable
 fun PreviewRecentTransactionItem() {
-    WiyadamaExpenseTrackerTheme {
+    MyMoneyTheme {
         RecentTransactionItem(
             merchantName = "Keells Super",
             categoryName = "Grocery",
@@ -59,7 +59,7 @@ fun PreviewRecentTransactionItem() {
 @Preview(showBackground = true, backgroundColor = 0xFFF8FAFC, name = "Transport Category")
 @Composable
 fun PreviewTransportCard() {
-    WiyadamaExpenseTrackerTheme {
+    MyMoneyTheme {
         CategoryCardItem(
             category = Category(
                 id = 2,
@@ -77,7 +77,7 @@ fun PreviewTransportCard() {
 @Preview(showBackground = true, backgroundColor = 0xFFF8FAFC, name = "Transaction List")
 @Composable
 fun PreviewTransactionList() {
-    WiyadamaExpenseTrackerTheme {
+    MyMoneyTheme {
         androidx.compose.foundation.layout.Column(
             verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)
         ) {
@@ -117,7 +117,7 @@ fun PreviewTransactionList() {
 @Composable
 fun PreviewCategoryCardDark() {
     // Note: You might need to create a dark theme variant
-    WiyadamaExpenseTrackerTheme {
+    MyMoneyTheme {
         CategoryCardItem(
             category = Category(
                 id = 3,

@@ -26,6 +26,7 @@ import com.wiyadama.expensetracker.data.entity.Member
 import com.wiyadama.expensetracker.data.entity.Shop
 import com.wiyadama.expensetracker.ui.components.CategoryCard
 import com.wiyadama.expensetracker.ui.theme.*
+import com.wiyadama.expensetracker.ui.util.CategoryData
 import com.wiyadama.expensetracker.ui.util.getCategoryData
 import com.wiyadama.expensetracker.util.CurrencyFormatter
 import com.wiyadama.expensetracker.util.DateUtils
@@ -89,7 +90,7 @@ fun HomeScreen(
             ) {
                 Column {
                     Text(
-                        text = "Expense Tracker",
+                        text = "My Money No",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Slate500,
                         modifier = Modifier.padding(bottom = 4.dp)
@@ -163,9 +164,11 @@ fun HomeScreen(
                         )
                         Text(
                             text = CurrencyFormatter.formatWithSymbol(totalExpenses, "LKR"),
-                            style = MaterialTheme.typography.headlineMedium,
+                            style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            color = Slate900
+                            color = Slate900,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
                         Text(
                             text = "This month",
@@ -212,12 +215,14 @@ fun HomeScreen(
                         )
                         Text(
                             text = transactionCount.toString(),
-                            style = MaterialTheme.typography.headlineMedium,
+                            style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
-                            color = Slate900
+                            color = Slate900,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
                         Text(
-                            text = "February 2026",
+                            text = java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.getDefault()).format(java.util.Date(System.currentTimeMillis())),
                             style = MaterialTheme.typography.bodySmall,
                             color = Slate400,
                             modifier = Modifier.padding(top = 8.dp)
@@ -319,63 +324,11 @@ fun CategoryCardItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
-    // Map category to icon and colors
-    val (icon, gradientColors, bgColors, iconColor) = when (category.name) {
-        "Food & Dining" -> CategoryData(
-            Icons.Default.Restaurant,
-            CategoryColors.FoodDining,
-            BackgroundColors.FoodDiningBg,
-            Orange400
-        )
-        "Transport" -> CategoryData(
-            Icons.Default.DirectionsCar,
-            CategoryColors.Transport,
-            BackgroundColors.TransportBg,
-            Blue400
-        )
-        "Shopping" -> CategoryData(
-            Icons.Default.ShoppingBag,
-            CategoryColors.Shopping,
-            BackgroundColors.ShoppingBg,
-            Purple400
-        )
-        "Bills & Utilities" -> CategoryData(
-            Icons.Default.Bolt,
-            CategoryColors.Bills,
-            BackgroundColors.BillsBg,
-            Yellow500
-        )
-        "Entertainment" -> CategoryData(
-            Icons.Default.MusicNote,
-            CategoryColors.Entertainment,
-            BackgroundColors.EntertainmentBg,
-            Pink400
-        )
-        "Travel" -> CategoryData(
-            Icons.Default.Flight,
-            CategoryColors.Travel,
-            BackgroundColors.TravelBg,
-            Teal400
-        )
-        "Grocery" -> CategoryData(
-            Icons.Default.ShoppingCart,
-            CategoryColors.FoodDining,
-            BackgroundColors.FoodDiningBg,
-            Emerald400
-        )
-        "Telephone Bills" -> CategoryData(
-            Icons.Default.Phone,
-            CategoryColors.Bills,
-            BackgroundColors.BillsBg,
-            Indigo400
-        )
-        else -> CategoryData(
-            Icons.Default.Category,
-            listOf(Slate400, Slate500),
-            listOf(Slate50, Slate100),
-            Slate600
-        )
-    }
+    val categoryData = getCategoryData(category.name)
+    val icon = categoryData.icon
+    val gradientColors = categoryData.gradientColors
+    val bgColors = categoryData.bgColors
+    val iconColor = categoryData.iconColor
 
     CategoryCard(
         name = category.name,
@@ -390,12 +343,7 @@ fun CategoryCardItem(
     )
 }
 
-data class CategoryData(
-    val icon: ImageVector,
-    val gradientColors: List<Color>,
-    val bgColors: List<Color>,
-    val iconColor: Color
-)
+
 
 @Composable
 fun RecentTransactionItem(
@@ -408,11 +356,9 @@ fun RecentTransactionItem(
     date: Long
 ) {
     val catData = getCategoryData(categoryName)
-    // Use shop icon if shop is assigned, otherwise category icon
-    val displayIcon = if (shopName != null) Icons.Default.Store else catData.icon
-    val displayBgColors = if (shopName != null) listOf(Teal400, Emerald400) else catData.bgColors
-    val displayIconColor = if (shopName != null) Color.White else catData.iconColor
-    val useSolidBg = shopName != null
+    val displayIcon = catData.icon
+    val displayBgColors = catData.bgColors
+    val displayIconColor = catData.iconColor
 
     Card(
         modifier = Modifier
@@ -450,29 +396,28 @@ fun RecentTransactionItem(
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
                     Text(
-                        text = merchantName,
+                        text = categoryName,
                         style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Medium,
-                        color = Slate900
-                    )
-                    // Build subtitle: category + optional member + optional shop
-                    val subtitleParts = mutableListOf(categoryName)
-                    if (memberName != null) subtitleParts.add(memberName)
-                    if (shopName != null) subtitleParts.add(shopName)
-                    Text(
-                        text = subtitleParts.joinToString(" • "),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Indigo500,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Slate900,
                         maxLines = 1
                     )
-                    if (notes != null && notes.isNotBlank()) {
+                    val detailParts = mutableListOf<String>()
+                    if (notes != null && notes.isNotBlank()) detailParts.add(notes)
+                    if (memberName != null) detailParts.add(memberName)
+                    if (shopName != null) detailParts.add(shopName)
+                    
+                    if (detailParts.isNotEmpty()) {
                         Text(
-                            text = notes,
+                            text = detailParts.joinToString(" • "),
                             style = MaterialTheme.typography.bodySmall,
-                            color = Slate400,
-                            maxLines = 1
+                            color = Indigo500,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
                     }
                     Text(
@@ -482,8 +427,9 @@ fun RecentTransactionItem(
                     )
                 }
             }
+            Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = CurrencyFormatter.formatWithSymbol(amount, "LKR"),
+                text = "-${CurrencyFormatter.formatWithSymbol(amount, "LKR")}",
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.SemiBold,
                 color = Slate900

@@ -26,7 +26,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun WiyadamaExpenseTrackerTheme(
+fun MyMoneyTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

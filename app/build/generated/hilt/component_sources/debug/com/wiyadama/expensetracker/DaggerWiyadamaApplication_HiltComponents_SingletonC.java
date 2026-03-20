@@ -17,20 +17,26 @@ import com.wiyadama.expensetracker.data.backup.BackupWorker;
 import com.wiyadama.expensetracker.data.backup.BackupWorker_AssistedFactory;
 import com.wiyadama.expensetracker.data.dao.BackupMetaDao;
 import com.wiyadama.expensetracker.data.dao.CategoryDao;
+import com.wiyadama.expensetracker.data.dao.IncomeDao;
 import com.wiyadama.expensetracker.data.dao.MemberDao;
+import com.wiyadama.expensetracker.data.dao.RentalPropertyDao;
 import com.wiyadama.expensetracker.data.dao.ShopDao;
 import com.wiyadama.expensetracker.data.dao.TransactionDao;
 import com.wiyadama.expensetracker.data.database.WiyadamaDatabase;
 import com.wiyadama.expensetracker.data.repository.BackupMetaRepository;
 import com.wiyadama.expensetracker.data.repository.CategoryRepository;
+import com.wiyadama.expensetracker.data.repository.IncomeRepository;
 import com.wiyadama.expensetracker.data.repository.MemberRepository;
+import com.wiyadama.expensetracker.data.repository.RentalPropertyRepository;
 import com.wiyadama.expensetracker.data.repository.ShopRepository;
 import com.wiyadama.expensetracker.data.repository.TransactionRepository;
 import com.wiyadama.expensetracker.di.DatabaseModule_ProvideApplicationScopeFactory;
 import com.wiyadama.expensetracker.di.DatabaseModule_ProvideBackupMetaDaoFactory;
 import com.wiyadama.expensetracker.di.DatabaseModule_ProvideCategoryDaoFactory;
 import com.wiyadama.expensetracker.di.DatabaseModule_ProvideDatabaseFactory;
+import com.wiyadama.expensetracker.di.DatabaseModule_ProvideIncomeDaoFactory;
 import com.wiyadama.expensetracker.di.DatabaseModule_ProvideMemberDaoFactory;
+import com.wiyadama.expensetracker.di.DatabaseModule_ProvideRentalPropertyDaoFactory;
 import com.wiyadama.expensetracker.di.DatabaseModule_ProvideShopDaoFactory;
 import com.wiyadama.expensetracker.di.DatabaseModule_ProvideTransactionDaoFactory;
 import com.wiyadama.expensetracker.ui.screens.HomeViewModel;
@@ -45,6 +51,8 @@ import com.wiyadama.expensetracker.ui.viewmodels.CategoryManagementViewModel;
 import com.wiyadama.expensetracker.ui.viewmodels.CategoryManagementViewModel_HiltModules;
 import com.wiyadama.expensetracker.ui.viewmodels.HistoryViewModel;
 import com.wiyadama.expensetracker.ui.viewmodels.HistoryViewModel_HiltModules;
+import com.wiyadama.expensetracker.ui.viewmodels.IncomeViewModel;
+import com.wiyadama.expensetracker.ui.viewmodels.IncomeViewModel_HiltModules;
 import com.wiyadama.expensetracker.ui.viewmodels.MembersViewModel;
 import com.wiyadama.expensetracker.ui.viewmodels.MembersViewModel_HiltModules;
 import dagger.hilt.android.ActivityRetainedLifecycle;
@@ -410,7 +418,7 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(7).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel, AddExpenseViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel, AnalyticsViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel, CategoryDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel, CategoryManagementViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel, HistoryViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_screens_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel, MembersViewModel_HiltModules.KeyModule.provide()).build());
+      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(8).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel, AddExpenseViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel, AnalyticsViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel, CategoryDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel, CategoryManagementViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel, HistoryViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_screens_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_IncomeViewModel, IncomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel, MembersViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -430,40 +438,45 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel = "com.wiyadama.expensetracker.ui.viewmodels.AddExpenseViewModel";
-
-      static String com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel = "com.wiyadama.expensetracker.ui.viewmodels.CategoryDetailViewModel";
-
-      static String com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel = "com.wiyadama.expensetracker.ui.viewmodels.HistoryViewModel";
-
-      static String com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel = "com.wiyadama.expensetracker.ui.viewmodels.AnalyticsViewModel";
+      static String com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel = "com.wiyadama.expensetracker.ui.viewmodels.MembersViewModel";
 
       static String com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel = "com.wiyadama.expensetracker.ui.viewmodels.CategoryManagementViewModel";
 
-      static String com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel = "com.wiyadama.expensetracker.ui.viewmodels.MembersViewModel";
-
       static String com_wiyadama_expensetracker_ui_screens_HomeViewModel = "com.wiyadama.expensetracker.ui.screens.HomeViewModel";
 
-      @KeepFieldType
-      AddExpenseViewModel com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel2;
+      static String com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel = "com.wiyadama.expensetracker.ui.viewmodels.HistoryViewModel";
 
-      @KeepFieldType
-      CategoryDetailViewModel com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel2;
+      static String com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel = "com.wiyadama.expensetracker.ui.viewmodels.AddExpenseViewModel";
 
-      @KeepFieldType
-      HistoryViewModel com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel2;
+      static String com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel = "com.wiyadama.expensetracker.ui.viewmodels.AnalyticsViewModel";
 
-      @KeepFieldType
-      AnalyticsViewModel com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel2;
+      static String com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel = "com.wiyadama.expensetracker.ui.viewmodels.CategoryDetailViewModel";
 
-      @KeepFieldType
-      CategoryManagementViewModel com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel2;
+      static String com_wiyadama_expensetracker_ui_viewmodels_IncomeViewModel = "com.wiyadama.expensetracker.ui.viewmodels.IncomeViewModel";
 
       @KeepFieldType
       MembersViewModel com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel2;
 
       @KeepFieldType
+      CategoryManagementViewModel com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel2;
+
+      @KeepFieldType
       HomeViewModel com_wiyadama_expensetracker_ui_screens_HomeViewModel2;
+
+      @KeepFieldType
+      HistoryViewModel com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel2;
+
+      @KeepFieldType
+      AddExpenseViewModel com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel2;
+
+      @KeepFieldType
+      AnalyticsViewModel com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel2;
+
+      @KeepFieldType
+      CategoryDetailViewModel com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel2;
+
+      @KeepFieldType
+      IncomeViewModel com_wiyadama_expensetracker_ui_viewmodels_IncomeViewModel2;
     }
   }
 
@@ -486,6 +499,8 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
 
     private Provider<HomeViewModel> homeViewModelProvider;
 
+    private Provider<IncomeViewModel> incomeViewModelProvider;
+
     private Provider<MembersViewModel> membersViewModelProvider;
 
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
@@ -507,12 +522,13 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
       this.categoryManagementViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
       this.historyViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
       this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
-      this.membersViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 6);
+      this.incomeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 6);
+      this.membersViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 7);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(7).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel, ((Provider) addExpenseViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel, ((Provider) analyticsViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel, ((Provider) categoryDetailViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel, ((Provider) categoryManagementViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel, ((Provider) historyViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_screens_HomeViewModel, ((Provider) homeViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel, ((Provider) membersViewModelProvider)).build());
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(8).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel, ((Provider) addExpenseViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel, ((Provider) analyticsViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel, ((Provider) categoryDetailViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel, ((Provider) categoryManagementViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel, ((Provider) historyViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_screens_HomeViewModel, ((Provider) homeViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_IncomeViewModel, ((Provider) incomeViewModelProvider)).put(LazyClassKeyProvider.com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel, ((Provider) membersViewModelProvider)).build());
     }
 
     @Override
@@ -522,40 +538,45 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel = "com.wiyadama.expensetracker.ui.viewmodels.CategoryManagementViewModel";
-
       static String com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel = "com.wiyadama.expensetracker.ui.viewmodels.HistoryViewModel";
 
-      static String com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel = "com.wiyadama.expensetracker.ui.viewmodels.AnalyticsViewModel";
+      static String com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel = "com.wiyadama.expensetracker.ui.viewmodels.CategoryManagementViewModel";
 
       static String com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel = "com.wiyadama.expensetracker.ui.viewmodels.CategoryDetailViewModel";
 
-      static String com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel = "com.wiyadama.expensetracker.ui.viewmodels.MembersViewModel";
+      static String com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel = "com.wiyadama.expensetracker.ui.viewmodels.AddExpenseViewModel";
+
+      static String com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel = "com.wiyadama.expensetracker.ui.viewmodels.AnalyticsViewModel";
 
       static String com_wiyadama_expensetracker_ui_screens_HomeViewModel = "com.wiyadama.expensetracker.ui.screens.HomeViewModel";
 
-      static String com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel = "com.wiyadama.expensetracker.ui.viewmodels.AddExpenseViewModel";
+      static String com_wiyadama_expensetracker_ui_viewmodels_IncomeViewModel = "com.wiyadama.expensetracker.ui.viewmodels.IncomeViewModel";
 
-      @KeepFieldType
-      CategoryManagementViewModel com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel2;
+      static String com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel = "com.wiyadama.expensetracker.ui.viewmodels.MembersViewModel";
 
       @KeepFieldType
       HistoryViewModel com_wiyadama_expensetracker_ui_viewmodels_HistoryViewModel2;
 
       @KeepFieldType
-      AnalyticsViewModel com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel2;
+      CategoryManagementViewModel com_wiyadama_expensetracker_ui_viewmodels_CategoryManagementViewModel2;
 
       @KeepFieldType
       CategoryDetailViewModel com_wiyadama_expensetracker_ui_viewmodels_CategoryDetailViewModel2;
 
       @KeepFieldType
-      MembersViewModel com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel2;
+      AddExpenseViewModel com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel2;
+
+      @KeepFieldType
+      AnalyticsViewModel com_wiyadama_expensetracker_ui_viewmodels_AnalyticsViewModel2;
 
       @KeepFieldType
       HomeViewModel com_wiyadama_expensetracker_ui_screens_HomeViewModel2;
 
       @KeepFieldType
-      AddExpenseViewModel com_wiyadama_expensetracker_ui_viewmodels_AddExpenseViewModel2;
+      IncomeViewModel com_wiyadama_expensetracker_ui_viewmodels_IncomeViewModel2;
+
+      @KeepFieldType
+      MembersViewModel com_wiyadama_expensetracker_ui_viewmodels_MembersViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -597,7 +618,10 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
           case 5: // com.wiyadama.expensetracker.ui.screens.HomeViewModel 
           return (T) new HomeViewModel(singletonCImpl.transactionRepositoryProvider.get(), singletonCImpl.categoryRepositoryProvider.get(), singletonCImpl.memberRepositoryProvider.get(), singletonCImpl.shopRepositoryProvider.get(), singletonCImpl.backupManagerProvider.get());
 
-          case 6: // com.wiyadama.expensetracker.ui.viewmodels.MembersViewModel 
+          case 6: // com.wiyadama.expensetracker.ui.viewmodels.IncomeViewModel 
+          return (T) new IncomeViewModel(singletonCImpl.incomeRepositoryProvider.get(), singletonCImpl.rentalPropertyRepositoryProvider.get());
+
+          case 7: // com.wiyadama.expensetracker.ui.viewmodels.MembersViewModel 
           return (T) new MembersViewModel(singletonCImpl.memberRepositoryProvider.get());
 
           default: throw new AssertionError(id);
@@ -698,6 +722,10 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
 
     private Provider<BackupWorker_AssistedFactory> backupWorker_AssistedFactoryProvider;
 
+    private Provider<IncomeRepository> incomeRepositoryProvider;
+
+    private Provider<RentalPropertyRepository> rentalPropertyRepositoryProvider;
+
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
       initialize(applicationContextModuleParam);
@@ -733,6 +761,14 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
       return WorkerFactoryModule_ProvideFactoryFactory.provideFactory(mapOfStringAndProviderOfWorkerAssistedFactoryOf());
     }
 
+    private IncomeDao incomeDao() {
+      return DatabaseModule_ProvideIncomeDaoFactory.provideIncomeDao(provideDatabaseProvider.get());
+    }
+
+    private RentalPropertyDao rentalPropertyDao() {
+      return DatabaseModule_ProvideRentalPropertyDaoFactory.provideRentalPropertyDao(provideDatabaseProvider.get());
+    }
+
     @SuppressWarnings("unchecked")
     private void initialize(final ApplicationContextModule applicationContextModuleParam) {
       this.provideApplicationScopeProvider = DoubleCheck.provider(new SwitchingProvider<CoroutineScope>(singletonCImpl, 4));
@@ -744,6 +780,8 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
       this.backupMetaRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<BackupMetaRepository>(singletonCImpl, 8));
       this.backupManagerProvider = DoubleCheck.provider(new SwitchingProvider<BackupManager>(singletonCImpl, 1));
       this.backupWorker_AssistedFactoryProvider = SingleCheck.provider(new SwitchingProvider<BackupWorker_AssistedFactory>(singletonCImpl, 0));
+      this.incomeRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<IncomeRepository>(singletonCImpl, 9));
+      this.rentalPropertyRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<RentalPropertyRepository>(singletonCImpl, 10));
     }
 
     @Override
@@ -816,6 +854,12 @@ public final class DaggerWiyadamaApplication_HiltComponents_SingletonC {
 
           case 8: // com.wiyadama.expensetracker.data.repository.BackupMetaRepository 
           return (T) new BackupMetaRepository(singletonCImpl.backupMetaDao());
+
+          case 9: // com.wiyadama.expensetracker.data.repository.IncomeRepository 
+          return (T) new IncomeRepository(singletonCImpl.incomeDao());
+
+          case 10: // com.wiyadama.expensetracker.data.repository.RentalPropertyRepository 
+          return (T) new RentalPropertyRepository(singletonCImpl.rentalPropertyDao());
 
           default: throw new AssertionError(id);
         }

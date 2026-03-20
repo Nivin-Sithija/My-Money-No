@@ -91,17 +91,41 @@ fun CategoryManagementScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(bottom = 80.dp)
         ) {
-            items(categories) { category ->
-                CategoryItem(
-                    category = category,
-                    onEdit = {
-                        editingCategory = category
-                        showCategoryDialog = true
-                    },
-                    onDelete = {
-                        prepareDelete(category)
+            val rootCategories = categories.filter { it.parentId == null }
+            items(rootCategories) { category ->
+                Column {
+                    CategoryItem(
+                        category = category,
+                        onEdit = {
+                            editingCategory = category
+                            showCategoryDialog = true
+                        },
+                        onDelete = {
+                            prepareDelete(category)
+                        }
+                    )
+                    
+                    val subcategories = categories.filter { it.parentId == category.id }
+                    if (subcategories.isNotEmpty()) {
+                        Column(
+                            modifier = Modifier.padding(start = 32.dp, top = 8.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            subcategories.forEach { sub ->
+                                CategoryItem(
+                                    category = sub,
+                                    onEdit = {
+                                        editingCategory = sub
+                                        showCategoryDialog = true
+                                    },
+                                    onDelete = {
+                                        prepareDelete(sub)
+                                    }
+                                )
+                            }
+                        }
                     }
-                )
+                }
             }
         }
     }

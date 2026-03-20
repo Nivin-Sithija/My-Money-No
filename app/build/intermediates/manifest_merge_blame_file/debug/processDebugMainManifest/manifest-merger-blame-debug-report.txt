@@ -41,12 +41,12 @@
 24-->[androidx.core:core:1.12.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/2254b219ee01acacfbc71a302374372d/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
 25        android:debuggable="true"
 26        android:extractNativeLibs="false"
-27        android:icon="@drawable/ic_launcher"
-27-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:10:9-45
+27        android:icon="@mipmap/ic_launcher"
+27-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:10:9-43
 28        android:label="@string/app_name"
 28-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:11:9-41
-29        android:roundIcon="@drawable/ic_launcher_round"
-29-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:12:9-56
+29        android:roundIcon="@mipmap/ic_launcher_round"
+29-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:12:9-54
 30        android:supportsRtl="true"
 30-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:13:9-35
 31        android:theme="@style/Theme.WiyadamaExpenseTracker" >
@@ -57,8 +57,8 @@
 33-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:16:13-41
 34            android:exported="true"
 34-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:17:13-36
-35            android:theme="@style/Theme.WiyadamaExpenseTracker"
-35-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:19:13-64
+35            android:theme="@style/Theme.WiyadamaExpenseTracker.Splash"
+35-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:19:13-71
 36            android:windowSoftInputMode="adjustResize" >
 36-->/Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:18:13-55
 37            <intent-filter>

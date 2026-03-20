@@ -1,6 +1,7 @@
 package com.wiyadama.expensetracker.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,6 +32,7 @@ import com.wiyadama.expensetracker.util.DateUtils
 fun CategoryDetailScreen(
     categoryId: Long,
     onBack: () -> Unit,
+    onSubcategoryClick: (Long) -> Unit = {},
     viewModel: com.wiyadama.expensetracker.ui.viewmodels.CategoryDetailViewModel = androidx.hilt.navigation.compose.hiltViewModel()
 ) {
     LaunchedEffect(categoryId) {
@@ -41,6 +43,9 @@ fun CategoryDetailScreen(
     val transactions by viewModel.transactions.collectAsState()
     val totalSpent by viewModel.totalSpent.collectAsState()
     val transactionCount by viewModel.transactionCount.collectAsState()
+    val currentMonthTotal by viewModel.currentMonthTotal.collectAsState()
+    val previousMonthTotal by viewModel.previousMonthTotal.collectAsState()
+    val subcategoriesWithStats by viewModel.subcategoriesWithStats.collectAsState()
     
     // Get category visual data
     val (icon, gradientColors, bgGradientColors, iconColor) = category?.let { 
@@ -216,85 +221,161 @@ fun CategoryDetailScreen(
                     .padding(horizontal = 24.dp, vertical = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Average Expense
+                // This Month
                 Card(
                     modifier = Modifier.weight(1f),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.8f)),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    shape = RoundedCornerShape(24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                 ) {
                     Column(
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(20.dp)
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(32.dp)
-                                .clip(RoundedCornerShape(8.dp))
+                                .size(36.dp)
+                                .clip(RoundedCornerShape(12.dp))
                                 .background(Brush.linearGradient(listOf(Indigo500, Purple500))),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.AccessTime,
-                                contentDescription = null,
-                                tint = Color.White,
-                                modifier = Modifier.size(16.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text(
-                            text = "Avg. Expense",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Slate500,
-                            fontWeight = FontWeight.Medium
-                        )
-                        Text(
-                            text = CurrencyFormatter.formatWithSymbol(
-                                if (transactionCount > 0) totalSpent / transactionCount else 0,
-                                "Rs"
-                            ),
-                            style = MaterialTheme.typography.titleLarge,
-                            color = Slate900,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                }
-
-                // Transaction count
-                Card(
-                    modifier = Modifier.weight(1f),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.8f)),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(32.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                                .background(Brush.linearGradient(listOf(Teal500, Emerald500))),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Receipt,
                                 contentDescription = null,
                                 tint = Color.White,
-                                modifier = Modifier.size(16.dp)
+                                modifier = Modifier.size(20.dp)
                             )
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         Text(
-                            text = "Transactions",
+                            text = "This Month",
                             style = MaterialTheme.typography.bodySmall,
-                            color = Slate500,
-                            fontWeight = FontWeight.Medium
+                            color = Slate500
                         )
                         Text(
-                            text = "$transactionCount",
+                            text = CurrencyFormatter.formatWithSymbol(currentMonthTotal, "LKR"),
                             style = MaterialTheme.typography.titleLarge,
                             color = Slate900,
-                            fontWeight = FontWeight.SemiBold
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                        )
+                        Text(
+                            text = java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.getDefault()).format(java.util.Date(System.currentTimeMillis())),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Slate400,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+                }
+
+                // Previous Month
+                Card(
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(24.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(20.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(Brush.linearGradient(listOf(Teal500, Emerald500))),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.History,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = "Previous Month",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Slate500
+                        )
+                        Text(
+                            text = CurrencyFormatter.formatWithSymbol(previousMonthTotal, "LKR"),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = Slate900,
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                        )
+                        val lastMonth = java.util.Calendar.getInstance().apply { add(java.util.Calendar.MONTH, -1) }.time
+                        Text(
+                            text = java.text.SimpleDateFormat("MMMM yyyy", java.util.Locale.getDefault()).format(lastMonth),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Slate400,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+                }
+            }
+        }
+
+        if (subcategoriesWithStats.isNotEmpty()) {
+            item {
+                Text(
+                    text = "Subcategories",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Slate900,
+                    modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 12.dp)
+                )
+            }
+            items(subcategoriesWithStats) { (subCat, amount) ->
+                val catData = com.wiyadama.expensetracker.ui.util.getCategoryData(subCat.name)
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp, vertical = 4.dp)
+                        .clickable { onSubcategoryClick(subCat.id) },
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .background(Brush.linearGradient(catData.bgColors)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = catData.icon,
+                                    contentDescription = null,
+                                    tint = catData.iconColor,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                            Text(
+                                text = subCat.name,
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Slate900
+                            )
+                        }
+                        Text(
+                            text = CurrencyFormatter.formatWithSymbol(amount, "LKR"),
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = Slate900
                         )
                     }
                 }
@@ -308,7 +389,7 @@ fun CategoryDetailScreen(
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
                 color = Slate900,
-                modifier = Modifier.padding(start = 24.dp, top = 16.dp, bottom = 16.dp)
+                modifier = Modifier.padding(start = 24.dp, top = 24.dp, bottom = 16.dp)
             )
         }
 

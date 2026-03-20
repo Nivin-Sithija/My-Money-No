@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.wiyadama.expensetracker.app-mergeDebugResources-68:/values-bn/values-bn.xml",
+            "outputFile": "com.wiyadama.expensetracker.app-mergeDebugResources-69:/values-bn/values-bn.xml",
             "map": [
                 {
                     "source": "/Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/40cea0ecf14f20b808bc298778ce5ca0/transformed/jetified-material3-release/res/values-bn/values-bn.xml",

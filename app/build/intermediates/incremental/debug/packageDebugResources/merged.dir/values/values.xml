@@ -3,7 +3,7 @@
     <color name="ic_launcher_background">#6366F1</color>
     <string name="add_expense">Add Expense</string>
     <string name="amount">Amount</string>
-    <string name="app_name">Wiyadama Expense Tracker</string>
+    <string name="app_name">My Money No</string>
     <string name="cancel">Cancel</string>
     <string name="categories">Categories</string>
     <string name="category">Category</string>
@@ -16,7 +16,7 @@
     <string name="error_amount_required">Amount is required</string>
     <string name="error_category_required">Category is required</string>
     <string name="error_member_required">Member is required for this category</string>
-    <string name="home_subtitle">Expense Tracker</string>
+    <string name="home_subtitle">My Money No</string>
     <string name="home_title">Overview</string>
     <string name="member">Member</string>
     <string name="nav_analytics">Analytics</string>
@@ -34,4 +34,10 @@
     <string name="total_expenses">Total Expenses</string>
     <string name="transactions">Transactions</string>
     <style name="Theme.WiyadamaExpenseTracker" parent="android:Theme.Material.Light.NoActionBar"/>
+    <style name="Theme.WiyadamaExpenseTracker.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/appicon</item>
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.WiyadamaExpenseTracker</item>
+    </style>
 </resources>

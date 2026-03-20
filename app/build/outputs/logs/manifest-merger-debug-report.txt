@@ -89,6 +89,7 @@ MERGED from [androidx.autofill:autofill:1.0.0] /Users/sithijaseneviratne/.gradle
 MERGED from [androidx.core:core:1.12.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/2254b219ee01acacfbc71a302374372d/transformed/core-1.12.0/AndroidManifest.xml:17:1-30:12
 MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/846b000a326aa6be8b524b874bb6ef91/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.core:core-ktx:1.12.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/e44cc5ec84a5c5585ebf8c5282042d5b/transformed/jetified-core-ktx-1.12.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core-splashscreen:1.0.1] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/00d915d459bb30743ca46cf054fbe696/transformed/jetified-core-splashscreen-1.0.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.room:room-runtime:2.6.1] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/f8b9e8c52b2b98eb243772be29cea920/transformed/room-runtime-2.6.1/AndroidManifest.xml:17:1-31:12
 MERGED from [androidx.room:room-ktx:2.6.1] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/f76d13b2a12c4a4a225a6bf97bc9bad7/transformed/jetified-room-ktx-2.6.1/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.datastore:datastore-preferences:1.0.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/9e8a41e4e3f39a9516597f69416751e0/transformed/jetified-datastore-preferences-1.0.0/AndroidManifest.xml:17:1-24:12
@@ -149,9 +150,9 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/sithijaseneviratne/.
 	android:label
 		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:11:9-41
 	android:roundIcon
-		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:12:9-56
+		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:12:9-54
 	android:icon
-		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:10:9-45
+		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:10:9-43
 	android:allowBackup
 		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:9:9-35
 	android:theme
@@ -165,7 +166,7 @@ ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/Andr
 	android:exported
 		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:17:13-36
 	android:theme
-		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:19:13-64
+		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:19:13-71
 	android:name
 		ADDED from /Users/sithijaseneviratne/Documents/GitHub/Wiyadama/app/src/main/AndroidManifest.xml:16:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
@@ -319,6 +320,8 @@ MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/sithi
 MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/846b000a326aa6be8b524b874bb6ef91/transformed/jetified-customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
 MERGED from [androidx.core:core-ktx:1.12.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/e44cc5ec84a5c5585ebf8c5282042d5b/transformed/jetified-core-ktx-1.12.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.core:core-ktx:1.12.0] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/e44cc5ec84a5c5585ebf8c5282042d5b/transformed/jetified-core-ktx-1.12.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-splashscreen:1.0.1] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/00d915d459bb30743ca46cf054fbe696/transformed/jetified-core-splashscreen-1.0.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core-splashscreen:1.0.1] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/00d915d459bb30743ca46cf054fbe696/transformed/jetified-core-splashscreen-1.0.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.room:room-runtime:2.6.1] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/f8b9e8c52b2b98eb243772be29cea920/transformed/room-runtime-2.6.1/AndroidManifest.xml:21:5-44
 MERGED from [androidx.room:room-runtime:2.6.1] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/f8b9e8c52b2b98eb243772be29cea920/transformed/room-runtime-2.6.1/AndroidManifest.xml:21:5-44
 MERGED from [androidx.room:room-ktx:2.6.1] /Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/f76d13b2a12c4a4a225a6bf97bc9bad7/transformed/jetified-room-ktx-2.6.1/AndroidManifest.xml:20:5-44

@@ -15,8 +15,12 @@ import com.wiyadama.expensetracker.data.dao.BackupMetaDao;
 import com.wiyadama.expensetracker.data.dao.BackupMetaDao_Impl;
 import com.wiyadama.expensetracker.data.dao.CategoryDao;
 import com.wiyadama.expensetracker.data.dao.CategoryDao_Impl;
+import com.wiyadama.expensetracker.data.dao.IncomeDao;
+import com.wiyadama.expensetracker.data.dao.IncomeDao_Impl;
 import com.wiyadama.expensetracker.data.dao.MemberDao;
 import com.wiyadama.expensetracker.data.dao.MemberDao_Impl;
+import com.wiyadama.expensetracker.data.dao.RentalPropertyDao;
+import com.wiyadama.expensetracker.data.dao.RentalPropertyDao_Impl;
 import com.wiyadama.expensetracker.data.dao.ShopDao;
 import com.wiyadama.expensetracker.data.dao.ShopDao_Impl;
 import com.wiyadama.expensetracker.data.dao.TransactionDao;
@@ -47,10 +51,14 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
 
   private volatile BackupMetaDao _backupMetaDao;
 
+  private volatile IncomeDao _incomeDao;
+
+  private volatile RentalPropertyDao _rentalPropertyDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(2) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(3) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `members` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `phone` TEXT, `email` TEXT, `color` INTEGER, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
@@ -67,8 +75,10 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_transactions_shopId` ON `transactions` (`shopId`)");
         db.execSQL("CREATE INDEX IF NOT EXISTS `index_transactions_deletedAt` ON `transactions` (`deletedAt`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `backup_meta` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `createdAt` INTEGER NOT NULL, `type` TEXT NOT NULL, `path` TEXT NOT NULL, `checksum` TEXT NOT NULL, `size` INTEGER NOT NULL, `appVersion` TEXT NOT NULL, `schemaVersion` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `incomes` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dateTime` INTEGER NOT NULL, `amountCents` INTEGER NOT NULL, `currency` TEXT NOT NULL, `categoryType` TEXT NOT NULL, `propertyId` INTEGER, `notes` TEXT, `paymentMethod` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `rental_properties` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL, `currentTenant` TEXT, `monthlyRent` INTEGER NOT NULL, `lastPaidDate` INTEGER, `advancePayment` INTEGER NOT NULL, `notes` TEXT, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd49454ee2fe694e2faaad19a81c517f6')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4637a53bc4974a2f31d7110c1304315b')");
       }
 
       @Override
@@ -78,6 +88,8 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
         db.execSQL("DROP TABLE IF EXISTS `shops`");
         db.execSQL("DROP TABLE IF EXISTS `transactions`");
         db.execSQL("DROP TABLE IF EXISTS `backup_meta`");
+        db.execSQL("DROP TABLE IF EXISTS `incomes`");
+        db.execSQL("DROP TABLE IF EXISTS `rental_properties`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -229,9 +241,49 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
                   + " Expected:\n" + _infoBackupMeta + "\n"
                   + " Found:\n" + _existingBackupMeta);
         }
+        final HashMap<String, TableInfo.Column> _columnsIncomes = new HashMap<String, TableInfo.Column>(10);
+        _columnsIncomes.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsIncomes.put("dateTime", new TableInfo.Column("dateTime", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsIncomes.put("amountCents", new TableInfo.Column("amountCents", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsIncomes.put("currency", new TableInfo.Column("currency", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsIncomes.put("categoryType", new TableInfo.Column("categoryType", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsIncomes.put("propertyId", new TableInfo.Column("propertyId", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsIncomes.put("notes", new TableInfo.Column("notes", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsIncomes.put("paymentMethod", new TableInfo.Column("paymentMethod", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsIncomes.put("createdAt", new TableInfo.Column("createdAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsIncomes.put("updatedAt", new TableInfo.Column("updatedAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysIncomes = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesIncomes = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoIncomes = new TableInfo("incomes", _columnsIncomes, _foreignKeysIncomes, _indicesIncomes);
+        final TableInfo _existingIncomes = TableInfo.read(db, "incomes");
+        if (!_infoIncomes.equals(_existingIncomes)) {
+          return new RoomOpenHelper.ValidationResult(false, "incomes(com.wiyadama.expensetracker.data.entity.Income).\n"
+                  + " Expected:\n" + _infoIncomes + "\n"
+                  + " Found:\n" + _existingIncomes);
+        }
+        final HashMap<String, TableInfo.Column> _columnsRentalProperties = new HashMap<String, TableInfo.Column>(10);
+        _columnsRentalProperties.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentalProperties.put("name", new TableInfo.Column("name", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentalProperties.put("type", new TableInfo.Column("type", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentalProperties.put("currentTenant", new TableInfo.Column("currentTenant", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentalProperties.put("monthlyRent", new TableInfo.Column("monthlyRent", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentalProperties.put("lastPaidDate", new TableInfo.Column("lastPaidDate", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentalProperties.put("advancePayment", new TableInfo.Column("advancePayment", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentalProperties.put("notes", new TableInfo.Column("notes", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentalProperties.put("createdAt", new TableInfo.Column("createdAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsRentalProperties.put("updatedAt", new TableInfo.Column("updatedAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysRentalProperties = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesRentalProperties = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoRentalProperties = new TableInfo("rental_properties", _columnsRentalProperties, _foreignKeysRentalProperties, _indicesRentalProperties);
+        final TableInfo _existingRentalProperties = TableInfo.read(db, "rental_properties");
+        if (!_infoRentalProperties.equals(_existingRentalProperties)) {
+          return new RoomOpenHelper.ValidationResult(false, "rental_properties(com.wiyadama.expensetracker.data.entity.RentalProperty).\n"
+                  + " Expected:\n" + _infoRentalProperties + "\n"
+                  + " Found:\n" + _existingRentalProperties);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "d49454ee2fe694e2faaad19a81c517f6", "fae0f81fe354b051ba6a3cca00463c38");
+    }, "4637a53bc4974a2f31d7110c1304315b", "8b13811bfc91beada10da3b10365b75e");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -242,7 +294,7 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "members","categories","shops","transactions","backup_meta");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "members","categories","shops","transactions","backup_meta","incomes","rental_properties");
   }
 
   @Override
@@ -263,6 +315,8 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
       _db.execSQL("DELETE FROM `shops`");
       _db.execSQL("DELETE FROM `transactions`");
       _db.execSQL("DELETE FROM `backup_meta`");
+      _db.execSQL("DELETE FROM `incomes`");
+      _db.execSQL("DELETE FROM `rental_properties`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -285,6 +339,8 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
     _typeConvertersMap.put(ShopDao.class, ShopDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(TransactionDao.class, TransactionDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(BackupMetaDao.class, BackupMetaDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(IncomeDao.class, IncomeDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(RentalPropertyDao.class, RentalPropertyDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -369,6 +425,34 @@ public final class WiyadamaDatabase_Impl extends WiyadamaDatabase {
           _backupMetaDao = new BackupMetaDao_Impl(this);
         }
         return _backupMetaDao;
+      }
+    }
+  }
+
+  @Override
+  public IncomeDao incomeDao() {
+    if (_incomeDao != null) {
+      return _incomeDao;
+    } else {
+      synchronized(this) {
+        if(_incomeDao == null) {
+          _incomeDao = new IncomeDao_Impl(this);
+        }
+        return _incomeDao;
+      }
+    }
+  }
+
+  @Override
+  public RentalPropertyDao rentalPropertyDao() {
+    if (_rentalPropertyDao != null) {
+      return _rentalPropertyDao;
+    } else {
+      synchronized(this) {
+        if(_rentalPropertyDao == null) {
+          _rentalPropertyDao = new RentalPropertyDao_Impl(this);
+        }
+        return _rentalPropertyDao;
       }
     }
   }

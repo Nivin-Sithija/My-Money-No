@@ -84,27 +84,25 @@ fun CategoryPieChart(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Visual pie representation using rows
+            // Visual pie representation using Canvas
             Box(
                 modifier = Modifier
                     .size(160.dp)
-                    .clip(CircleShape)
-                    .background(Slate100)
             ) {
-                // Display top 3 categories as segments
-                val topCategories = data.take(3)
-                topCategories.forEachIndexed { index, category ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(CircleShape)
-                            .background(
-                                brush = Brush.sweepGradient(
-                                    colors = listOf(category.color, category.color.copy(alpha = 0.7f))
-                                ),
-                                alpha = 1f - (index * 0.2f)
+                androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxSize()) {
+                    var startAngle = -90f
+                    data.forEach { category ->
+                        val sweepAngle = (category.percentage / 100f) * 360f
+                        if (sweepAngle > 0f) {
+                            drawArc(
+                                color = category.color,
+                                startAngle = startAngle,
+                                sweepAngle = sweepAngle,
+                                useCenter = true
                             )
-                    )
+                            startAngle += sweepAngle
+                        }
+                    }
                 }
                 
                 // Center circle

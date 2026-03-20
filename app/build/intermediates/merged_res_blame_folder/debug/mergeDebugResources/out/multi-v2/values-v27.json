@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.wiyadama.expensetracker.app-mergeDebugResources-69:/values-v27/values-v27.xml",
+            "map": [
+                {
+                    "source": "/Users/sithijaseneviratne/.gradle/caches/8.10.2/transforms/00d915d459bb30743ca46cf054fbe696/transformed/jetified-core-splashscreen-1.0.1/res/values-v27/values-v27.xml",
+                    "from": {
+                        "startLines": "2,3,4,7",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,136,229,405",
+                        "endLines": "2,3,6,9",
+                        "endColumns": "80,92,12,12",
+                        "endOffsets": "131,224,400,588"
+                    }
+                }
+            ]
+        }
+    ]
+}
