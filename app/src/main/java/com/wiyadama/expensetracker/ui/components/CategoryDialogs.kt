@@ -93,48 +93,50 @@ fun CategoryDialog(
 
 
                 // Parent Category Selector (optional)
-                // Filter out self to prevent circular dependency
-                val validParents = parentCategories.filter { it.id != category?.id }
-                if (validParents.isNotEmpty()) {
-                    var expanded by remember { mutableStateOf(false) }
-                    ExposedDropdownMenuBox(
-                        expanded = expanded,
-                        onExpandedChange = { expanded = !expanded }
-                    ) {
-                        OutlinedTextField(
-                            value = selectedParent?.name ?: "None (Root Category)",
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text("Parent Category") },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .menuAnchor(),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Indigo600,
-                                focusedLabelColor = Indigo600
-                            )
+                // Only allow root categories as parents (no sub-subcategories)
+                // Filter out self to prevent circular dependency and only show root categories
+                val validParents = parentCategories.filter { 
+                    it.id != category?.id && it.parentId == null 
+                }
+                
+                var expanded by remember { mutableStateOf(false) }
+                ExposedDropdownMenuBox(
+                    expanded = expanded,
+                    onExpandedChange = { expanded = !expanded }
+                ) {
+                    OutlinedTextField(
+                        value = selectedParent?.name ?: "None (Root Category)",
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Parent Category (Optional)") },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor(),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Indigo600,
+                            focusedLabelColor = Indigo600
                         )
-                        ExposedDropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false }
-                        ) {
+                    )
+                    ExposedDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("None (Root Category)") },
+                            onClick = {
+                                selectedParent = null
+                                expanded = false
+                            }
+                        )
+                        validParents.forEach { parentCat ->
                             DropdownMenuItem(
-                                text = { Text("None (Root Category)") },
+                                text = { Text(parentCat.name) },
                                 onClick = {
-                                    selectedParent = null
+                                    selectedParent = parentCat
                                     expanded = false
                                 }
                             )
-                            validParents.forEach { category ->
-                                DropdownMenuItem(
-                                    text = { Text(category.name) },
-                                    onClick = {
-                                        selectedParent = category
-                                        expanded = false
-                                    }
-                                )
-                            }
                         }
                     }
                 }

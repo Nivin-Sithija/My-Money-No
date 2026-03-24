@@ -160,6 +160,31 @@ class IncomeViewModel @Inject constructor(
         }
     }
 
+    // Get all transactions for a property
+    fun getPropertyTransactions(propertyId: Long): Flow<List<RentTransaction>> {
+        return rentTransactionRepository.getTransactionsByProperty(propertyId)
+    }
+
+    // Update tenant name (doesn't affect payment history)
+    fun updateTenant(propertyId: Long, tenantName: String?) {
+        viewModelScope.launch {
+            val property = rentalPropertyRepository.getPropertyById(propertyId)
+            property?.let {
+                rentalPropertyRepository.updateProperty(it.copy(currentTenant = tenantName))
+            }
+        }
+    }
+
+    // Update rent amount (applies to future transactions only)
+    fun updateRentAmount(propertyId: Long, newRentAmount: Int) {
+        viewModelScope.launch {
+            val property = rentalPropertyRepository.getPropertyById(propertyId)
+            property?.let {
+                rentalPropertyRepository.updateProperty(it.copy(monthlyRent = newRentAmount))
+            }
+        }
+    }
+
     // Non-rent income functions (IET Salary, Solar)
     fun addIncome(
         amountCents: Int,

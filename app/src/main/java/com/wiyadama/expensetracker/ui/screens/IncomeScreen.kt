@@ -28,6 +28,27 @@ import com.wiyadama.expensetracker.util.DateUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
+private fun getCurrentMonthStart(): Long {
+    val calendar = Calendar.getInstance()
+    calendar.set(Calendar.DAY_OF_MONTH, 1)
+    calendar.set(Calendar.HOUR_OF_DAY, 0)
+    calendar.set(Calendar.MINUTE, 0)
+    calendar.set(Calendar.SECOND, 0)
+    calendar.set(Calendar.MILLISECOND, 0)
+    return calendar.timeInMillis
+}
+
+private fun getNextMonthStart(): Long {
+    val calendar = Calendar.getInstance()
+    calendar.set(Calendar.DAY_OF_MONTH, 1)
+    calendar.set(Calendar.HOUR_OF_DAY, 0)
+    calendar.set(Calendar.MINUTE, 0)
+    calendar.set(Calendar.SECOND, 0)
+    calendar.set(Calendar.MILLISECOND, 0)
+    calendar.add(Calendar.MONTH, 1)
+    return calendar.timeInMillis
+}
+
 @Composable
 fun IncomeScreen(
     viewModel: IncomeViewModel = hiltViewModel()
@@ -35,15 +56,16 @@ fun IncomeScreen(
     val allIncomes by viewModel.allIncomes.collectAsState()
     val rentalProperties by viewModel.rentalProperties.collectAsState()
     val propertiesWithTransactions by viewModel.propertiesWithTransactions.collectAsState()
+    val allRentTransactions by viewModel.allRentTransactions.collectAsState()
     
     var selectedTab by remember { mutableIntStateOf(0) }
     var showAddIncomeDialog by remember { mutableStateOf(false) }
     var showAddPropertyDialog by remember { mutableStateOf(false) }
-    var showManageCategoriesDialog by remember { mutableStateOf(false) }
     var editingProperty by remember { mutableStateOf<RentalProperty?>(null) }
+    var viewingProperty by remember { mutableStateOf<RentalProperty?>(null) }
     
-    val tabs = listOf("House Rent", "IET Salary", "Solar")
-    val categoryTypes = listOf("HOUSE_RENT", "IET_SALARY", "SOLAR")
+    val tabs = listOf("House Rent", "IET Salary", "Solar", "Other")
+    val categoryTypes = listOf("HOUSE_RENT", "IET_SALARY", "SOLAR", "OTHER")
     
     val filteredIncomes = allIncomes.filter { it.categoryType == categoryTypes[selectedTab] }
     val totalIncome = filteredIncomes.sumOf { it.amountCents }
@@ -53,6 +75,39 @@ fun IncomeScreen(
         rentalProperties.forEach { property ->
             viewModel.generateCurrentMonthTransaction(property)
         }
+    }
+
+    // Show property detail screen if viewing a property
+    if (viewingProperty != null) {
+        val propertyTransactions by viewModel.getPropertyTransactions(viewingProperty!!.id).collectAsState(initial = emptyList())
+        
+        PropertyDetailScreen(
+            property = viewingProperty!!,
+            allTransactions = propertyTransactions,
+            viewModel = viewModel,
+            onBack = { viewingProperty = null },
+            onPropertyUpdated = { updatedProperty ->
+                viewingProperty = updatedProperty
+            },
+            onDeleteProperty = {
+                viewingProperty?.let { property ->
+                    viewModel.deleteProperty(property)
+                    viewingProperty = null
+                }
+            },
+            onRecordPayment = { transaction ->
+                transaction?.let { tx ->
+                    viewModel.recordFullPayment(tx.id)
+                }
+            },
+            onEditPayment = { transaction, amount ->
+                viewModel.recordPartialPayment(transaction.id, amount)
+            },
+            onDeletePayment = { transaction ->
+                viewModel.deleteTransaction(transaction)
+            }
+        )
+        return
     }
 
     LazyColumn(
@@ -90,19 +145,6 @@ fun IncomeScreen(
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color.White.copy(alpha = 0.8f),
                                 modifier = Modifier.padding(top = 8.dp)
-                            )
-                        }
-                        IconButton(
-                            onClick = { showManageCategoriesDialog = true },
-                            modifier = Modifier
-                                .size(44.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(Color.White.copy(alpha = 0.2f))
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Settings,
-                                contentDescription = "Manage Categories",
-                                tint = Color.White
                             )
                         }
                     }
@@ -258,14 +300,10 @@ fun IncomeScreen(
                     RentalPropertyCard(
                         property = propertyWithTx.property,
                         currentTransaction = propertyWithTx.currentMonthTransaction,
-                        onPaymentClick = { 
-                            propertyWithTx.currentMonthTransaction?.let { tx ->
-                                viewModel.togglePaymentStatus(tx.id)
-                            }
-                        },
-                        onEditClick = { 
-                            editingProperty = propertyWithTx.property
-                            showAddPropertyDialog = true
+                        onPaymentClick = { },
+                        onEditClick = { },
+                        onClick = {
+                            viewingProperty = propertyWithTx.property
                         },
                         viewModel = viewModel
                     )
@@ -286,14 +324,10 @@ fun IncomeScreen(
                     RentalPropertyCard(
                         property = propertyWithTx.property,
                         currentTransaction = propertyWithTx.currentMonthTransaction,
-                        onPaymentClick = { 
-                            propertyWithTx.currentMonthTransaction?.let { tx ->
-                                viewModel.togglePaymentStatus(tx.id)
-                            }
-                        },
-                        onEditClick = { 
-                            editingProperty = propertyWithTx.property
-                            showAddPropertyDialog = true
+                        onPaymentClick = { },
+                        onEditClick = { },
+                        onClick = {
+                            viewingProperty = propertyWithTx.property
                         },
                         viewModel = viewModel
                     )
@@ -415,8 +449,8 @@ fun IncomeScreen(
         AddIncomeDialog(
             categoryType = categoryTypes[selectedTab],
             onDismiss = { showAddIncomeDialog = false },
-            onConfirm = { amount, notes, date ->
-                viewModel.addIncome(amount, categoryTypes[selectedTab], null, notes, date)
+            onConfirm = { amount, category, notes, date ->
+                viewModel.addIncome(amount, category, null, notes, date)
                 showAddIncomeDialog = false
             }
         )
@@ -431,14 +465,10 @@ fun IncomeScreen(
             },
             onConfirm = { property ->
                 if (editingProperty != null) {
-                    viewModel.updateProperty(editingProperty!!.copy(
-                        name = property.name,
-                        type = property.type,
-                        currentTenant = property.currentTenant,
-                        monthlyRent = property.monthlyRent,
-                        advancePayment = property.advancePayment,
-                        notes = property.notes
-                    ))
+                    viewModel.updateProperty(property)
+                    if (viewingProperty?.id == property.id) {
+                        viewingProperty = property
+                    }
                 } else {
                     viewModel.addProperty(property)
                 }
@@ -448,11 +478,347 @@ fun IncomeScreen(
         )
     }
 
-    if (showManageCategoriesDialog) {
-        ManageIncomeCategoriesDialog(
-            currentCategories = tabs,
-            onDismiss = { showManageCategoriesDialog = false }
-        )
+
+}
+
+@Composable
+fun ExpandableIncomeCard(
+    title: String,
+    currentMonthTotal: Int,
+    categoryType: String,
+    allIncomes: List<Income>
+) {
+    var expanded by remember { mutableStateOf(false) }
+    
+    // Filter incomes by category type
+    val categoryIncomes = allIncomes.filter { it.categoryType == categoryType }
+    
+    // Group incomes by month
+    val incomesByMonth = categoryIncomes
+        .sortedByDescending { it.dateTime }
+        .groupBy { income ->
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = income.dateTime
+            "${calendar.get(Calendar.YEAR)}-${String.format("%02d", calendar.get(Calendar.MONTH) + 1)}"
+        }
+    
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 8.dp)
+            .clickable { expanded = !expanded },
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Slate500
+                    )
+                    Text(
+                        text = CurrencyFormatter.formatWithSymbol(currentMonthTotal, "LKR"),
+                        style = MaterialTheme.typography.headlineLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Emerald600,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                    Text(
+                        text = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(Date()),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Slate400,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
+                
+                Icon(
+                    imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                    contentDescription = if (expanded) "Collapse" else "Expand",
+                    tint = Slate400,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+            
+            if (expanded) {
+                Spacer(modifier = Modifier.height(16.dp))
+                HorizontalDivider(color = Slate100)
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Text(
+                    text = "Monthly Breakdown",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Slate900,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+                
+                if (incomesByMonth.isEmpty()) {
+                    Text(
+                        text = "No income history yet",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Slate400,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                } else {
+                    incomesByMonth.entries.take(6).forEach { (monthKey, monthIncomes) ->
+                        val monthTotal = monthIncomes.sumOf { it.amountCents }
+                        
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+                                        .format(Date(monthIncomes.first().dateTime)),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Medium,
+                                    color = Slate900
+                                )
+                                Text(
+                                    text = "${monthIncomes.size} transaction${if (monthIncomes.size != 1) "s" else ""}",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = Slate500
+                                )
+                            }
+                            
+                            Text(
+                                text = CurrencyFormatter.formatWithSymbol(monthTotal, "LKR"),
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.SemiBold,
+                                color = Emerald600
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun MonthlyRentSummaryCard(
+    properties: List<RentalProperty>,
+    allTransactions: List<com.wiyadama.expensetracker.data.entity.RentTransaction>
+) {
+    var expanded by remember { mutableStateOf(false) }
+    
+    // Get current month transactions
+    val calendar = Calendar.getInstance()
+    calendar.set(Calendar.DAY_OF_MONTH, 1)
+    calendar.set(Calendar.HOUR_OF_DAY, 0)
+    calendar.set(Calendar.MINUTE, 0)
+    calendar.set(Calendar.SECOND, 0)
+    calendar.set(Calendar.MILLISECOND, 0)
+    val currentMonthStart = calendar.timeInMillis
+    calendar.add(Calendar.MONTH, 1)
+    val nextMonthStart = calendar.timeInMillis
+    
+    val currentMonthTransactions = allTransactions.filter { 
+        it.dueDate >= currentMonthStart && it.dueDate < nextMonthStart 
+    }
+    
+    val currentMonthCollected = currentMonthTransactions
+        .filter { it.status == com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PAID }
+        .sumOf { it.paidAmount } +
+        currentMonthTransactions
+            .filter { it.status == com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PARTIAL }
+            .sumOf { it.paidAmount }
+    
+    // Group all transactions by month for history
+    val transactionsByMonth = allTransactions
+        .sortedByDescending { it.dueDate }
+        .groupBy { transaction ->
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = transaction.dueDate
+            "${cal.get(Calendar.YEAR)}-${String.format("%02d", cal.get(Calendar.MONTH) + 1)}"
+        }
+    
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 8.dp)
+            .clickable { expanded = !expanded },
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = "This Month Collected",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Slate500
+                    )
+                    Text(
+                        text = CurrencyFormatter.formatWithSymbol(currentMonthCollected, "LKR"),
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Emerald600,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                    Text(
+                        text = SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(Date()),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Slate400,
+                        modifier = Modifier.padding(top = 2.dp)
+                    )
+                }
+                
+                Icon(
+                    imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                    contentDescription = if (expanded) "Collapse" else "Expand",
+                    tint = Slate400,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+            
+            if (expanded) {
+                Spacer(modifier = Modifier.height(16.dp))
+                HorizontalDivider(color = Slate100)
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Text(
+                    text = "Monthly Breakdown by Property",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Slate900,
+                    modifier = Modifier.padding(bottom = 12.dp)
+                )
+                
+                if (transactionsByMonth.isEmpty()) {
+                    Text(
+                        text = "No payment history yet",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Slate400,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                } else {
+                    transactionsByMonth.entries.take(6).forEach { (monthKey, monthTransactions) ->
+                        var monthExpanded by remember { mutableStateOf(false) }
+                        
+                        val monthCollected = monthTransactions
+                            .filter { it.status == com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PAID }
+                            .sumOf { it.paidAmount } +
+                            monthTransactions
+                                .filter { it.status == com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PARTIAL }
+                                .sumOf { it.paidAmount }
+                        
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { monthExpanded = !monthExpanded }
+                                    .padding(vertical = 8.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Icon(
+                                        imageVector = if (monthExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                        contentDescription = null,
+                                        tint = Slate400,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Text(
+                                        text = SimpleDateFormat("MMM yyyy", Locale.getDefault())
+                                            .format(Date(monthTransactions.first().dueDate)),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.Medium,
+                                        color = Slate900
+                                    )
+                                }
+                                
+                                Text(
+                                    text = CurrencyFormatter.formatWithSymbol(monthCollected, "LKR"),
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Emerald600
+                                )
+                            }
+                            
+                            if (monthExpanded) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(start = 28.dp, top = 4.dp, bottom = 8.dp)
+                                ) {
+                                    monthTransactions.forEach { transaction ->
+                                        val property = properties.find { it.id == transaction.propertyId }
+                                        if (property != null) {
+                                            Row(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(vertical = 6.dp),
+                                                horizontalArrangement = Arrangement.SpaceBetween,
+                                                verticalAlignment = Alignment.CenterVertically
+                                            ) {
+                                                Column(modifier = Modifier.weight(1f)) {
+                                                    Text(
+                                                        text = property.name,
+                                                        style = MaterialTheme.typography.bodySmall,
+                                                        color = Slate700
+                                                    )
+                                                    val statusText = when (transaction.status) {
+                                                        com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PAID -> "Paid"
+                                                        com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PARTIAL -> "Partial"
+                                                        com.wiyadama.expensetracker.data.entity.RentPaymentStatus.UNPAID -> "Unpaid"
+                                                        com.wiyadama.expensetracker.data.entity.RentPaymentStatus.OVERDUE -> "Overdue"
+                                                    }
+                                                    Text(
+                                                        text = statusText,
+                                                        style = MaterialTheme.typography.bodySmall,
+                                                        color = when (transaction.status) {
+                                                            com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PAID -> Emerald600
+                                                            com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PARTIAL -> Color(0xFFB45309)
+                                                            else -> Slate400
+                                                        }
+                                                    )
+                                                }
+                                                
+                                                Text(
+                                                    text = CurrencyFormatter.formatWithSymbol(transaction.paidAmount, "LKR"),
+                                                    style = MaterialTheme.typography.bodyMedium,
+                                                    fontWeight = FontWeight.Medium,
+                                                    color = if (transaction.paidAmount > 0) Slate900 else Slate400
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -673,6 +1039,7 @@ fun RentalPropertyCard(
     currentTransaction: com.wiyadama.expensetracker.data.entity.RentTransaction?,
     onPaymentClick: () -> Unit,
     onEditClick: () -> Unit,
+    onClick: () -> Unit,
     viewModel: IncomeViewModel
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -706,21 +1073,36 @@ fun RentalPropertyCard(
                             .size(48.dp)
                             .clip(RoundedCornerShape(12.dp))
                             .background(
-                                Brush.linearGradient(
-                                    colors = if (property.type == "SHOP") 
-                                        listOf(Teal500, Emerald500) 
-                                    else 
-                                        listOf(Indigo500, Purple500)
-                                )
+                                if (property.imagePath == null) {
+                                    Brush.linearGradient(
+                                        colors = if (property.type == "SHOP") 
+                                            listOf(Teal500, Emerald500) 
+                                        else 
+                                            listOf(Indigo500, Purple500)
+                                    )
+                                } else {
+                                    Brush.linearGradient(listOf(Slate100, Slate100))
+                                }
                             ),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            imageVector = if (property.type == "SHOP") Icons.Default.Store else Icons.Default.Home,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(24.dp)
-                        )
+                        if (property.imagePath != null) {
+                            androidx.compose.foundation.Image(
+                                painter = coil.compose.rememberAsyncImagePainter(
+                                    android.net.Uri.parse(property.imagePath)
+                                ),
+                                contentDescription = property.name,
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                            )
+                        } else {
+                            Icon(
+                                imageVector = if (property.type == "SHOP") Icons.Default.Store else Icons.Default.Home,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
@@ -885,39 +1267,19 @@ fun RentalPropertyCard(
                     Spacer(modifier = Modifier.height(8.dp))
                 }
 
-                Row(
+                Button(
+                    onClick = onClick,
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    colors = ButtonDefaults.buttonColors(containerColor = Indigo600),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
-                    if (status != com.wiyadama.expensetracker.data.entity.RentPaymentStatus.PAID) {
-                        Button(
-                            onClick = onPaymentClick,
-                            modifier = Modifier.weight(1f),
-                            colors = ButtonDefaults.buttonColors(containerColor = Emerald600),
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.CheckCircle,
-                                contentDescription = null,
-                                modifier = Modifier.size(18.dp)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text("Mark Paid")
-                        }
-                    }
-                    OutlinedButton(
-                        onClick = onEditClick,
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(12.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Edit,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text("Edit")
-                    }
+                    Icon(
+                        imageVector = Icons.Default.Visibility,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("View Full Details & History")
                 }
             }
         }
@@ -993,11 +1355,19 @@ fun IncomeItemCard(income: Income) {
 fun AddIncomeDialog(
     categoryType: String,
     onDismiss: () -> Unit,
-    onConfirm: (amountCents: Int, notes: String, date: Long) -> Unit
+    onConfirm: (amountCents: Int, category: String, notes: String, date: Long) -> Unit
 ) {
     var amount by remember { mutableStateOf("") }
     var notes by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf(categoryType) }
     var selectedDate by remember { mutableStateOf(System.currentTimeMillis()) }
+    var categoryExpanded by remember { mutableStateOf(false) }
+    
+    val categories = listOf(
+        "IET_SALARY" to "IET Salary",
+        "SOLAR" to "Solar Income",
+        "OTHER" to "Other Income"
+    )
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -1006,6 +1376,34 @@ fun AddIncomeDialog(
             Column(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
+                ExposedDropdownMenuBox(
+                    expanded = categoryExpanded,
+                    onExpandedChange = { categoryExpanded = !categoryExpanded }
+                ) {
+                    OutlinedTextField(
+                        value = categories.find { it.first == selectedCategory }?.second ?: "Select Category",
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Category") },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = categoryExpanded) },
+                        modifier = Modifier.fillMaxWidth().menuAnchor()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = categoryExpanded,
+                        onDismissRequest = { categoryExpanded = false }
+                    ) {
+                        categories.forEach { (value, label) ->
+                            DropdownMenuItem(
+                                text = { Text(label) },
+                                onClick = {
+                                    selectedCategory = value
+                                    categoryExpanded = false
+                                }
+                            )
+                        }
+                    }
+                }
+                
                 OutlinedTextField(
                     value = amount,
                     onValueChange = { if (it.isEmpty() || it.all { char -> char.isDigit() || char == '.' }) amount = it },
@@ -1027,7 +1425,7 @@ fun AddIncomeDialog(
                 onClick = {
                     val amountCents = (amount.toDoubleOrNull()?.times(100))?.toInt() ?: 0
                     if (amountCents > 0) {
-                        onConfirm(amountCents, notes, selectedDate)
+                        onConfirm(amountCents, selectedCategory, notes, selectedDate)
                     }
                 },
                 enabled = amount.isNotEmpty() && amount.toDoubleOrNull() != null
@@ -1145,15 +1543,29 @@ fun AddPropertyDialog(
                     val rentCents = (monthlyRent.toDoubleOrNull()?.times(100))?.toInt() ?: 0
                     val advanceCents = (advance.toDoubleOrNull()?.times(100))?.toInt() ?: 0
                     if (name.isNotEmpty() && rentCents > 0) {
-                        val property = RentalProperty(
-                            name = name,
-                            type = type,
-                            currentTenant = tenant.ifBlank { null },
-                            monthlyRent = rentCents,
-                            advancePayment = advanceCents,
-                            notes = notes.ifBlank { null }
-                        )
-                        onConfirm(property)
+                        val updatedProperty = if (property != null) {
+                            // Editing existing property - preserve ID and other fields
+                            property.copy(
+                                name = name,
+                                type = type,
+                                currentTenant = tenant.ifBlank { null },
+                                monthlyRent = rentCents,
+                                advancePayment = advanceCents,
+                                notes = notes.ifBlank { null },
+                                updatedAt = System.currentTimeMillis()
+                            )
+                        } else {
+                            // Creating new property
+                            RentalProperty(
+                                name = name,
+                                type = type,
+                                currentTenant = tenant.ifBlank { null },
+                                monthlyRent = rentCents,
+                                advancePayment = advanceCents,
+                                notes = notes.ifBlank { null }
+                            )
+                        }
+                        onConfirm(updatedProperty)
                     }
                 },
                 enabled = name.isNotEmpty() && monthlyRent.isNotEmpty() && monthlyRent.toDoubleOrNull() != null

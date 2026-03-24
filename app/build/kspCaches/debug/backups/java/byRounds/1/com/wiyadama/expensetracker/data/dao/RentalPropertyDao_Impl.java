@@ -46,7 +46,7 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR REPLACE INTO `rental_properties` (`id`,`name`,`type`,`currentTenant`,`monthlyRent`,`lastPaidDate`,`advancePayment`,`notes`,`createdAt`,`updatedAt`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?)";
+        return "INSERT OR REPLACE INTO `rental_properties` (`id`,`name`,`type`,`currentTenant`,`monthlyRent`,`lastPaidDate`,`advancePayment`,`notes`,`imagePath`,`createdAt`,`updatedAt`) VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -72,8 +72,13 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
         } else {
           statement.bindString(8, entity.getNotes());
         }
-        statement.bindLong(9, entity.getCreatedAt());
-        statement.bindLong(10, entity.getUpdatedAt());
+        if (entity.getImagePath() == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, entity.getImagePath());
+        }
+        statement.bindLong(10, entity.getCreatedAt());
+        statement.bindLong(11, entity.getUpdatedAt());
       }
     };
     this.__deletionAdapterOfRentalProperty = new EntityDeletionOrUpdateAdapter<RentalProperty>(__db) {
@@ -93,7 +98,7 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "UPDATE OR ABORT `rental_properties` SET `id` = ?,`name` = ?,`type` = ?,`currentTenant` = ?,`monthlyRent` = ?,`lastPaidDate` = ?,`advancePayment` = ?,`notes` = ?,`createdAt` = ?,`updatedAt` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `rental_properties` SET `id` = ?,`name` = ?,`type` = ?,`currentTenant` = ?,`monthlyRent` = ?,`lastPaidDate` = ?,`advancePayment` = ?,`notes` = ?,`imagePath` = ?,`createdAt` = ?,`updatedAt` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -119,9 +124,14 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
         } else {
           statement.bindString(8, entity.getNotes());
         }
-        statement.bindLong(9, entity.getCreatedAt());
-        statement.bindLong(10, entity.getUpdatedAt());
-        statement.bindLong(11, entity.getId());
+        if (entity.getImagePath() == null) {
+          statement.bindNull(9);
+        } else {
+          statement.bindString(9, entity.getImagePath());
+        }
+        statement.bindLong(10, entity.getCreatedAt());
+        statement.bindLong(11, entity.getUpdatedAt());
+        statement.bindLong(12, entity.getId());
       }
     };
   }
@@ -201,6 +211,7 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
           final int _cursorIndexOfLastPaidDate = CursorUtil.getColumnIndexOrThrow(_cursor, "lastPaidDate");
           final int _cursorIndexOfAdvancePayment = CursorUtil.getColumnIndexOrThrow(_cursor, "advancePayment");
           final int _cursorIndexOfNotes = CursorUtil.getColumnIndexOrThrow(_cursor, "notes");
+          final int _cursorIndexOfImagePath = CursorUtil.getColumnIndexOrThrow(_cursor, "imagePath");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updatedAt");
           final List<RentalProperty> _result = new ArrayList<RentalProperty>(_cursor.getCount());
@@ -234,11 +245,17 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
             } else {
               _tmpNotes = _cursor.getString(_cursorIndexOfNotes);
             }
+            final String _tmpImagePath;
+            if (_cursor.isNull(_cursorIndexOfImagePath)) {
+              _tmpImagePath = null;
+            } else {
+              _tmpImagePath = _cursor.getString(_cursorIndexOfImagePath);
+            }
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
             final long _tmpUpdatedAt;
             _tmpUpdatedAt = _cursor.getLong(_cursorIndexOfUpdatedAt);
-            _item = new RentalProperty(_tmpId,_tmpName,_tmpType,_tmpCurrentTenant,_tmpMonthlyRent,_tmpLastPaidDate,_tmpAdvancePayment,_tmpNotes,_tmpCreatedAt,_tmpUpdatedAt);
+            _item = new RentalProperty(_tmpId,_tmpName,_tmpType,_tmpCurrentTenant,_tmpMonthlyRent,_tmpLastPaidDate,_tmpAdvancePayment,_tmpNotes,_tmpImagePath,_tmpCreatedAt,_tmpUpdatedAt);
             _result.add(_item);
           }
           return _result;
@@ -274,6 +291,7 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
           final int _cursorIndexOfLastPaidDate = CursorUtil.getColumnIndexOrThrow(_cursor, "lastPaidDate");
           final int _cursorIndexOfAdvancePayment = CursorUtil.getColumnIndexOrThrow(_cursor, "advancePayment");
           final int _cursorIndexOfNotes = CursorUtil.getColumnIndexOrThrow(_cursor, "notes");
+          final int _cursorIndexOfImagePath = CursorUtil.getColumnIndexOrThrow(_cursor, "imagePath");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updatedAt");
           final List<RentalProperty> _result = new ArrayList<RentalProperty>(_cursor.getCount());
@@ -307,11 +325,17 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
             } else {
               _tmpNotes = _cursor.getString(_cursorIndexOfNotes);
             }
+            final String _tmpImagePath;
+            if (_cursor.isNull(_cursorIndexOfImagePath)) {
+              _tmpImagePath = null;
+            } else {
+              _tmpImagePath = _cursor.getString(_cursorIndexOfImagePath);
+            }
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
             final long _tmpUpdatedAt;
             _tmpUpdatedAt = _cursor.getLong(_cursorIndexOfUpdatedAt);
-            _item = new RentalProperty(_tmpId,_tmpName,_tmpType,_tmpCurrentTenant,_tmpMonthlyRent,_tmpLastPaidDate,_tmpAdvancePayment,_tmpNotes,_tmpCreatedAt,_tmpUpdatedAt);
+            _item = new RentalProperty(_tmpId,_tmpName,_tmpType,_tmpCurrentTenant,_tmpMonthlyRent,_tmpLastPaidDate,_tmpAdvancePayment,_tmpNotes,_tmpImagePath,_tmpCreatedAt,_tmpUpdatedAt);
             _result.add(_item);
           }
           return _result;
@@ -349,6 +373,7 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
           final int _cursorIndexOfLastPaidDate = CursorUtil.getColumnIndexOrThrow(_cursor, "lastPaidDate");
           final int _cursorIndexOfAdvancePayment = CursorUtil.getColumnIndexOrThrow(_cursor, "advancePayment");
           final int _cursorIndexOfNotes = CursorUtil.getColumnIndexOrThrow(_cursor, "notes");
+          final int _cursorIndexOfImagePath = CursorUtil.getColumnIndexOrThrow(_cursor, "imagePath");
           final int _cursorIndexOfCreatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "createdAt");
           final int _cursorIndexOfUpdatedAt = CursorUtil.getColumnIndexOrThrow(_cursor, "updatedAt");
           final RentalProperty _result;
@@ -381,11 +406,17 @@ public final class RentalPropertyDao_Impl implements RentalPropertyDao {
             } else {
               _tmpNotes = _cursor.getString(_cursorIndexOfNotes);
             }
+            final String _tmpImagePath;
+            if (_cursor.isNull(_cursorIndexOfImagePath)) {
+              _tmpImagePath = null;
+            } else {
+              _tmpImagePath = _cursor.getString(_cursorIndexOfImagePath);
+            }
             final long _tmpCreatedAt;
             _tmpCreatedAt = _cursor.getLong(_cursorIndexOfCreatedAt);
             final long _tmpUpdatedAt;
             _tmpUpdatedAt = _cursor.getLong(_cursorIndexOfUpdatedAt);
-            _result = new RentalProperty(_tmpId,_tmpName,_tmpType,_tmpCurrentTenant,_tmpMonthlyRent,_tmpLastPaidDate,_tmpAdvancePayment,_tmpNotes,_tmpCreatedAt,_tmpUpdatedAt);
+            _result = new RentalProperty(_tmpId,_tmpName,_tmpType,_tmpCurrentTenant,_tmpMonthlyRent,_tmpLastPaidDate,_tmpAdvancePayment,_tmpNotes,_tmpImagePath,_tmpCreatedAt,_tmpUpdatedAt);
           } else {
             _result = null;
           }

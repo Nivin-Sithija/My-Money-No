@@ -349,7 +349,7 @@ fun ExpandableMemberCard(
                             ),
                         contentAlignment = Alignment.Center
                     ) {
-                        if (member.imagePath != null) {
+                        if (member.imagePath != null && member.imagePath.isNotBlank()) {
                             Image(
                                 painter = rememberAsyncImagePainter(Uri.parse(member.imagePath)),
                                 contentDescription = "Member photo",
@@ -495,7 +495,7 @@ fun ExpandableShopCard(
                             ),
                         contentAlignment = Alignment.Center
                     ) {
-                        if (shop.imagePath != null) {
+                        if (shop.imagePath != null && shop.imagePath.isNotBlank()) {
                             Image(
                                 painter = rememberAsyncImagePainter(Uri.parse(shop.imagePath)),
                                 contentDescription = "Shop photo",

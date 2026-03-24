@@ -29,13 +29,15 @@ import com.wiyadama.expensetracker.ui.theme.*
 @Composable
 fun AddShopDialog(
     initialName: String = "",
+    initialAddress: String = "",
+    initialImagePath: String? = null,
     onDismiss: () -> Unit,
     onConfirm: (name: String, address: String, imagePath: String?) -> Unit
 ) {
     val context = LocalContext.current
     var shopName by remember { mutableStateOf(initialName) }
-    var shopAddress by remember { mutableStateOf("") }
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var shopAddress by remember { mutableStateOf(initialAddress) }
+    var selectedImageUri by remember { mutableStateOf<Uri?>(initialImagePath?.let { Uri.parse(it) }) }
     
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()

@@ -68,6 +68,7 @@ fun MainApp(
     var categoryBackStack by remember { mutableStateOf<List<Long>>(emptyList()) }
     var editingTransaction by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Transaction?>(null) }
     var showMonthlyExpenses by remember { mutableStateOf(false) }
+    var showMonthlyTransactions by remember { mutableStateOf(false) }
 
     val categories by addExpenseViewModel.categories.collectAsStateWithLifecycle()
     val members by addExpenseViewModel.members.collectAsStateWithLifecycle()
@@ -156,6 +157,14 @@ fun MainApp(
                                     transactions = transactions,
                                     onBack = { showMonthlyExpenses = false }
                                 )
+                            } else if (showMonthlyTransactions) {
+                                MonthlyTransactionsScreen(
+                                    transactions = transactions,
+                                    categories = categories,
+                                    members = members,
+                                    shops = shops,
+                                    onBack = { showMonthlyTransactions = false }
+                                )
                             } else {
                                 HomeScreen(
                                     onCategoryClick = { categoryId ->
@@ -167,6 +176,9 @@ fun MainApp(
                                     },
                                     onTotalExpensesClick = {
                                         showMonthlyExpenses = true
+                                    },
+                                    onTransactionsClick = {
+                                        showMonthlyTransactions = true
                                     }
                                 )
                             }
@@ -177,6 +189,7 @@ fun MainApp(
                             var showMemberDialog by remember { mutableStateOf(false) }
                             var showShopDialog by remember { mutableStateOf(false) }
                             var editingMember by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Member?>(null) }
+                            var editingShop by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Shop?>(null) }
                             var viewingMember by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Member?>(null) }
                             var viewingShop by remember { mutableStateOf<com.wiyadama.expensetracker.data.entity.Shop?>(null) }
                             
@@ -214,10 +227,11 @@ fun MainApp(
                                     transactionCount = txCount,
                                     onBack = { viewingShop = null },
                                     onEdit = {
-                                        // TODO: Implement Shop Edit
+                                        editingShop = viewingShop
+                                        showShopDialog = true
                                     },
                                     onDelete = {
-                                        // TODO: Implement Shop Delete
+                                        membersViewModel.deleteShop(viewingShop!!.id)
                                         viewingShop = null
                                     }
                                 )
@@ -231,7 +245,10 @@ fun MainApp(
                                         editingMember = null
                                         showMemberDialog = true 
                                     },
-                                    onAddShop = { showShopDialog = true },
+                                    onAddShop = { 
+                                        editingShop = null
+                                        showShopDialog = true 
+                                    },
                                     onMemberClick = { member -> viewingMember = member },
                                     onShopClick = { shop -> viewingShop = shop }
                                 )
@@ -258,11 +275,26 @@ fun MainApp(
                             
                             if (showShopDialog) {
                                 com.wiyadama.expensetracker.ui.components.AddShopDialog(
-                                    onDismiss = { showShopDialog = false },
+                                    initialName = editingShop?.name ?: "",
+                                    initialAddress = editingShop?.address ?: "",
+                                    initialImagePath = editingShop?.imagePath,
+                                    onDismiss = { 
+                                        showShopDialog = false
+                                        editingShop = null
+                                    },
                                     onConfirm = { name, address, imagePath ->
-                                        addExpenseViewModel.addShop(name, address, imagePath) { _ ->
-                                            showShopDialog = false
+                                        if (editingShop != null) {
+                                            membersViewModel.updateShop(editingShop!!.copy(
+                                                name = name, 
+                                                address = address, 
+                                                imagePath = imagePath
+                                            ))
+                                        } else {
+                                            membersViewModel.addShop(name, address, imagePath)
                                         }
+                                        showShopDialog = false
+                                        editingShop = null
+                                        viewingShop = null
                                     }
                                 )
                             }

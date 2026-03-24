@@ -14,6 +14,7 @@ data class RentalProperty(
     val lastPaidDate: Long? = null,
     val advancePayment: Int = 0, // in cents
     val notes: String? = null,
+    val imagePath: String? = null, // Path to property image/avatar
     val createdAt: Long = System.currentTimeMillis(),
     val updatedAt: Long = System.currentTimeMillis()
 )

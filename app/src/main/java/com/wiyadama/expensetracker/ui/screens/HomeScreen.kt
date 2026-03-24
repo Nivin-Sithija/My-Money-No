@@ -25,6 +25,7 @@ import com.wiyadama.expensetracker.data.entity.Category
 import com.wiyadama.expensetracker.data.entity.Member
 import com.wiyadama.expensetracker.data.entity.Shop
 import com.wiyadama.expensetracker.ui.components.CategoryCard
+import com.wiyadama.expensetracker.ui.components.ExpandableTransactionsCard
 import com.wiyadama.expensetracker.ui.theme.*
 import com.wiyadama.expensetracker.ui.util.CategoryData
 import com.wiyadama.expensetracker.ui.util.getCategoryData
@@ -36,7 +37,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onCategoryClick: (Long) -> Unit = {},
     onSeeAllCategoriesClick: () -> Unit = {},
-    onTotalExpensesClick: () -> Unit = {}
+    onTotalExpensesClick: () -> Unit = {},
+    onTransactionsClick: () -> Unit = {}
 ) {
     val totalExpenses by viewModel.totalExpenses.collectAsState()
     val transactionCount by viewModel.transactionCount.collectAsState()
@@ -183,7 +185,8 @@ fun HomeScreen(
                 Card(
                     modifier = Modifier
                         .weight(1f)
-                        .height(160.dp),
+                        .height(160.dp)
+                        .clickable { onTransactionsClick() },
                     shape = RoundedCornerShape(24.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)

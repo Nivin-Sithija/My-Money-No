@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
         RentalProperty::class,
         RentTransaction::class
     ],
-    version = 6,
+    version = 7,
     exportSchema = true
 )
 abstract class WiyadamaDatabase : RoomDatabase() {
@@ -131,6 +131,13 @@ abstract class WiyadamaDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_6_7 = object : Migration(6, 7) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Add imagePath column to rental_properties table
+                db.execSQL("ALTER TABLE rental_properties ADD COLUMN imagePath TEXT")
+            }
+        }
+
         fun getDatabase(context: Context, scope: CoroutineScope): WiyadamaDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -139,7 +146,7 @@ abstract class WiyadamaDatabase : RoomDatabase() {
                     "my_money_no.db"
                 )
                     .setJournalMode(JournalMode.WRITE_AHEAD_LOGGING)
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
                     .addCallback(SeedDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance

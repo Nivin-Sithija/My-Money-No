@@ -51,8 +51,10 @@ fun AddExpenseScreen(
     var description by remember { mutableStateOf(editingTransaction?.notes ?: "") }
     var selectedDate by remember { mutableLongStateOf(editingTransaction?.dateTime ?: System.currentTimeMillis()) }
     
-    var showMemberDialog by remember { mutableStateOf(false) }
-    var showShopDialog by remember { mutableStateOf(false) }
+    var showMemberSelectionDialog by remember { mutableStateOf(false) }
+    var showMemberAddDialog by remember { mutableStateOf(false) }
+    var showShopSelectionDialog by remember { mutableStateOf(false) }
+    var showShopAddDialog by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
     var showCategoryPicker by remember { mutableStateOf(false) }
     
@@ -193,7 +195,7 @@ fun AddExpenseScreen(
                         CompactSelectorCard(
                             icon = Icons.Default.Person,
                             label = selectedMember?.name ?: "Member",
-                            onClick = { showMemberDialog = true },
+                            onClick = { showMemberSelectionDialog = true },
                             modifier = Modifier.weight(1f)
                         )
                         
@@ -201,7 +203,7 @@ fun AddExpenseScreen(
                         CompactSelectorCard(
                             icon = Icons.Default.Store,
                             label = selectedShop?.name ?: "Shop",
-                            onClick = { showShopDialog = true },
+                            onClick = { showShopSelectionDialog = true },
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -295,25 +297,53 @@ fun AddExpenseScreen(
     }
 
     // Dialogs
-    if (showMemberDialog) {
+    if (showMemberSelectionDialog) {
+        com.wiyadama.expensetracker.ui.components.MemberSelectionDialog(
+            members = members,
+            selectedMember = selectedMember,
+            onMemberSelected = { member ->
+                selectedMember = member
+            },
+            onAddNewMember = {
+                showMemberAddDialog = true
+            },
+            onDismiss = { showMemberSelectionDialog = false }
+        )
+    }
+
+    if (showMemberAddDialog) {
         MemberDialog(
-            onDismiss = { showMemberDialog = false },
+            onDismiss = { showMemberAddDialog = false },
             onConfirm = { name, color, imagePath ->
                 onAddMember(name, color, imagePath) { newMember ->
                     selectedMember = newMember
-                    showMemberDialog = false
+                    showMemberAddDialog = false
                 }
             }
         )
     }
 
-    if (showShopDialog) {
+    if (showShopSelectionDialog) {
+        com.wiyadama.expensetracker.ui.components.ShopSelectionDialog(
+            shops = shops,
+            selectedShop = selectedShop,
+            onShopSelected = { shop ->
+                selectedShop = shop
+            },
+            onAddNewShop = {
+                showShopAddDialog = true
+            },
+            onDismiss = { showShopSelectionDialog = false }
+        )
+    }
+
+    if (showShopAddDialog) {
         AddShopDialog(
-            onDismiss = { showShopDialog = false },
+            onDismiss = { showShopAddDialog = false },
             onConfirm = { name, address, imagePath ->
                 onAddShop(name, address, imagePath) { newShop ->
                     selectedShop = newShop
-                    showShopDialog = false
+                    showShopAddDialog = false
                 }
             }
         )

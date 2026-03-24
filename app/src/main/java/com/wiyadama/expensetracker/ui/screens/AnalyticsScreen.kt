@@ -46,7 +46,7 @@ fun AnalyticsScreen(
             .background(Slate50),
         contentPadding = PaddingValues(bottom = 100.dp)
     ) {
-        // Header with Total Spending
+        // Header
         item {
             Box(
                 modifier = Modifier
@@ -61,21 +61,15 @@ fun AnalyticsScreen(
                 Column {
                     Text(
                         text = "Analytics",
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.headlineMedium,
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "Total Spending",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White.copy(alpha = 0.7f)
-                    )
-                    Text(
-                        text = CurrencyFormatter.formatWithSymbol(totalSpending, "LKR"),
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
+                        text = "Spending insights and trends",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White.copy(alpha = 0.8f),
+                        modifier = Modifier.padding(top = 8.dp)
                     )
                 }
             }
